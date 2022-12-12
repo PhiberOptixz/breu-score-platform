@@ -1,0 +1,14 @@
+[setup the amplify studio]
+1. install nodejs. Go for LTS as they are more stable 
+   node --version
+2. install visual studio code 
+
+3. In the CI -> sudo npm install -g @aws-amplify/cli #use sudo 
+
+4. login to amplify studio
+
+5. In the CLI -> amplify configure
+
+6. Install git, check for -> git --version
+
+7. 
