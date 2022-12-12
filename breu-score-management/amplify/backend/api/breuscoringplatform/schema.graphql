@@ -1,0 +1,61 @@
+type ReliabilityVideoTest @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  question_1: String
+  question_2: String
+}
+
+type ReliabilityObjTypeTest @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  question_1: String
+  question_2: String
+  question_3: String
+  question_4: String
+  question_5: String
+  question_6: String
+  question_7: String
+  question_8: String
+  question_9: String
+  question_10: String
+}
+
+type CandidateReliabilityScore @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  test_score: Float
+  video_score_1: Float
+  video_score_2: Float
+}
+
+type CandidateScore @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  final_score: Float
+  believability: Float
+  reliability: Float
+  emotional: Float
+  undesirability: Float
+}
+
+type CandidateProfile @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String!
+  profile_pic: String
+  ReliabilityVideoTest: ReliabilityVideoTest @hasOne
+  ReliabilityObjTypeTest: ReliabilityObjTypeTest @hasOne
+  CandidateReliabilityScore: CandidateReliabilityScore @hasOne
+  CandidateScore: CandidateScore @hasOne
+  CandidateBelievability: CandidateBelievability @hasOne
+}
+
+type CandidateBelievability @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  role: String!
+  total_years_of_exp: Int!
+  prefered_programming_lang: String!
+  framework_proficiency: String!
+  education: String!
+  domain: String!
+  github: String
+  stackoverflow: String
+  linkedin: String
+  blogs: String
+}
+ 

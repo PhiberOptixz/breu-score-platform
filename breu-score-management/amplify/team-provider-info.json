@@ -1,0 +1,15 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-breuscoringplatform-staging-61310-authRole",
+      "UnauthRoleArn": "arn:aws:iam::071912167366:role/amplify-breuscoringplatform-staging-61310-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::071912167366:role/amplify-breuscoringplatform-staging-61310-authRole",
+      "Region": "ap-northeast-1",
+      "DeploymentBucketName": "amplify-breuscoringplatform-staging-61310-deployment",
+      "UnauthRoleName": "amplify-breuscoringplatform-staging-61310-unauthRole",
+      "StackName": "amplify-breuscoringplatform-staging-61310",
+      "StackId": "arn:aws:cloudformation:ap-northeast-1:071912167366:stack/amplify-breuscoringplatform-staging-61310/0d833380-79e4-11ed-83f2-0a6c5c8cc417",
+      "AmplifyAppId": "d3tvuki513zwj2"
+    }
+  }
+}
