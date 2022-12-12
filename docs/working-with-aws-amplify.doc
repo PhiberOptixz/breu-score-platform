@@ -10,5 +10,5 @@
 5. In the CLI -> amplify configure
 
 6. Install git, check for -> git --version
-
-7. 
+    for the first time user please get the git token & setup the account
+    https://docs.github.com/en/enterprise-server@3.4/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
