@@ -3,13 +3,15 @@ import './App.css';
 
 import { BelievabilityScreen } from './ui-components';
 
-import { Component1 } from './ui-components';
+import { EmotionalUndesirabilityScreen } from './ui-components';
+import { CandidatesBREU } from './ui-components';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-      <Component1 />
+      <EmotionalUndesirabilityScreen />
+      <CandidatesBREU />
       </header>
     </div>
   );

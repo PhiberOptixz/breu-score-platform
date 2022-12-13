@@ -6780,7 +6780,7 @@ export default function CandidateRecruiterScreen2(props) {
           viewBox={{
             minX: 0,
             minY: 0,
-            width: 165.4036865234375,
+            width: 165.40362548828125,
             height: 172.680908203125,
           }}
           paths={[
@@ -6958,7 +6958,7 @@ export default function CandidateRecruiterScreen2(props) {
           viewBox={{
             minX: 0,
             minY: 0,
-            width: 116.1492919921875,
+            width: 116.14935302734375,
             height: 119.861572265625,
           }}
           paths={[
@@ -7372,7 +7372,7 @@ export default function CandidateRecruiterScreen2(props) {
             viewBox={{
               minX: 0,
               minY: 0,
-              width: 133.573486328125,
+              width: 133.57354736328125,
               height: 118.83428955078125,
             }}
             paths={[
@@ -7535,7 +7535,7 @@ export default function CandidateRecruiterScreen2(props) {
           viewBox={{
             minX: 0,
             minY: 0,
-            width: 156.61279296875,
+            width: 156.61285400390625,
             height: 162.5350341796875,
           }}
           paths={[
