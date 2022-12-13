@@ -4,6 +4,9 @@
  * Any changes to this file will be overwritten when running amplify pull. *
  **************************************************************************/
 
+export { default as Component1 } from "./Component1";
+export { default as CandidateRecruiterScreen2 } from "./CandidateRecruiterScreen2";
+export { default as BelievabilityScreen } from "./BelievabilityScreen";
 export { default as studioTheme } from "./studioTheme";
 export { default as ReliabilityVideoTestCreateForm } from "./ReliabilityVideoTestCreateForm";
 export { default as ReliabilityVideoTestUpdateForm } from "./ReliabilityVideoTestUpdateForm";
