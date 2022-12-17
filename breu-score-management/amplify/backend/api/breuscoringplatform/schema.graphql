@@ -57,5 +57,4 @@ type CandidateBelievability @model @auth(rules: [{allow: public}]) {
   stackoverflow: String
   linkedin: String
   blogs: String
-}
- 
+} 

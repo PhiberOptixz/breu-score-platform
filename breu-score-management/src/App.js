@@ -5,13 +5,13 @@ import { BelievabilityScreen } from './ui-components';
 
 import { EmotionalUndesirabilityScreen } from './ui-components';
 import { CandidatesBREU } from './ui-components';
+import { BelievabilityScreenlandscape } from './ui-components'
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-      <EmotionalUndesirabilityScreen />
-      <CandidatesBREU />
+      <BelievabilityScreenlandscape />
       </header>
     </div>
   );

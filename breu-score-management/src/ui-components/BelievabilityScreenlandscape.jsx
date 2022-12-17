@@ -6,10 +6,22 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { getOverrideProps } from "@aws-amplify/ui-react/internal";
+import { CandidateBelievability } from "../models";
+import {
+  getOverrideProps,
+  useDataStoreUpdateAction,
+} from "@aws-amplify/ui-react/internal";
+import { schema } from "../models/schema";
 import { Icon, Text, View } from "@aws-amplify/ui-react";
 export default function BelievabilityScreenlandscape(props) {
-  const { overrides, ...rest } = props;
+  const { candidateBelievability, overrides, ...rest } = props;
+  const rectangleThreeFourSevenOneOneEightTwoFiveOnClick =
+    useDataStoreUpdateAction({
+      fields: {},
+      id: candidateBelievability?.role,
+      model: CandidateBelievability,
+      schema: schema,
+    });
   return (
     <View
       width="1440px"
@@ -254,6 +266,9 @@ export default function BelievabilityScreenlandscape(props) {
               borderRadius="10px"
               padding="0px 0px 0px 0px"
               backgroundColor="rgba(255,255,255,1)"
+              onClick={() => {
+                rectangleThreeFourSevenOneOneEightTwoFiveOnClick();
+              }}
               {...getOverrideProps(overrides, "Rectangle 34711825")}
             ></View>
             <Text

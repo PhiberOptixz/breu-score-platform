@@ -5,9 +5,12 @@
  **************************************************************************/
 
 import * as React from "react";
+import { CandidateBelievability } from "../models";
 import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
 import { ViewProps } from "@aws-amplify/ui-react";
 export declare type BelievabilityScreenlandscapeProps = React.PropsWithChildren<Partial<ViewProps> & {
+    candidateBelievability?: CandidateBelievability;
+} & {
     overrides?: EscapeHatchProps | undefined | null;
 }>;
 export default function BelievabilityScreenlandscape(props: BelievabilityScreenlandscapeProps): React.ReactElement;
