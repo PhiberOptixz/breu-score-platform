@@ -24,11 +24,11 @@ export default function PlaceholderText(props) {
       {...getOverrideProps(overrides, "PlaceholderText")}
     >
       <Text
-        fontFamily="Inter"
+        fontFamily="Montserrat"
         fontSize="16px"
         fontWeight="400"
-        color="rgba(119,126,144,1)"
-        lineHeight="24px"
+        color="rgba(102,102,102,1)"
+        lineHeight="19.503999710083008px"
         textAlign="left"
         display="block"
         direction="column"
@@ -39,13 +39,13 @@ export default function PlaceholderText(props) {
         alignItems="unset"
         position="absolute"
         top="0%"
-        bottom="-20%"
+        bottom="0%"
         left="0%"
-        right="-2.17%"
+        right="53.26%"
         padding="0px 0px 0px 0px"
         whiteSpace="pre-wrap"
-        children="Choose your current role"
-        {...getOverrideProps(overrides, "Choose your current role")}
+        children="Select Size"
+        {...getOverrideProps(overrides, "Select Size")}
       ></Text>
     </View>
   );

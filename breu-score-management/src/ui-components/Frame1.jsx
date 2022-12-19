@@ -7,13 +7,14 @@
 /* eslint-disable */
 import * as React from "react";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
-import { Text, View } from "@aws-amplify/ui-react";
-export default function ListBoxtitle(props) {
+import IMac1 from "./IMac1";
+import { View } from "@aws-amplify/ui-react";
+export default function Frame1(props) {
   const { overrides, ...rest } = props;
   return (
     <View
-      width="95px"
-      height="20px"
+      width="1280px"
+      height="720px"
       display="block"
       gap="unset"
       alignItems="unset"
@@ -21,32 +22,23 @@ export default function ListBoxtitle(props) {
       position="relative"
       padding="0px 0px 0px 0px"
       {...rest}
-      {...getOverrideProps(overrides, "ListBoxtitle")}
+      {...getOverrideProps(overrides, "Frame1")}
     >
-      <Text
-        fontFamily="Montserrat"
-        fontSize="16px"
-        fontWeight="500"
-        color="rgba(51,51,51,1)"
-        lineHeight="19.503999710083008px"
-        textAlign="left"
+      <IMac1
+        width="1280px"
+        height="720px"
         display="block"
-        direction="column"
-        justifyContent="unset"
-        width="unset"
-        height="unset"
         gap="unset"
         alignItems="unset"
+        justifyContent="unset"
+        overflow="hidden"
         position="absolute"
-        top="0%"
-        bottom="0%"
-        left="0%"
-        right="20%"
+        top="0px"
+        left="0px"
         padding="0px 0px 0px 0px"
-        whiteSpace="pre-wrap"
-        children="Cake size"
-        {...getOverrideProps(overrides, "Cake size")}
-      ></Text>
+        backgroundColor="rgba(255,255,255,1)"
+        {...getOverrideProps(overrides, "iMac - 1")}
+      ></IMac1>
     </View>
   );
 }

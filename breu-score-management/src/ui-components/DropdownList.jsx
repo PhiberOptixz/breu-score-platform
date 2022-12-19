@@ -15,7 +15,7 @@ export default function DropdownList(props) {
     <Flex
       gap="1px"
       direction="column"
-      width="612px"
+      width="280px"
       height="unset"
       justifyContent="center"
       alignItems="center"
@@ -30,7 +30,7 @@ export default function DropdownList(props) {
       <HoverState
         width="unset"
         height="44px"
-        display="block"
+        display="12"
         gap="unset"
         alignItems="unset"
         justifyContent="unset"
@@ -46,7 +46,7 @@ export default function DropdownList(props) {
       <HoverState
         width="unset"
         height="44px"
-        display="block"
+        display="23"
         gap="unset"
         alignItems="unset"
         justifyContent="unset"
@@ -62,7 +62,23 @@ export default function DropdownList(props) {
       <HoverState
         width="unset"
         height="44px"
-        display="block"
+        display="23"
+        gap="unset"
+        alignItems="unset"
+        justifyContent="unset"
+        overflow="hidden"
+        shrink="0"
+        alignSelf="stretch"
+        position="relative"
+        padding="0px 0px 0px 0px"
+        backgroundColor="rgba(255,255,255,1)"
+        property1="Default"
+        {...getOverrideProps(overrides, "Item 3")}
+      ></HoverState>
+      <HoverState
+        width="unset"
+        height="44px"
+        display="45"
         gap="unset"
         alignItems="unset"
         justifyContent="unset"

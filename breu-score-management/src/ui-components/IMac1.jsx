@@ -7,46 +7,39 @@
 /* eslint-disable */
 import * as React from "react";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
-import { Text, View } from "@aws-amplify/ui-react";
-export default function ListBoxtitle(props) {
+import ListboxComponent from "./ListboxComponent";
+import { View } from "@aws-amplify/ui-react";
+export default function IMac1(props) {
   const { overrides, ...rest } = props;
   return (
     <View
-      width="95px"
-      height="20px"
+      width="1280px"
+      height="720px"
       display="block"
       gap="unset"
       alignItems="unset"
       justifyContent="unset"
+      overflow="hidden"
       position="relative"
       padding="0px 0px 0px 0px"
+      backgroundColor="rgba(255,255,255,1)"
       {...rest}
-      {...getOverrideProps(overrides, "ListBoxtitle")}
+      {...getOverrideProps(overrides, "IMac1")}
     >
-      <Text
-        fontFamily="Montserrat"
-        fontSize="16px"
-        fontWeight="500"
-        color="rgba(51,51,51,1)"
-        lineHeight="19.503999710083008px"
-        textAlign="left"
+      <ListboxComponent
+        width="308px"
+        height="289px"
         display="block"
-        direction="column"
-        justifyContent="unset"
-        width="unset"
-        height="unset"
         gap="unset"
         alignItems="unset"
+        justifyContent="unset"
         position="absolute"
-        top="0%"
-        bottom="0%"
-        left="0%"
-        right="20%"
+        top="215px"
+        left="486px"
         padding="0px 0px 0px 0px"
-        whiteSpace="pre-wrap"
-        children="Cake size"
-        {...getOverrideProps(overrides, "Cake size")}
-      ></Text>
+        property1="Default"
+        {...getOverrideProps(overrides, "Listbox Component")}
+      ></ListboxComponent>
     </View>
   );
 }

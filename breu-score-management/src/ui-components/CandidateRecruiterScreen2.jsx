@@ -9,7 +9,7 @@ import * as React from "react";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import { Icon, Text, View } from "@aws-amplify/ui-react";
 export default function CandidateRecruiterScreen2(props) {
-  const { overrides, ...rest } = props;
+  const { candidateBelievability, overrides, ...rest } = props;
   return (
     <View
       width="1440px"

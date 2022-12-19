@@ -5,12 +5,9 @@
  **************************************************************************/
 
 import * as React from "react";
-import { CandidateBelievability } from "../models";
 import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
-import { ViewProps } from "@aws-amplify/ui-react";
-export declare type CandidateRecruiterScreen2Props = React.PropsWithChildren<Partial<ViewProps> & {
-    candidateBelievability?: CandidateBelievability;
-} & {
+import { FlexProps } from "@aws-amplify/ui-react";
+export declare type ContactUsProps = React.PropsWithChildren<Partial<FlexProps> & {
     overrides?: EscapeHatchProps | undefined | null;
 }>;
-export default function CandidateRecruiterScreen2(props: CandidateRecruiterScreen2Props): React.ReactElement;
+export default function ContactUs(props: ContactUsProps): React.ReactElement;

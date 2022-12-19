@@ -6,26 +6,14 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { CandidateBelievability } from "../models";
-import {
-  getOverrideProps,
-  useDataStoreUpdateAction,
-} from "@aws-amplify/ui-react/internal";
-import { schema } from "../models/schema";
+import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import { Icon, Text, View } from "@aws-amplify/ui-react";
-export default function BelievabilityScreenlandscape(props) {
+export default function BelievabilityScreenCompVers01(props) {
   const { candidateBelievability, overrides, ...rest } = props;
-  const rectangleThreeFourSevenOneOneEightTwoFiveOnClick =
-    useDataStoreUpdateAction({
-      fields: {},
-      id: candidateBelievability?.id,
-      model: CandidateBelievability,
-      schema: schema,
-    });
   return (
     <View
-      width="1440px"
-      height="1047px"
+      width="1517px"
+      height="1017px"
       display="block"
       gap="unset"
       alignItems="unset"
@@ -35,12 +23,12 @@ export default function BelievabilityScreenlandscape(props) {
       padding="0px 0px 0px 0px"
       backgroundColor="rgba(246,248,252,1)"
       {...rest}
-      {...getOverrideProps(overrides, "BelievabilityScreenlandscape")}
+      {...getOverrideProps(overrides, "BelievabilityScreenCompVers01")}
     >
       <View
         padding="0px 0px 0px 0px"
-        width="1440px"
-        height="125px"
+        width="1517px"
+        height="121.42px"
         display="block"
         gap="unset"
         alignItems="unset"
@@ -52,8 +40,8 @@ export default function BelievabilityScreenlandscape(props) {
       >
         <View
           padding="0px 0px 0px 0px"
-          width="1440px"
-          height="125px"
+          width="1517px"
+          height="121.42px"
           display="block"
           gap="unset"
           alignItems="unset"
@@ -64,8 +52,8 @@ export default function BelievabilityScreenlandscape(props) {
           {...getOverrideProps(overrides, "Group 1000001238")}
         >
           <View
-            width="1440px"
-            height="125px"
+            width="1517px"
+            height="121.42px"
             display="block"
             gap="unset"
             alignItems="unset"
@@ -82,8 +70,8 @@ export default function BelievabilityScreenlandscape(props) {
         </View>
         <View
           padding="0px 0px 0px 0px"
-          width="1440px"
-          height="125px"
+          width="1517px"
+          height="121.42px"
           display="block"
           gap="unset"
           alignItems="unset"
@@ -94,8 +82,8 @@ export default function BelievabilityScreenlandscape(props) {
           {...getOverrideProps(overrides, "Mask group")}
         >
           <View
-            width="1440px"
-            height="125px"
+            width="1517px"
+            height="121.42px"
             display="block"
             gap="unset"
             alignItems="unset"
@@ -106,21 +94,21 @@ export default function BelievabilityScreenlandscape(props) {
             left="0%"
             right="0%"
             padding="0px 0px 0px 0px"
-            backgroundColor="rgba(238,108,77,1)"
+            backgroundColor="rgba(77,199,238,1)"
             {...getOverrideProps(overrides, "Rectangle 5288")}
           ></View>
           <Icon
-            width="1003.92px"
-            height="496.44px"
+            width="1055.81px"
+            height="503.31px"
             viewBox={{
               minX: 0,
               minY: 0,
-              width: 1346.134521484375,
-              height: 499.3000793457031,
+              width: 1418.115478515625,
+              height: 484.9934997558594,
             }}
             paths={[
               {
-                d: "M43.5856 19.6568C38.3458 12.428 44.4855 2.47782 53.2965 3.91905L556.653 86.2537C558.429 86.5442 560.25 86.35 561.925 85.6918L740.519 15.499C746.791 13.0337 753.657 17.3529 754.15 24.0746L765.207 174.852C765.4 177.479 766.622 179.925 768.607 181.656L986.765 371.939C993.326 377.662 989.948 388.453 981.295 389.414L488.361 444.143L28.8728 493.346C19.4167 494.359 14.0193 482.844 20.8468 476.224L222.328 280.861C225.898 277.399 226.382 271.84 223.463 267.813L43.5856 19.6568Z",
+                d: "M45.6914 19.7333C40.2915 12.5519 46.3663 2.44612 55.2416 3.84564L585.659 87.4848C587.376 87.7556 589.134 87.5741 590.759 86.9582L779.586 15.414C785.829 13.0483 792.594 17.349 793.1 24.0067L804.757 177.241C804.961 179.921 806.236 182.406 808.293 184.136L1037.85 377.16C1044.6 382.83 1041.24 393.819 1032.48 394.757L513.604 450.293L29.5787 500.259C20.0461 501.243 14.7222 489.55 21.7231 483.006L233.799 284.77C237.532 281.28 238.034 275.538 234.963 271.454L45.6914 19.7333Z",
                 fillRule: "nonzero",
               },
             ]}
@@ -130,25 +118,25 @@ export default function BelievabilityScreenlandscape(props) {
             justifyContent="unset"
             position="absolute"
             top="140.07%"
-            bottom="-437.22%"
+            bottom="-454.59%"
             left="32.39%"
-            right="-2.11%"
+            right="-1.99%"
             transformOrigin="top left"
-            transform="rotate(-171.36deg)"
+            transform="rotate(-172.02deg)"
             {...getOverrideProps(overrides, "Rectangle 5286")}
           ></Icon>
           <Icon
-            width="1003.92px"
-            height="496.44px"
+            width="1055.81px"
+            height="503.31px"
             viewBox={{
               minX: 0,
               minY: 0,
-              width: 1346.13427734375,
-              height: 499.30010986328125,
+              width: 1418.1156005859375,
+              height: 484.9934997558594,
             }}
             paths={[
               {
-                d: "M96.3044 92.3869C71.6772 58.4116 100.534 11.6457 141.946 18.4195L518.666 80.0401C545.305 84.3975 572.626 81.4858 597.749 71.6119L693.758 33.8773C723.239 22.2903 755.508 42.5907 757.825 74.1823L763.312 149.012C764.719 168.194 773.639 186.045 788.133 198.687L923.291 316.576C954.128 343.472 938.252 394.193 897.584 398.708L488.361 444.143L135.704 481.906C91.2599 486.666 65.8921 432.546 97.9817 401.431L135.233 365.311C188.789 313.382 196.046 229.988 152.265 169.589L96.3044 92.3869Z",
+                d: "M100.591 92.7467C75.2118 58.9939 103.763 11.4967 145.477 18.0745L548.976 81.7005C574.732 85.7619 601.103 83.0391 625.486 73.8005L733.335 32.9379C762.68 21.8192 794.471 42.0328 796.852 73.3237L802.749 150.84C804.237 170.405 813.54 188.548 828.558 201.176L971.407 321.289C1003.1 347.941 987.339 399.588 946.162 403.996L513.604 450.293L139.021 488.961C94.2182 493.586 69.1959 438.631 102.1 407.874L141.917 370.656C197.909 318.318 205.438 232.188 159.376 170.928L100.591 92.7467Z",
                 fillRule: "nonzero",
               },
             ]}
@@ -158,11 +146,11 @@ export default function BelievabilityScreenlandscape(props) {
             justifyContent="unset"
             position="absolute"
             top="219.23%"
-            bottom="-516.38%"
+            bottom="-533.76%"
             left="132.66%"
-            right="-102.38%"
+            right="-102.26%"
             transformOrigin="top left"
-            transform="rotate(-171.36deg)"
+            transform="rotate(-172.02deg)"
             {...getOverrideProps(overrides, "Rectangle 5287")}
           ></Icon>
         </View>
@@ -176,8 +164,8 @@ export default function BelievabilityScreenlandscape(props) {
           display="block"
           direction="column"
           justifyContent="unset"
-          width="391.68px"
-          height="28.65px"
+          width="412.62px"
+          height="27.83px"
           gap="unset"
           alignItems="unset"
           position="absolute"
@@ -228,7 +216,7 @@ export default function BelievabilityScreenlandscape(props) {
             position="absolute"
             top="0px"
             left="0px"
-            {...getOverrideProps(overrides, "Name11823")}
+            {...getOverrideProps(overrides, "Name113")}
           >
             <Text
               fontFamily="Inter"
@@ -266,10 +254,7 @@ export default function BelievabilityScreenlandscape(props) {
               borderRadius="10px"
               padding="0px 0px 0px 0px"
               backgroundColor="rgba(255,255,255,1)"
-              onClick={() => {
-                rectangleThreeFourSevenOneOneEightTwoFiveOnClick();
-              }}
-              {...getOverrideProps(overrides, "Rectangle 34711825")}
+              {...getOverrideProps(overrides, "Rectangle 347115")}
             ></View>
             <Text
               fontFamily="Inter"
@@ -313,7 +298,7 @@ export default function BelievabilityScreenlandscape(props) {
             position="absolute"
             top="54px"
             left="585px"
-            {...getOverrideProps(overrides, "Vector 17011827")}
+            {...getOverrideProps(overrides, "Vector 170117")}
           ></Icon>
         </View>
         <View
@@ -340,7 +325,7 @@ export default function BelievabilityScreenlandscape(props) {
             position="absolute"
             top="0px"
             left="0px"
-            {...getOverrideProps(overrides, "Name11829")}
+            {...getOverrideProps(overrides, "Name119")}
           >
             <Text
               fontFamily="Inter"
@@ -378,7 +363,7 @@ export default function BelievabilityScreenlandscape(props) {
               borderRadius="10px"
               padding="0px 0px 0px 0px"
               backgroundColor="rgba(255,255,255,1)"
-              {...getOverrideProps(overrides, "Rectangle 34711831")}
+              {...getOverrideProps(overrides, "Rectangle 347121")}
             ></View>
             <Text
               fontFamily="Inter"
@@ -422,7 +407,7 @@ export default function BelievabilityScreenlandscape(props) {
             position="absolute"
             top="54px"
             left="585px"
-            {...getOverrideProps(overrides, "Vector 17011833")}
+            {...getOverrideProps(overrides, "Vector 170123")}
           ></Icon>
         </View>
         <View
@@ -449,7 +434,7 @@ export default function BelievabilityScreenlandscape(props) {
             position="absolute"
             top="0px"
             left="0px"
-            {...getOverrideProps(overrides, "Name11835")}
+            {...getOverrideProps(overrides, "Name125")}
           >
             <Text
               fontFamily="Inter"
@@ -487,7 +472,7 @@ export default function BelievabilityScreenlandscape(props) {
               borderRadius="10px"
               padding="0px 0px 0px 0px"
               backgroundColor="rgba(255,255,255,1)"
-              {...getOverrideProps(overrides, "Rectangle 34711837")}
+              {...getOverrideProps(overrides, "Rectangle 347127")}
             ></View>
             <Text
               fontFamily="Inter"
@@ -534,7 +519,7 @@ export default function BelievabilityScreenlandscape(props) {
             position="absolute"
             top="54px"
             left="585px"
-            {...getOverrideProps(overrides, "Vector 17011839")}
+            {...getOverrideProps(overrides, "Vector 170129")}
           ></Icon>
         </View>
         <View
@@ -561,7 +546,7 @@ export default function BelievabilityScreenlandscape(props) {
             position="absolute"
             top="0px"
             left="0px"
-            {...getOverrideProps(overrides, "Name11841")}
+            {...getOverrideProps(overrides, "Name131")}
           >
             <Text
               fontFamily="Inter"
@@ -599,7 +584,7 @@ export default function BelievabilityScreenlandscape(props) {
               borderRadius="10px"
               padding="0px 0px 0px 0px"
               backgroundColor="rgba(255,255,255,1)"
-              {...getOverrideProps(overrides, "Rectangle 34711843")}
+              {...getOverrideProps(overrides, "Rectangle 347133")}
             ></View>
             <Text
               fontFamily="Inter"
@@ -646,7 +631,7 @@ export default function BelievabilityScreenlandscape(props) {
             position="absolute"
             top="54px"
             left="585px"
-            {...getOverrideProps(overrides, "Vector 17011845")}
+            {...getOverrideProps(overrides, "Vector 170135")}
           ></Icon>
         </View>
         <View
@@ -673,7 +658,7 @@ export default function BelievabilityScreenlandscape(props) {
             position="absolute"
             top="0px"
             left="0px"
-            {...getOverrideProps(overrides, "Name11847")}
+            {...getOverrideProps(overrides, "Name137")}
           >
             <Text
               fontFamily="Inter"
@@ -711,7 +696,7 @@ export default function BelievabilityScreenlandscape(props) {
               borderRadius="10px"
               padding="0px 0px 0px 0px"
               backgroundColor="rgba(255,255,255,1)"
-              {...getOverrideProps(overrides, "Rectangle 34711849")}
+              {...getOverrideProps(overrides, "Rectangle 347139")}
             ></View>
             <Text
               fontFamily="Inter"
@@ -755,7 +740,7 @@ export default function BelievabilityScreenlandscape(props) {
             position="absolute"
             top="54px"
             left="585px"
-            {...getOverrideProps(overrides, "Vector 17011851")}
+            {...getOverrideProps(overrides, "Vector 170141")}
           ></Icon>
         </View>
         <View
@@ -782,7 +767,7 @@ export default function BelievabilityScreenlandscape(props) {
             position="absolute"
             top="0px"
             left="0px"
-            {...getOverrideProps(overrides, "Name11853")}
+            {...getOverrideProps(overrides, "Name143")}
           >
             <Text
               fontFamily="Inter"
@@ -804,7 +789,7 @@ export default function BelievabilityScreenlandscape(props) {
               padding="0px 0px 0px 0px"
               whiteSpace="pre-wrap"
               children="Choose your education"
-              {...getOverrideProps(overrides, "Choose your education11854")}
+              {...getOverrideProps(overrides, "Choose your education144")}
             ></Text>
             <View
               width="612px"
@@ -820,7 +805,7 @@ export default function BelievabilityScreenlandscape(props) {
               borderRadius="10px"
               padding="0px 0px 0px 0px"
               backgroundColor="rgba(255,255,255,1)"
-              {...getOverrideProps(overrides, "Rectangle 34711855")}
+              {...getOverrideProps(overrides, "Rectangle 347145")}
             ></View>
             <Text
               fontFamily="Inter"
@@ -842,7 +827,7 @@ export default function BelievabilityScreenlandscape(props) {
               padding="0px 0px 0px 0px"
               whiteSpace="pre-wrap"
               children="Choose your education"
-              {...getOverrideProps(overrides, "Choose your education11856")}
+              {...getOverrideProps(overrides, "Choose your education146")}
             ></Text>
           </View>
           <Icon
@@ -864,7 +849,7 @@ export default function BelievabilityScreenlandscape(props) {
             position="absolute"
             top="54px"
             left="585px"
-            {...getOverrideProps(overrides, "Vector 17011857")}
+            {...getOverrideProps(overrides, "Vector 170147")}
           ></Icon>
         </View>
         <View
@@ -891,7 +876,7 @@ export default function BelievabilityScreenlandscape(props) {
             position="absolute"
             top="0px"
             left="0px"
-            {...getOverrideProps(overrides, "Name11859")}
+            {...getOverrideProps(overrides, "Name149")}
           >
             <Text
               fontFamily="Inter"
@@ -929,7 +914,7 @@ export default function BelievabilityScreenlandscape(props) {
               borderRadius="10px"
               padding="0px 0px 0px 0px"
               backgroundColor="rgba(255,255,255,1)"
-              {...getOverrideProps(overrides, "Rectangle 34711861")}
+              {...getOverrideProps(overrides, "Rectangle 347151")}
             ></View>
             <Text
               fontFamily="Inter"
@@ -973,7 +958,7 @@ export default function BelievabilityScreenlandscape(props) {
             position="absolute"
             top="54px"
             left="585px"
-            {...getOverrideProps(overrides, "Vector 17011863")}
+            {...getOverrideProps(overrides, "Vector 170153")}
           ></Icon>
         </View>
       </View>
@@ -1014,7 +999,7 @@ export default function BelievabilityScreenlandscape(props) {
             position="absolute"
             top="0px"
             left="0px"
-            {...getOverrideProps(overrides, "Name11866")}
+            {...getOverrideProps(overrides, "Name156")}
           >
             <Text
               fontFamily="Inter"
@@ -1052,7 +1037,7 @@ export default function BelievabilityScreenlandscape(props) {
               borderRadius="10px"
               padding="0px 0px 0px 0px"
               backgroundColor="rgba(255,255,255,1)"
-              {...getOverrideProps(overrides, "Rectangle 34711868")}
+              {...getOverrideProps(overrides, "Rectangle 347158")}
             ></View>
             <Text
               fontFamily="Inter"
@@ -1096,7 +1081,7 @@ export default function BelievabilityScreenlandscape(props) {
             position="absolute"
             top="54px"
             left="585px"
-            {...getOverrideProps(overrides, "Vector 17011870")}
+            {...getOverrideProps(overrides, "Vector 170160")}
           ></Icon>
         </View>
         <View
@@ -1123,7 +1108,7 @@ export default function BelievabilityScreenlandscape(props) {
             position="absolute"
             top="0px"
             left="0px"
-            {...getOverrideProps(overrides, "Name11872")}
+            {...getOverrideProps(overrides, "Name162")}
           >
             <Text
               fontFamily="Inter"
@@ -1161,7 +1146,7 @@ export default function BelievabilityScreenlandscape(props) {
               borderRadius="10px"
               padding="0px 0px 0px 0px"
               backgroundColor="rgba(255,255,255,1)"
-              {...getOverrideProps(overrides, "Rectangle 34711874")}
+              {...getOverrideProps(overrides, "Rectangle 347164")}
             ></View>
             <Text
               fontFamily="Inter"
@@ -1205,7 +1190,7 @@ export default function BelievabilityScreenlandscape(props) {
             position="absolute"
             top="54px"
             left="585px"
-            {...getOverrideProps(overrides, "Vector 17011876")}
+            {...getOverrideProps(overrides, "Vector 170166")}
           ></Icon>
         </View>
         <View
@@ -1232,7 +1217,7 @@ export default function BelievabilityScreenlandscape(props) {
             position="absolute"
             top="0px"
             left="0px"
-            {...getOverrideProps(overrides, "Name11878")}
+            {...getOverrideProps(overrides, "Name168")}
           >
             <Text
               fontFamily="Inter"
@@ -1270,7 +1255,7 @@ export default function BelievabilityScreenlandscape(props) {
               borderRadius="10px"
               padding="0px 0px 0px 0px"
               backgroundColor="rgba(255,255,255,1)"
-              {...getOverrideProps(overrides, "Rectangle 34711880")}
+              {...getOverrideProps(overrides, "Rectangle 347170")}
             ></View>
             <Text
               fontFamily="Inter"
@@ -1314,7 +1299,7 @@ export default function BelievabilityScreenlandscape(props) {
             position="absolute"
             top="54px"
             left="585px"
-            {...getOverrideProps(overrides, "Vector 17011882")}
+            {...getOverrideProps(overrides, "Vector 170172")}
           ></Icon>
         </View>
         <View
@@ -1341,7 +1326,7 @@ export default function BelievabilityScreenlandscape(props) {
             position="absolute"
             top="0px"
             left="0px"
-            {...getOverrideProps(overrides, "Name11884")}
+            {...getOverrideProps(overrides, "Name174")}
           >
             <Text
               fontFamily="Inter"
@@ -1379,7 +1364,7 @@ export default function BelievabilityScreenlandscape(props) {
               borderRadius="10px"
               padding="0px 0px 0px 0px"
               backgroundColor="rgba(255,255,255,1)"
-              {...getOverrideProps(overrides, "Rectangle 34711886")}
+              {...getOverrideProps(overrides, "Rectangle 347176")}
             ></View>
             <Text
               fontFamily="Inter"
@@ -1423,7 +1408,7 @@ export default function BelievabilityScreenlandscape(props) {
             position="absolute"
             top="54px"
             left="585px"
-            {...getOverrideProps(overrides, "Vector 17011888")}
+            {...getOverrideProps(overrides, "Vector 170178")}
           ></Icon>
         </View>
         <View
@@ -1437,7 +1422,7 @@ export default function BelievabilityScreenlandscape(props) {
           position="absolute"
           top="521px"
           left="0px"
-          {...getOverrideProps(overrides, "Group 100000130611889")}
+          {...getOverrideProps(overrides, "Group 1000001306179")}
         >
           <View
             padding="0px 0px 0px 0px"
@@ -1450,7 +1435,7 @@ export default function BelievabilityScreenlandscape(props) {
             position="absolute"
             top="0px"
             left="0px"
-            {...getOverrideProps(overrides, "Name11890")}
+            {...getOverrideProps(overrides, "Name180")}
           >
             <Text
               fontFamily="Inter"
@@ -1488,7 +1473,7 @@ export default function BelievabilityScreenlandscape(props) {
               borderRadius="10px"
               padding="0px 0px 0px 0px"
               backgroundColor="rgba(255,255,255,1)"
-              {...getOverrideProps(overrides, "Rectangle 34711892")}
+              {...getOverrideProps(overrides, "Rectangle 347182")}
             ></View>
             <Text
               fontFamily="Inter"
@@ -1532,7 +1517,7 @@ export default function BelievabilityScreenlandscape(props) {
             position="absolute"
             top="54px"
             left="585px"
-            {...getOverrideProps(overrides, "Vector 17011894")}
+            {...getOverrideProps(overrides, "Vector 170184")}
           ></Icon>
         </View>
         <Text
@@ -1569,7 +1554,7 @@ export default function BelievabilityScreenlandscape(props) {
         position="absolute"
         top="927px"
         left="803px"
-        {...getOverrideProps(overrides, "Group 100000130611896")}
+        {...getOverrideProps(overrides, "Group 1000001306186")}
       >
         <View
           width="250px"
@@ -1601,7 +1586,7 @@ export default function BelievabilityScreenlandscape(props) {
           boxShadow="0px 4px 20px rgba(0.03921568766236305, 0.4431372582912445, 0.7254902124404907, 0.20000000298023224)"
           borderRadius="10px"
           padding="0px 0px 0px 0px"
-          backgroundColor="rgba(10,113,185,1)"
+          backgroundColor="rgba(10,185,153,1)"
           {...getOverrideProps(overrides, "Rectangle 360")}
         ></View>
         <Text

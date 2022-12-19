@@ -5,12 +5,9 @@
  **************************************************************************/
 
 import * as React from "react";
-import { CandidateBelievability } from "../models";
 import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
 import { ViewProps } from "@aws-amplify/ui-react";
-export declare type CandidateRecruiterScreen2Props = React.PropsWithChildren<Partial<ViewProps> & {
-    candidateBelievability?: CandidateBelievability;
-} & {
+export declare type Frame1Props = React.PropsWithChildren<Partial<ViewProps> & {
     overrides?: EscapeHatchProps | undefined | null;
 }>;
-export default function CandidateRecruiterScreen2(props: CandidateRecruiterScreen2Props): React.ReactElement;
+export default function Frame1(props: Frame1Props): React.ReactElement;

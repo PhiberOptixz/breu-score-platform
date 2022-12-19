@@ -10,6 +10,14 @@
       "StackName": "amplify-breuscoringplatform-staging-61310",
       "StackId": "arn:aws:cloudformation:ap-northeast-1:071912167366:stack/amplify-breuscoringplatform-staging-61310/0d833380-79e4-11ed-83f2-0a6c5c8cc417",
       "AmplifyAppId": "d3tvuki513zwj2"
+    },
+    "categories": {
+      "api": {
+        "breuscoringplatform": {}
+      },
+      "video": {
+        "mylivestream": {}
+      }
     }
   }
 }

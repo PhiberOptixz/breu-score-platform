@@ -5,5 +5,13 @@ export type AmplifyDependentResourcesAttributes = {
             "GraphQLAPIIdOutput": "string",
             "GraphQLAPIEndpointOutput": "string"
         }
+    },
+    "video": {
+        "mylivestream": {
+            "oMediaLiveChannelName": "string",
+            "oMediaLiveChannelId": "string",
+            "oMediaLivePrimaryIngestUrl": "string",
+            "oMediaLiveBackupIngestUrl": "string"
+        }
     }
 }

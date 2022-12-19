@@ -48,17 +48,14 @@ export default function ListboxComponent(props) {
         Chevron: {
           top: "55%",
           bottom: "36.67%",
-          left: "94.92%",
-          right: "3.45%",
+          left: "92.14%",
+          right: "4.29%",
           transform: "rotate(-180deg)",
         },
         "Placeholder Text": {},
         "ListBox Main": {},
         "Dropdown List": {
-          width: "613px",
           height: "unset",
-          left: "4.46%",
-          right: "4.49%",
           backgroundColor: "rgba(255,255,255,1)",
         },
         "Clip List": {},
@@ -70,16 +67,10 @@ export default function ListboxComponent(props) {
       overrides: {
         "ListBox title": {},
         ListBoxBG: {},
-        Chevron: { left: "93.31%", right: "5.06%" },
+        Chevron: {},
         "Placeholder Text": {},
         "ListBox Main": {},
-        "Dropdown List": {
-          width: "611px",
-          height: "unset",
-          top: "8px",
-          left: "4.6%",
-          right: "4.63%",
-        },
+        "Dropdown List": { height: "unset", top: "8px" },
         "Clip List": { height: "69px", bottom: "66.44%" },
         ListboxComponent: { overflow: "hidden" },
       },
@@ -89,16 +80,10 @@ export default function ListboxComponent(props) {
       overrides: {
         "ListBox title": {},
         ListBoxBG: {},
-        Chevron: { left: "93.31%", right: "5.06%" },
+        Chevron: {},
         "Placeholder Text": {},
         "ListBox Main": {},
-        "Dropdown List": {
-          width: "611px",
-          height: "unset",
-          top: "-36px",
-          left: "4.6%",
-          right: "4.63%",
-        },
+        "Dropdown List": { height: "unset", top: "-36px" },
         "Clip List": { height: "69px", bottom: "66.44%" },
         ListboxComponent: {},
       },
@@ -108,16 +93,10 @@ export default function ListboxComponent(props) {
       overrides: {
         "ListBox title": {},
         ListBoxBG: {},
-        Chevron: { left: "93.31%", right: "5.06%" },
+        Chevron: {},
         "Placeholder Text": {},
         "ListBox Main": {},
-        "Dropdown List": {
-          width: "611px",
-          height: "unset",
-          top: "-80px",
-          left: "4.6%",
-          right: "4.63%",
-        },
+        "Dropdown List": { height: "unset", top: "-80px" },
         "Clip List": { height: "69px", bottom: "66.44%" },
         ListboxComponent: {},
       },
@@ -127,16 +106,10 @@ export default function ListboxComponent(props) {
       overrides: {
         "ListBox title": {},
         ListBoxBG: {},
-        Chevron: { left: "93.31%", right: "5.06%" },
+        Chevron: {},
         "Placeholder Text": {},
         "ListBox Main": {},
-        "Dropdown List": {
-          width: "611px",
-          height: "unset",
-          top: "-124px",
-          left: "4.6%",
-          right: "4.63%",
-        },
+        "Dropdown List": { height: "unset", top: "-124px" },
         "Clip List": { height: "69px", bottom: "66.44%" },
         ListboxComponent: {},
       },
@@ -149,7 +122,7 @@ export default function ListboxComponent(props) {
   );
   return (
     <View
-      width="673.2px"
+      width="308px"
       height="289px"
       display="block"
       gap="unset"
@@ -161,7 +134,7 @@ export default function ListboxComponent(props) {
       {...getOverrideProps(overrides, "ListboxComponent")}
     >
       <ListBoxtitle
-        width="612px"
+        width="280px"
         height="20px"
         display="block"
         gap="unset"
@@ -177,7 +150,7 @@ export default function ListboxComponent(props) {
       ></ListBoxtitle>
       <View
         padding="0px 0px 0px 0px"
-        width="612px"
+        width="280px"
         height="60px"
         display="block"
         gap="unset"
@@ -191,7 +164,7 @@ export default function ListboxComponent(props) {
         {...getOverrideProps(overrides, "ListBox Main")}
       >
         <View
-          width="612px"
+          width="280px"
           height="60px"
           display="block"
           gap="unset"
@@ -202,8 +175,8 @@ export default function ListboxComponent(props) {
           bottom="0%"
           left="0%"
           right="0%"
-          border="1px SOLID rgba(230,232,236,1)"
-          borderRadius="10px"
+          boxShadow="0px 4px 14px rgba(0, 0, 0, 0.10000000149011612)"
+          borderRadius="8px"
           padding="0px 0px 0px 0px"
           backgroundColor="rgba(255,255,255,1)"
           {...getOverrideProps(overrides, "ListBoxBG")}
@@ -228,14 +201,14 @@ export default function ListboxComponent(props) {
           position="absolute"
           top="46.67%"
           bottom="45%"
-          left="93.28%"
-          right="5.09%"
+          left="88.57%"
+          right="7.86%"
           transformOrigin="top left"
           transform="rotate(0deg)"
           {...getOverrideProps(overrides, "Chevron")}
         ></Icon>
         <PlaceholderText
-          width="402.17px"
+          width="184px"
           height="20px"
           display="block"
           gap="unset"
@@ -251,7 +224,7 @@ export default function ListboxComponent(props) {
         ></PlaceholderText>
       </View>
       <View
-        width="673.2px"
+        width="308px"
         height="261px"
         display="block"
         gap="unset"
@@ -270,7 +243,7 @@ export default function ListboxComponent(props) {
           display="flex"
           gap="1px"
           direction="column"
-          width="612px"
+          width="280px"
           height="1px"
           justifyContent="center"
           alignItems="center"

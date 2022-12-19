@@ -20,7 +20,7 @@ export default function HoverState(props) {
       variantValues: { property1: "Default" },
     },
     {
-      overrides: { Item: {}, HoverState: {} },
+      overrides: { Item: { fontWeight: "500" }, HoverState: {} },
       variantValues: { property1: "Variant2" },
     },
   ];
@@ -44,11 +44,11 @@ export default function HoverState(props) {
       {...getOverrideProps(overrides, "HoverState")}
     >
       <Text
-        fontFamily="Inter"
+        fontFamily="Montserrat"
         fontSize="16px"
         fontWeight="400"
-        color="rgba(119,126,144,1)"
-        lineHeight="24px"
+        color="rgba(51,51,51,1)"
+        lineHeight="19.503999710083008px"
         textAlign="left"
         display="block"
         direction="column"
