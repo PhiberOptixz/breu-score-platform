@@ -1,0 +1,24 @@
+.landing{
+    // background-image: url("../assets/LandingScreenForVideo.jpg");
+    // background-size: cover;
+    // position: relative;
+    // /* width: 100vh; */
+    // height: 100vh;
+    // background-repeat: no-repeat;
+    // background-position: center;
+}
+
+.player-wrapper {
+    position: relative;
+    padding-top: 56.25%; /* Player ratio: 100 / (1280 / 720) */
+  }
+  
+  .react-player {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .LandingVideoGrid{
+    margin-top: 200%;
+  }
