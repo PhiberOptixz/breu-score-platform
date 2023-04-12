@@ -59,10 +59,12 @@ const SignIn = () =>  {
             <CssBaseline />
             <Box
               sx={{
-                marginTop: 8,
+                marginTop: 15,
+                padding:2,
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
+                background:'white'
               }}
             >
               <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
@@ -92,10 +94,6 @@ const SignIn = () =>  {
                   id="password"
                   autoComplete="current-password"
                 />
-                <FormControlLabel
-                  control={<Checkbox value="remember" color="primary" />}
-                  label="Remember me"
-                />
                 <Button
                   type="submit"
                   fullWidth
@@ -106,9 +104,6 @@ const SignIn = () =>  {
                 </Button>
                 <Grid container>
                   <Grid item xs>
-                    <Link href="#" variant="body2">
-                      Forgot password?
-                    </Link>
                   </Grid>
                   <Grid item>
                     <Link href="#" variant="body2">

@@ -36,9 +36,11 @@ const SignUp = () => {
             <Box
               sx={{
                 marginTop: 8,
+                padding:2,
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
+                background:'white'
               }}
             >
               <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
@@ -74,6 +76,16 @@ const SignUp = () => {
                     <TextField
                       required
                       fullWidth
+                      id="phoneNumber"
+                      label="Phone Number"
+                      name="phoneNumber"
+                      autoComplete="phone"
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      required
+                      fullWidth
                       id="email"
                       label="Email Address"
                       name="email"
@@ -89,12 +101,6 @@ const SignUp = () => {
                       type="password"
                       id="password"
                       autoComplete="new-password"
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <FormControlLabel
-                      control={<Checkbox value="allowExtraEmails" color="primary" />}
-                      label="I want to receive inspiration, marketing promotions and updates via email."
                     />
                   </Grid>
                 </Grid>

@@ -7,8 +7,8 @@ import Singup from "./components/SignUp/SignUp";
 
 function App() {
   return (
-    // <SignIn />
-    <Singup />
+    <SignIn />
+   // <Singup />
     // <Switch>
     //   <Route path="/" component={Landing} />
     //   <Route path="/signIn" component={SignIn} />
