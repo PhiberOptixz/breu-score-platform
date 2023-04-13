@@ -20,5 +20,43 @@
   }
 
   .LandingVideoGrid{
-    margin-top: 200%;
+    margin-top: 10%;
+    margin-left: 5%;
+    @media only screen and (max-width: 910px) {
+      margin-top: 0%;
+      margin-left: 0%;
+    }
+  }
+
+  .landinCard{
+    background-color: #0A71B9;
+  }
+
+  .cardHeading{
+    color: #0A71B9;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 40px;
+    // line-height: 48px;
+  }
+
+  .cardParagraph{
+    top: 2%;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    // line-height: 29px;
+  }
+
+  .candidateCard{
+    position: absolute;
+    width: 457px;
+    height: 143px;
+    left: 840px;
+    top: 374px;
+    background: #5A5A5C;
+    border-radius: 10px;
   }

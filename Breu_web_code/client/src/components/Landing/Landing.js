@@ -6,6 +6,8 @@ import Radio from '@mui/material/Radio';
 import ReactPlayer from "react-player";
 import BreuButton from "../../common/button";
 import { Typography } from "@mui/material";
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -20,7 +22,7 @@ const Landing = () => {
 
   const theme = createTheme();
 
-  return <div>
+  return <div className="landing">
     {/* <Box sx={{ flexGrow: 1 }}>
       <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} justifyContent="center"
         alignItems="center">
@@ -74,8 +76,8 @@ const Landing = () => {
     </Box> */}
 
     <Grid container >
-      <Grid item xs={12} md={7} className="LandingVideoGrid" >
-        <div className='player-wrapper'>
+      <Grid item xs={12} md={7} >
+        <div className='player-wrapper LandingVideoGrid'>
           <ReactPlayer
             className='react-player'
             url='https://www.youtube.com/watch?v=ysz5S6PUM-U'
@@ -85,24 +87,40 @@ const Landing = () => {
         </div>
       </Grid>
       <Grid item xs={12} md={5} >
-        <ThemeProvider theme={theme}>
-          <Container component="main" maxWidth="xs">
+        {/* <ThemeProvider theme={theme}>
+          <Container component="main" maxWidth="xs" className="landinCard">
             <CssBaseline />
             <Box
               sx={{
-                marginTop: 15,
-                padding:2,
+                marginTop: 10,
+                padding:"0px",
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
                 background:'white'
               }}
             >
+              <p align="center" className="cardHeading" >
+                BREU
+              </p>
+              <p align="center" className="cardParagraph" >
+                Continue As A
+              </p>
+
+              <Card align="center">
+                <CardContent className="candidateCard">
+                  <p>
+
+                  </p>
+                </CardContent>
+              </Card>
               
             </Box>
             {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}
-          </Container>
-        </ThemeProvider>
+          {/* </Container>
+        </ThemeProvider> */} 
+
+        
       </Grid>
     </Grid>
   </div>;
