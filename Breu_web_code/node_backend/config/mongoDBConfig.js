@@ -6,11 +6,9 @@ const env = process.env.NODE_ENV;
 
 // Mongo DB connection
 mongoose
-  .connect(process.env.MONGODB_URI, {
+  .connect(process.env.Mongo_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    useCreateIndex: true,
-    useFindAndModify: false,
   })
   .then(() => console.log(colors.green, `MongoDB connected to ${env} database`))
   .catch((err) =>

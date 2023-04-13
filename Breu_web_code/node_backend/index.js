@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
-// require("./config/mongoDBConfig");
+require("./config/mongoDBConfig");
 const colors = require("./helpers/colors");
 const AppError = require("./helpers/appError");
 const errorHandler = require("./middlewares/errorHandler");
