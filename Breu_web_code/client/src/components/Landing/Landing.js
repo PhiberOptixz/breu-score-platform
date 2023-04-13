@@ -1,24 +1,23 @@
 import React from "react";
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper'
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
 import ReactPlayer from "react-player";
-import Button from '@mui/material/Button';
+import Button from "@mui/material/Button";
 import BreuButton from "../../common/button";
 import { Typography } from "@mui/material";
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Container from "@mui/material/Container";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
 
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
 import { Link } from "react-router-dom";
 
 const Landing = () => {
-
-  const [selectedValue, setSelectedValue] = React.useState('a');
+  const [selectedValue, setSelectedValue] = React.useState("a");
 
   const handleChange = (event) => {
     setSelectedValue(event.target.value);
@@ -26,8 +25,9 @@ const Landing = () => {
 
   const theme = createTheme();
 
-  return <div>
-    {/* <Box sx={{ flexGrow: 1 }}>
+  return (
+    <div>
+      {/* <Box sx={{ flexGrow: 1 }}>
       <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} justifyContent="center"
         alignItems="center">
         <Grid item xs={12} md={8}>
@@ -79,19 +79,20 @@ const Landing = () => {
       </Grid>
     </Box> */}
 
-    <Grid container >
-      <Grid item xs={12} md={7} >
-        <div className='player-wrapper LandingVideoGrid'>
-          <ReactPlayer
-            className='react-player'
-            url='https://www.youtube.com/watch?v=ysz5S6PUM-U'
-            width='100%'
-            height='100%'
-          />
-        </div>
-      </Grid>
-      <Grid item xs={12} md={5} >
-        {/* <ThemeProvider theme={theme}>
+      <Grid container>
+        <Grid item xs={12} md={7}>
+          <div className="player-wrapper LandingVideoGrid">
+            <ReactPlayer
+              className="react-player"
+              url="https://www.youtube.com/watch?v=ysz5S6PUM-U"
+              width="100%"
+              height="100%"
+              playing={true}
+            />
+          </div>
+        </Grid>
+        <Grid item xs={12} md={5}>
+          {/* <ThemeProvider theme={theme}>
           <Container component="main" maxWidth="xs" >
             <CssBaseline />
             <Box
@@ -122,70 +123,77 @@ const Landing = () => {
             </Box>
             {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}
           {/* </Container>
-        </ThemeProvider> */} 
+        </ThemeProvider> */}
 
-        <Card className="landinCard">
-          <CardContent sx={{padding:0,margin:0}}>
-              <p align="center" className="cardHeading" >
+          <Card className="landinCard">
+            <CardContent sx={{ padding: 0, margin: 0 }}>
+              <p align="center" className="cardHeading">
                 BREU
-              </p> 
-              <p align="center" className="cardParagraph" >
-                Continue As A 
+              </p>
+              <p align="center" className="cardParagraph">
+                Continue As A
               </p>
 
               <CardContent className="candidateCard">
                 <Grid container>
                   <Grid item md={10} xs={10}>
-                      <p className="candidateCardParagraph">
-                        Candidate
-                      </p>
+                    <p className="candidateCardParagraph">Candidate</p>
                   </Grid>
                   <Grid item md={2} xs={2}>
-                    <Radio sx={{
-                    paddingTop: "40%",
-                    '&, &.Mui-checked': {
-                      color:"#FFFFFF",
-                    },
-                    }} className="candidateCardParagraph" />
+                    <Radio
+                      sx={{
+                        paddingTop: "40%",
+                        "&, &.Mui-checked": {
+                          color: "#FFFFFF",
+                        },
+                      }}
+                      className="candidateCardParagraph"
+                    />
                   </Grid>
                 </Grid>
               </CardContent>
 
               <CardContent className="candidateCard">
                 <Grid container>
-                  <Grid item md={10} xs={10} >
-                      <p className="candidateCardParagraph">
-                        Candidate
-                      </p>
+                  <Grid item md={10} xs={10}>
+                    <p className="candidateCardParagraph">Candidate</p>
                   </Grid>
-                  <Grid item md={2} xs={2} >
-                    <Radio sx={{
-                    paddingTop: "40%",
-                    '&, &.Mui-checked': {
-                      color:"#FFFFFF",
-                    },
-                    }} className="candidateCardParagraph" />
+                  <Grid item md={2} xs={2}>
+                    <Radio
+                      sx={{
+                        paddingTop: "40%",
+                        "&, &.Mui-checked": {
+                          color: "#FFFFFF",
+                        },
+                      }}
+                      className="candidateCardParagraph"
+                    />
                   </Grid>
                 </Grid>
               </CardContent>
-              
+
               <CardContent align="center">
                 <Button
                   align="center"
                   type="submit"
                   fullWidth
                   variant="contained"
-                  sx={{ mt: 2, mb: 1, width:"70%", }}
-                ><Link to="/sign-in" style={{textDecoration:"none",color:"#FFFFFF"}}>
-                     Continue
-                </Link>
+                  sx={{ mt: 2, mb: 1, width: "70%" }}
+                >
+                  <Link
+                    to="/sign-in"
+                    style={{ textDecoration: "none", color: "#FFFFFF" }}
+                  >
+                    Continue
+                  </Link>
                 </Button>
               </CardContent>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
+        </Grid>
       </Grid>
-    </Grid>
-  </div>;
+    </div>
+  );
 };
 
 export default Landing;
