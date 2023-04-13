@@ -1,14 +1,21 @@
 import React from "react";
-// import { Switch, Route } from "react-router-dom"; 
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import Landing from './components/Landing/Landing';
+import Landing from "./components/Landing/Landing";
 import SignIn from "./components/SignIn/SignIn";
 import Singup from "./components/SignUp/SignUp";
 
 function App() {
   return (
-    <SignIn />
-   // <Singup />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Landing />} />
+        <Route path="/sign-in" element={<SignIn />} />
+        <Route path="/sign-up" element={<Singup />} />
+        <Route path="*" element={<div>404 Not found</div>} />
+      </Routes>
+    </BrowserRouter>
+    // <Singup />
     // <Switch>
     //   <Route path="/" component={Landing} />
     //   <Route path="/signIn" component={SignIn} />
