@@ -7,18 +7,23 @@ import InputLabel from '@mui/material/InputLabel';
 
 
 function BreuSelect(props) {
-    const { label, options, value, onChange } = props;
+    const { id, options, value, onChange, sx, size,variant, placeholder } = props;
 
     return (
-        <FormControl  sx={{ m: 1, minWidth: 80 }} >
-            <InputLabel>{label}</InputLabel>
+        <FormControl sx={{ m: 1, minWidth: 80 }} size={size} variant={variant}>
+            {/* <InputLabel>{label}</InputLabel> */}
             <Select
+                id={id}
                 value={value}
                 onChange={onChange}
+                sx={sx}
             >
+                <MenuItem value="">
+                    <em>{placeholder}</em>
+                </MenuItem>
                 {options.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                        {option.label}
+                    <MenuItem key={option.name} value={option.name}>
+                        {option.name}
                     </MenuItem>
                 ))}
             </Select>
@@ -26,16 +31,16 @@ function BreuSelect(props) {
     );
 }
 
-BreuSelect.propTypes = {
-    label: PropTypes.string.isRequired,
-    options: PropTypes.arrayOf(
-        PropTypes.shape({
-            value: PropTypes.any.isRequired,
-            label: PropTypes.string.isRequired,
-        })
-    ).isRequired,
-    value: PropTypes.any.isRequired,
-    onChange: PropTypes.func.isRequired,
-};
+// BreuSelect.propTypes = {
+//     // label: PropTypes.string.isRequired,
+//     options: PropTypes.arrayOf(
+//         PropTypes.shape({
+//             value: PropTypes.any.isRequired,
+//             label: PropTypes.string.isRequired,
+//         })
+//     ).isRequired,
+//     value: PropTypes.any.isRequired,
+//     onChange: PropTypes.func.isRequired,
+// };
 
 export default BreuSelect;
