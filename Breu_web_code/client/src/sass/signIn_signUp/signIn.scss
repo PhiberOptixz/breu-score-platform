@@ -1,5 +1,5 @@
 .signInContainer {
-  background-image: url("../../assets/LandingScreen2.jpg");
+  background-image: url("../../assests/LandingScreen2.jpg");
   background-size: cover;
   position: relative;
   background-repeat: no-repeat;
@@ -9,7 +9,6 @@
   height: 100vh;
   @media only screen and (max-width: 1104px) {
     background-image: none;
-    background-color: #124fc0;
     height: 100vh;
   }
 }

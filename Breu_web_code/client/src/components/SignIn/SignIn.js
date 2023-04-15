@@ -7,7 +7,7 @@
 // export default SignIn;
 
 
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -17,10 +17,14 @@ import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
+import { useFormik } from "formik";
+import * as Yup from "yup";
 // import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import TextFieldGroup from "../../common/TextFieldGroup";
+
 // import { Grid } from "@material-ui/core";
 
 // function Copyright(props) {
@@ -48,6 +52,26 @@ const SignIn = () =>  {
     });
   };
 
+  const [showPassword, setShowPassword] = useState(false);
+
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema: Yup.object({
+      email: Yup.string().trim().required("Username / Email is required field"),
+      password: Yup.string().required("Password is required field"),
+    }),
+    onSubmit: async (values) => {
+      // await loginUser(values);
+      console.log({
+        email: values.email,
+        password: values.password,
+      });
+    },
+  });
+
   return (
     <Grid container className='signInContainer'>
       <Grid item xs={12} md={6}>
@@ -70,29 +94,39 @@ const SignIn = () =>  {
               <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
                 {/* <LockOutlinedIcon /> */}
               </Avatar>
+              
               <Typography component="h1" variant="h5">
                 Sign in
               </Typography>
-              <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
+              <Box sx={{ mt: 1 }}>
+              <form onSubmit={formik.handleSubmit} noValidate autoComplete="off">
+                <TextFieldGroup
+                  placeholder="Username / Email"
+                  type="text"
                   name="email"
-                  autoComplete="email"
-                  autoFocus
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.email}
+                  errors={
+                    formik.touched.email && formik.errors.email
+                      ? formik.errors.email
+                      : null
+                  }
                 />
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
+                <TextFieldGroup
+                  placeholder="Password"
+                  type={showPassword ? "text" : "password"}
                   name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="current-password"
+                  passwordControl={() => setShowPassword(!showPassword)}
+                  showPassword={showPassword}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.password}
+                  errors={
+                    formik.touched.password && formik.errors.password
+                      ? formik.errors.password
+                      : null
+                  }
                 />
                 <Button
                   type="submit"
@@ -111,6 +145,7 @@ const SignIn = () =>  {
                     </Link>
                   </Grid>
                 </Grid>
+              </form>
               </Box>
             </Box>
             {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}

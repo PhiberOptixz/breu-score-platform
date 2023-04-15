@@ -6,12 +6,15 @@ import TextField from "@mui/material/TextField";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 // import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useDispatch } from "react-redux";
 import { registerCandidate } from "../../features/authSlice";
+import TextFieldGroup from "../../common/TextFieldGroup";
 
 const theme = createTheme();
 
@@ -27,6 +30,42 @@ const SignUp = () => {
     event.preventDefault();
     dispatch(registerCandidate(candidate));
   };
+
+  const [showPassword, setShowPassword] = useState(false);
+    // const passwordRegExp ="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})";
+    const phoneRegExp = "^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$";
+    const formik = useFormik({
+        initialValues: {
+            firstName:'',
+            lastName:'',
+            email: '',
+            password: '',
+            phoneNumber:'',
+        },
+        validationSchema: Yup.object({
+            firstName: Yup.string()
+                .trim().required('First Name is a required field').min(3, 'Name must be at least 3 characters'),
+            lastName:Yup.string()
+                .trim().required('Last Name is a required field'),
+            email: Yup.string()
+                .trim().email('Email is not valid').required('Email is required field'),
+            password: Yup.string()
+                .min(8, 'Password must be at least 8 characters')
+                .matches('(?=.*[a-z])', 'Password must contain at least 1 Lower Case character')
+                .matches('(?=.*[A-Z])', 'Password must contain at least 1 Upper Case character')
+                .matches('(?=.*[0-9])', 'Password must contain at least 1 Number')
+                .matches('(?=.*[!@#\$%\^&\*])', 'Password must contain at least 1 special character')
+                .required('Password is required field'),
+            phoneNumber: Yup.string()
+                // .min(10, 'Name must be at least 6 characters')
+                .length(10,'Phone Number must have 10 numbers')
+                .matches(phoneRegExp, 'Phone number is not valid')
+                .required('Phone number is required field'),
+        }),
+        onSubmit: async(values) => {
+            // await registerUser(values);
+        }
+    });
 
   return (
     <Grid container className="signInContainer">
@@ -58,62 +97,80 @@ const SignUp = () => {
                 sx={{ mt: 3 }}
               >
                 <Grid container spacing={2}>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      autoComplete="given-name"
-                      name="firstName"
-                      required
-                      fullWidth
-                      id="firstName"
-                      label="First Name"
-                      autoFocus
-                      onChange={handleInputs}
-                    />
+                  <Grid item xs={12} sm={12}>
+                  <TextFieldGroup
+                    placeholder="First Name"
+                    type="text"
+                    name="firstName"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.firstName}
+                    errors={
+                      formik.touched.firstName && formik.errors.firstName
+                        ? formik.errors.firstName
+                        : null
+                    }
+                  />
                   </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      fullWidth
-                      id="lastName"
-                      label="Last Name"
-                      name="lastName"
-                      autoComplete="family-name"
-                      onChange={handleInputs}
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      required
-                      fullWidth
-                      id="phoneNumber"
-                      label="Phone Number"
-                      name="phoneNumber"
-                      autoComplete="phone"
-                      onChange={handleInputs}
-                    />
+                  <Grid item xs={12} sm={12}>
+                  <TextFieldGroup
+                    placeholder="Last Name"
+                    type="text"
+                    name="lastName"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.lastName}
+                    errors={
+                      formik.touched.lastName && formik.errors.lastName
+                        ? formik.errors.lastName
+                        : null
+                    }
+                  />
                   </Grid>
                   <Grid item xs={12}>
-                    <TextField
-                      required
-                      fullWidth
-                      id="email"
-                      label="Email Address"
-                      name="email"
-                      autoComplete="email"
-                      onChange={handleInputs}
-                    />
+                  <TextFieldGroup
+                    placeholder="Phone Number"
+                    type="text"
+                    name="phoneNumber"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.phoneNumber}
+                    errors={
+                      formik.touched.phoneNumber && formik.errors.phoneNumber
+                        ? formik.errors.phoneNumber
+                        : null
+                    }
+                  />
                   </Grid>
                   <Grid item xs={12}>
-                    <TextField
-                      required
-                      fullWidth
-                      name="password"
-                      label="Password"
-                      type="password"
-                      id="password"
-                      autoComplete="new-password"
-                      onChange={handleInputs}
-                    />
+                  <TextFieldGroup
+                    placeholder="Email"
+                    type="text"
+                    name="email"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.email}
+                    errors={
+                      formik.touched.email && formik.errors.email
+                        ? formik.errors.email
+                        : null
+                    }
+                  />
+                  </Grid>
+                  <Grid item xs={12}>
+                  <TextFieldGroup
+                    placeholder="Password"
+                    type="text"
+                    name="password"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.password}
+                    errors={
+                      formik.touched.password && formik.errors.password
+                        ? formik.errors.password
+                        : null
+                    }
+                  />
                   </Grid>
                 </Grid>
                 <Button

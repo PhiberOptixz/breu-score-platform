@@ -1,6 +1,7 @@
 .believabilityContainer{
     background-color: #F6F8FC;
     height: 88vh;
+
 }
 
 .headerGridItem{
@@ -16,6 +17,16 @@
  }
 
  .selectPara{
+    margin-top: 3%;
     margin-left: 4px;
     margin-bottom: 2px;
+    font-size: 14px;
+    font-style: Inter;
+    font-weight: 400;
+    color: #002c44;
+ }
+
+ .believabilityLeftGrid{
+    margin-left: 5%;
+    margin-right: 5%;
  }
