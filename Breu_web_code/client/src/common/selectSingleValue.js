@@ -27,17 +27,22 @@ const SelectSingleValues = ({
   label,
   size,
   values,
-  disabled,sx
+  disabled, sx
 }) => {
-//   const classes = useStyles();
+  //   const classes = useStyles();
 
   const errorText = (
-    <p>
-      <ErrorOutlineIcon fontSize='small' /> {errors}
-    </p>
+    <div style={{
+      display: 'flex',
+      alignItems: 'center',
+      flexWrap: 'wrap',
+      marginTop:'2%',
+    }}>
+      <ErrorOutlineIcon fontSize='small' /><span> {errors}</span>
+    </div>
   );
   return (
-    <div 
+    <div
     // className={classes.root}
     >
       {showLable && <div className="fieldHeading">{heading}</div>}
@@ -54,7 +59,7 @@ const SelectSingleValues = ({
         renderInput={(params) => (
           <TextField
             {...params}
-            disabled = {disabled || false}
+            disabled={disabled || false}
             placeholder={placeholder}
             InputLabelProps={{ shrink: false }}
             label={label}
