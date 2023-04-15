@@ -91,11 +91,9 @@ const SignUp = () => {
                 Sign up
               </Typography>
               <Box
-                component="form"
-                noValidate
-                onSubmit={handleSubmit}
                 sx={{ mt: 3 }}
               >
+                <form onSubmit={formik.handleSubmit} noValidate autoComplete="off">
                 <Grid container spacing={2}>
                   <Grid item xs={12} sm={12}>
                   <TextFieldGroup
@@ -188,6 +186,7 @@ const SignUp = () => {
                     </Link>
                   </Grid>
                 </Grid>
+                </form>
               </Box>
             </Box>
             {/* <Copyright sx={{ mt: 5 }} /> */}
