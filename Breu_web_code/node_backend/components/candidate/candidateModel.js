@@ -56,6 +56,10 @@ let candidateSchema = new mongoose.Schema({
   status: {
     type: Boolean,
   },
+  completedBelievability: {
+    type: Boolean,
+    default: false,
+  },
   createdAt: {
     type: Date,
     default: new Date(),

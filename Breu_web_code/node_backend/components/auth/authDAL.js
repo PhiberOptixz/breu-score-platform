@@ -17,6 +17,16 @@ async function candidateRegister(data) {
   }
 }
 
+async function candidateLogin(data) {
+  try {
+    let result = await candidateModel.findOne({ email: data.email }).lean();
+    return result;
+  } catch (err) {
+    throw err;
+  }
+}
+
 module.exports = {
   candidateRegister,
+  candidateLogin,
 };

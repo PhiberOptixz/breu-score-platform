@@ -1,34 +1,20 @@
-// import React from "react";
-
-// const SignIn = () => {
-//   return <div>SignIn</div>;
-// };
-
-// export default SignIn;
-
-import * as React from "react";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import InputLabel from "@mui/material/InputLabel";
-import FormControl from "@mui/material/FormControl";
-import Link from "@mui/material/Link";
+import React, { useState, useEffect } from "react";
 import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
 import BreuSelect from "../../common/selectSingleValue";
-// import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from "@mui/material/Typography";
-import MenuItem from "@mui/material/MenuItem";
-import Container from "@mui/material/Container";
-import Select from "@mui/material/Select";
 import Header from "../../common/header";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { styled } from "@mui/material/styles";
 import TextFieldGroup from "../../common/TextFieldGroup";
 import ButtonField from "../../common/button";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getDomainData,
+  getEducationData,
+  getExperienceData,
+  getLanguageData,
+  getProficiencyData,
+  getRoleData,
+} from "../../features/believabilitySlice";
 
 const theme = createTheme();
 
@@ -40,17 +26,23 @@ const Responsive = styled("BreuSelect")(({ theme }) => ({
 }));
 
 const Believability = () => {
+  const dispatch = useDispatch();
+  const { believability } = useSelector((state) => state);
+
+  useEffect(() => {
+    dispatch(getDomainData());
+    dispatch(getEducationData());
+    dispatch(getExperienceData());
+    dispatch(getLanguageData());
+    dispatch(getProficiencyData());
+    dispatch(getRoleData());
+  }, []);
+
   return (
     <>
       <Header />
       <Grid container className="believabilityContainer">
-        <Grid
-          item
-          className="believabilityLeftGrid"
-          sx={{ marginTop: "2%" }}
-          xs={12}
-          md={6}
-        >
+        <Grid item className="believabilityLeftGrid" sx={{}} xs={12} md={6}>
           <p style={{ marginLeft: "8%" }} className="selectPara">
             Role
           </p>
@@ -65,16 +57,12 @@ const Believability = () => {
               backgroundColor: "#FFF",
             }}
             className="believabilityBreuSelect"
-            values={[
-              { name: "1" },
-              { name: "2" },
-              { name: "3" },
-              { name: "4" },
-            ]}
+            values={believability.roleData}
+            onSelect={() => console.log("df")}
           />
 
           <p style={{ marginLeft: "8%" }} className="selectPara">
-            Exprience
+            Current Working Experience (*Experience in selected role)
           </p>
           <BreuSelect
             align="center"
@@ -87,16 +75,11 @@ const Believability = () => {
               backgroundColor: "#FFF",
             }}
             className="believabilityBreuSelect"
-            values={[
-              { name: "1" },
-              { name: "2" },
-              { name: "3" },
-              { name: "4" },
-            ]}
+            values={believability.experienceData}
           />
 
           <p style={{ marginLeft: "8%" }} className="selectPara">
-            Overall Exprience
+            Overall Work Exprience
           </p>
           <BreuSelect
             align="center"
@@ -109,12 +92,7 @@ const Believability = () => {
               backgroundColor: "#FFF",
             }}
             className="believabilityBreuSelect"
-            values={[
-              { name: "1" },
-              { name: "2" },
-              { name: "3" },
-              { name: "4" },
-            ]}
+            values={believability.experienceData}
           />
 
           <p style={{ marginLeft: "8%" }} className="selectPara">
@@ -131,12 +109,7 @@ const Believability = () => {
               backgroundColor: "#FFF",
             }}
             className="believabilityBreuSelect"
-            values={[
-              { name: "1" },
-              { name: "2" },
-              { name: "3" },
-              { name: "4" },
-            ]}
+            values={believability.languageData}
           />
 
           <p style={{ marginLeft: "8%" }} className="selectPara">
@@ -153,16 +126,11 @@ const Believability = () => {
               backgroundColor: "#FFF",
             }}
             className="believabilityBreuSelect"
-            values={[
-              { name: "1" },
-              { name: "2" },
-              { name: "3" },
-              { name: "4" },
-            ]}
+            values={believability.proficiencyData}
           />
 
           <p style={{ marginLeft: "8%" }} className="selectPara">
-            Choose your education
+            Education
           </p>
           <BreuSelect
             align="center"
@@ -175,12 +143,7 @@ const Believability = () => {
               backgroundColor: "#FFF",
             }}
             className="believabilityBreuSelect"
-            values={[
-              { name: "1" },
-              { name: "2" },
-              { name: "3" },
-              { name: "4" },
-            ]}
+            values={believability.educationData}
           />
 
           <p style={{ marginLeft: "8%" }} className="selectPara">
@@ -197,21 +160,39 @@ const Believability = () => {
               backgroundColor: "#FFF",
             }}
             className="believabilityBreuSelect"
-            values={[
-              { name: "1" },
-              { name: "2" },
-              { name: "3" },
-              { name: "4" },
-            ]}
+            values={believability.domainData}
           />
         </Grid>
 
-        <Grid item xs={12} md={6} sx={{ marginTop: "4%" }}>
+        <Grid item xs={12} md={6} sx={{}}>
           <h2 style={{ paddingLeft: "6%" }}>Others-Provide Links</h2>
 
+          <p style={{ marginLeft: "8%" }} className="selectPara">
+            LinkedIn
+          </p>
+
+          <TextFieldGroup
+            placeholder="https://www.linkedin.com"
+            type="text"
+            name="firstName"
+            sx={{
+              marginLeft: "8%",
+              width: "80%",
+              marginTop: "1%",
+              backgroundColor: "#FFF",
+            }}
+            // onChange={formik.handleChange}
+            // onBlur={formik.handleBlur}
+            // value={formik.values.firstName}
+            // errors={
+            //   formik.touched.firstName && formik.errors.firstName
+            //     ? formik.errors.firstName
+            //     : null
+            // }
+          />
 
           <p
-            style={{ marginLeft: "8%", marginTop:"4%"}}
+            style={{ marginLeft: "8%", marginTop: "4%" }}
             className="selectPara"
           >
             GitHub
@@ -237,10 +218,7 @@ const Believability = () => {
             // }
           />
 
-          <p
-            style={{ marginLeft: "8%" }}
-            className="selectPara"
-          >
+          <p style={{ marginLeft: "8%" }} className="selectPara">
             Satck Overflow
           </p>
 
@@ -264,10 +242,7 @@ const Believability = () => {
             // }
           />
 
-          <p
-            style={{ marginLeft: "8%" }}
-            className="selectPara"
-          >
+          <p style={{ marginLeft: "8%" }} className="selectPara">
             Kaggle
           </p>
 
@@ -291,37 +266,7 @@ const Believability = () => {
             // }
           />
 
-          <p
-            style={{ marginLeft: "8%" }}
-            className="selectPara"
-          >
-            LinkedIn
-          </p>
-
-          <TextFieldGroup
-            placeholder="https://www.linkedin.com"
-            type="text"
-            name="firstName"
-            sx={{
-              marginLeft: "8%",
-              width: "80%",
-              marginTop: "1%",
-              backgroundColor: "#FFF",
-            }}
-            // onChange={formik.handleChange}
-            // onBlur={formik.handleBlur}
-            // value={formik.values.firstName}
-            // errors={
-            //   formik.touched.firstName && formik.errors.firstName
-            //     ? formik.errors.firstName
-            //     : null
-            // }
-          />
-
-<p
-            style={{ marginLeft: "8%"}}
-            className="selectPara"
-          >
+          {/* <p style={{ marginLeft: "8%" }} className="selectPara">
             Patents
           </p>
 
@@ -343,10 +288,10 @@ const Believability = () => {
             //     ? formik.errors.firstName
             //     : null
             // }
-          />
-          <Grid container sx={{marginTop:"4%"}}>
-            <Grid item xs={6} md={6} align="center" >
-              <ButtonField 
+          /> */}
+          <Grid container sx={{ marginTop: "4%" }}>
+            <Grid item xs={6} md={6} align="center">
+              <ButtonField
                 buttonStyle="submit"
                 type="submit"
                 name="submit"
@@ -354,7 +299,7 @@ const Believability = () => {
                 variant="contained"
                 sx={{
                   width: "60%",
-                  backgroundColor:"#0a71b9"
+                  backgroundColor: "#0a71b9",
                 }}
               />
             </Grid>
@@ -367,7 +312,7 @@ const Believability = () => {
                 variant="contained"
                 sx={{
                   width: "60%",
-                  backgroundColor:"#5a5a5c"
+                  backgroundColor: "#5a5a5c",
                 }}
                 // onClick={submitForm}
               />

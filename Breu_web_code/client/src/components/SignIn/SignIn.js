@@ -1,58 +1,28 @@
-// import React from "react";
-
-// const SignIn = () => {
-//   return <div>SignIn</div>;
-// };
-
-// export default SignIn;
-
-
-import React, { useState, useEffect } from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
+import React, { useState, useEffect } from "react";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import { Link } from "react-router-dom";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-// import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import TextFieldGroup from "../../common/TextFieldGroup";
-
-// import { Grid } from "@material-ui/core";
-
-// function Copyright(props) {
-//   return (
-//     <Typography variant="body2" color="text.secondary" align="center" {...props}>
-//       {'Copyright © '}
-//       <Link color="inherit" href="https://mui.com/">
-//         Your Website
-//       </Link>{' '}
-//       {new Date().getFullYear()}
-//       {'.'}
-//     </Typography>
-//   );
-// }
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { candidateSignIn } from "../../features/authSlice";
 
 const theme = createTheme();
 
-const SignIn = () =>  {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-  };
-
+const SignIn = () => {
+  const dispatch = useDispatch();
+  const { auth } = useSelector((state) => state);
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
+  const { isAuthenticated, user } = auth;
 
   const formik = useFormik({
     initialValues: {
@@ -64,88 +34,100 @@ const SignIn = () =>  {
       password: Yup.string().required("Password is required field"),
     }),
     onSubmit: async (values) => {
-      // await loginUser(values);
-      console.log({
-        email: values.email,
-        password: values.password,
-      });
+      dispatch(candidateSignIn(values));
     },
   });
 
-  return (
-    <Grid container className='signInContainer'>
-      <Grid item xs={12} md={6}>
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/believability");
+    }
+  }, [auth]);
 
-      </Grid>
-      <Grid item xs={12} md={6} >
+  return (
+    <Grid container className="signInContainer">
+      <Grid item xs={12} md={6}></Grid>
+      <Grid item xs={12} md={6}>
         <ThemeProvider theme={theme}>
           <Container component="main" maxWidth="xs">
             <CssBaseline />
             <Box
               sx={{
                 marginTop: 15,
-                padding:2,
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                background:'white'
+                padding: 2,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                background: "white",
               }}
             >
-              <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+              <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
                 {/* <LockOutlinedIcon /> */}
               </Avatar>
-              
+
               <Typography component="h1" variant="h5">
                 Sign in
               </Typography>
               <Box sx={{ mt: 1 }}>
-              <form onSubmit={formik.handleSubmit} noValidate autoComplete="off">
-                <TextFieldGroup
-                  placeholder="Username / Email"
-                  type="text"
-                  name="email"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.email}
-                  errors={
-                    formik.touched.email && formik.errors.email
-                      ? formik.errors.email
-                      : null
-                  }
-                />
-                <TextFieldGroup
-                  placeholder="Password"
-                  type={showPassword ? "text" : "password"}
-                  name="password"
-                  passwordControl={() => setShowPassword(!showPassword)}
-                  showPassword={showPassword}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.password}
-                  errors={
-                    formik.touched.password && formik.errors.password
-                      ? formik.errors.password
-                      : null
-                  }
-                />
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
+                <form
+                  onSubmit={formik.handleSubmit}
+                  noValidate
+                  autoComplete="off"
                 >
-                  Sign In
-                </Button>
-                <Grid container>
-                  <Grid item xs>
+                  <Grid container spacing={2}>
+                    <Grid item xs={12} sm={12}>
+                      <TextFieldGroup
+                        placeholder="Email"
+                        type="text"
+                        name="email"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.email}
+                        errors={
+                          formik.touched.email && formik.errors.email
+                            ? formik.errors.email
+                            : null
+                        }
+                      />
+                    </Grid>
+
+                    <Grid item xs={12} sm={12}>
+                      <TextFieldGroup
+                        placeholder="Password"
+                        type={showPassword ? "text" : "password"}
+                        name="password"
+                        passwordControl={() => setShowPassword(!showPassword)}
+                        showPassword={showPassword}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.password}
+                        errors={
+                          formik.touched.password && formik.errors.password
+                            ? formik.errors.password
+                            : null
+                        }
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={12}>
+                      <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        sx={{ mt: 3, mb: 2 }}
+                      >
+                        Sign In
+                      </Button>
+                    </Grid>
                   </Grid>
-                  <Grid item>
-                    <Link href="/sign-up" variant="body2">
-                      {"Don't have an account? Sign Up"}
-                    </Link>
+                  <Grid container>
+                    <Grid item xs></Grid>
+                    <Grid item>
+                      <Link to="/sign-up">
+                        {"Don't have an account? Sign Up"}
+                      </Link>
+                    </Grid>
                   </Grid>
-                </Grid>
-              </form>
+                </form>
               </Box>
             </Box>
             {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}
@@ -153,7 +135,6 @@ const SignIn = () =>  {
         </ThemeProvider>
       </Grid>
     </Grid>
-    
   );
-}
+};
 export default SignIn;
