@@ -94,6 +94,25 @@ export const getRoleData = createAsyncThunk(
   }
 );
 
+//add believability data
+export const addBelievabilityData = createAsyncThunk(
+  "addBelievabilityData",
+  async (data, { rejectWithValue }) => {
+    axios
+      .post("/api/believability/addBelievabilityData", data.data)
+      .then((response) => {
+        const result = response.data;
+        SnackBar.success(response?.data?.message);
+        data.navigate("/reliability");
+        return result;
+      })
+      .catch((error) => {
+        SnackBar.error(error?.response?.data?.message);
+        return rejectWithValue(error?.response?.data);
+      });
+  }
+);
+
 export const believability = createSlice({
   name: "believability",
   initialState: {
@@ -170,6 +189,16 @@ export const believability = createSlice({
       state.roleData = action.payload.data;
     });
     builder.addCase(getRoleData.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
+    builder.addCase(addBelievabilityData.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(addBelievabilityData.fulfilled, (state, action) => {
+      state.loading = false;
+    });
+    builder.addCase(addBelievabilityData.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload;
     });

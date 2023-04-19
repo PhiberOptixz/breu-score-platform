@@ -40,7 +40,11 @@ const SignIn = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/believability");
+      if (!auth?.user?.completedBelievability) {
+        navigate("/believability");
+      } else {
+        navigate("/reliability");
+      }
     }
   }, [auth]);
 

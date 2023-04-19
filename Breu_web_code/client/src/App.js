@@ -6,6 +6,7 @@ import SignIn from "./components/SignIn/SignIn";
 import Singup from "./components/SignUp/SignUp";
 import Believability from "./components/Believability/believability";
 import ProtectedRoute from "./common/ProtectedRoute";
+import Reliability from "./components/Reliability/Reliability";
 
 function App() {
   return (
@@ -19,6 +20,14 @@ function App() {
           element={
             <ProtectedRoute>
               <Believability />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/reliability"
+          element={
+            <ProtectedRoute>
+              <Reliability />
             </ProtectedRoute>
           }
         />

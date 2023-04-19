@@ -24,19 +24,32 @@ let candidateSchema = new mongoose.Schema({
     required: true,
   },
   jobRole: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "believabilityRoles",
   },
   currentJobExperience: {
-    type: Number,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "believabilityExperiences",
   },
   overallJobExperience: {
-    type: Number,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "believabilityExperiences",
   },
   preferredProgrammingLanguage: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "believabilityLanguages",
+  },
+  proficiency: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "believabilityProficiencys",
   },
   highestEducation: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "believabilityEducations",
+  },
+  domain: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "believabilityDomains",
   },
   githubLink: {
     type: String,
@@ -48,9 +61,6 @@ let candidateSchema = new mongoose.Schema({
     type: String,
   },
   linkedInLink: {
-    type: String,
-  },
-  educationDomain: {
     type: String,
   },
   status: {

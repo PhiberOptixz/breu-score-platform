@@ -26,7 +26,15 @@ const believabilitySchema = Joi.object({
         "Preferred Programming Language is not allowed to be empty",
       "any.required": "Preferred Programming Language is required",
     }),
+  proficiency: Joi.string().min(24).max(24).required().messages({
+    "string.empty": "Highest Education is not allowed to be empty",
+    "any.required": "Highest Education is required",
+  }),
   highestEducation: Joi.string().min(24).max(24).required().messages({
+    "string.empty": "Highest Education is not allowed to be empty",
+    "any.required": "Highest Education is required",
+  }),
+  domain: Joi.string().min(24).max(24).required().messages({
     "string.empty": "Highest Education is not allowed to be empty",
     "any.required": "Highest Education is required",
   }),
@@ -34,7 +42,7 @@ const believabilitySchema = Joi.object({
   stackOverFlowLink: Joi.any(),
   kaggleLink: Joi.any(),
   linkedInLink: Joi.any(),
-  educationDomain: Joi.any(),
+  //   domain: Joi.any(),
 });
 
 module.exports = {

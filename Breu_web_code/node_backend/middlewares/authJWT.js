@@ -12,7 +12,7 @@ module.exports.verifyJWTToken = async (req, res, next) => {
   try {
     const decoded = await jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
     req.decoded = decoded;
-    console.log(colors.cyan, decoded);
+    // console.log(colors.cyan, decoded);
     return next();
   } catch (err) {
     const message =

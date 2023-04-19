@@ -16,7 +16,9 @@ import {
   getLanguageData,
   getProficiencyData,
   getRoleData,
+  addBelievabilityData,
 } from "../../features/believabilitySlice";
+import { useNavigate } from "react-router-dom";
 
 const theme = createTheme();
 
@@ -29,7 +31,8 @@ const Responsive = styled("BreuSelect")(({ theme }) => ({
 
 const Believability = () => {
   const dispatch = useDispatch();
-  const { believability } = useSelector((state) => state);
+  const { believability, auth } = useSelector((state) => state);
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(getDomainData());
@@ -39,6 +42,14 @@ const Believability = () => {
     dispatch(getProficiencyData());
     dispatch(getRoleData());
   }, []);
+
+  useEffect(() => {
+    if (auth?.isAuthenticated) {
+      if (auth?.user?.completedBelievability) {
+        navigate("/reliability");
+      }
+    }
+  }, [auth]);
 
   const formik = useFormik({
     initialValues: {
@@ -74,8 +85,25 @@ const Believability = () => {
         .required("Select Domain is reqired field"),
     }),
     onSubmit: async (values) => {
-      // dispatch(registerCandidate(values));
-      console.log("Believability", values);
+      const data = {
+        _id: auth?.user?._id,
+        jobRole: values?.selectRole?._id,
+        currentJobExperience: values?.selectTotalExprience?._id,
+        overallJobExperience: values?.overallExprience?._id,
+        preferredProgrammingLanguage: values?.selectProgrammingLanguage?._id,
+        proficiency: values?.selectProficiency?._id,
+        highestEducation: values?.selectEducation?._id,
+        domain: values?.selectDomain?._id,
+        githubLink: values?.gitHub,
+        stackOverFlowLink: values?.satckOverflow,
+        kaggleLink: values?.kaggle,
+        linkedInLink: values?.linkedIn,
+      };
+      const apiData = {
+        data,
+        navigate,
+      };
+      dispatch(addBelievabilityData(apiData));
     },
   });
 
@@ -290,21 +318,21 @@ const Believability = () => {
             <TextFieldGroup
               placeholder="https://www.linkedin.com"
               type="text"
-              name="firstName"
+              name="linkedIn"
               sx={{
                 marginLeft: "8%",
                 width: "80%",
                 marginTop: "1%",
                 backgroundColor: "#FFF",
               }}
-              // onChange={formik.handleChange}
-              // onBlur={formik.handleBlur}
-              // value={formik.values.firstName}
-              // errors={
-              //   formik.touched.firstName && formik.errors.firstName
-              //     ? formik.errors.firstName
-              //     : null
-              // }
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.linkedIn}
+              errors={
+                formik.touched.linkedIn && formik.errors.linkedIn
+                  ? formik.errors.linkedIn
+                  : null
+              }
             />
 
             <p
@@ -317,21 +345,21 @@ const Believability = () => {
             <TextFieldGroup
               placeholder="https://www.github.com"
               type="text"
-              name="firstName"
+              name="gitHub"
               sx={{
                 marginLeft: "8%",
                 width: "80%",
                 marginTop: "1%",
                 backgroundColor: "#FFF",
               }}
-              // onChange={formik.handleChange}
-              // onBlur={formik.handleBlur}
-              // value={formik.values.firstName}
-              // errors={
-              //   formik.touched.firstName && formik.errors.firstName
-              //     ? formik.errors.firstName
-              //     : null
-              // }
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.gitHub}
+              errors={
+                formik.touched.gitHub && formik.errors.gitHub
+                  ? formik.errors.gitHub
+                  : null
+              }
             />
 
             <p style={{ marginLeft: "8%" }} className="selectPara">
@@ -341,21 +369,21 @@ const Believability = () => {
             <TextFieldGroup
               placeholder="https://www.stackoverflow.com"
               type="text"
-              name="firstName"
+              name="satckOverflow"
               sx={{
                 marginLeft: "8%",
                 width: "80%",
                 marginTop: "1%",
                 backgroundColor: "#FFF",
               }}
-              // onChange={formik.handleChange}
-              // onBlur={formik.handleBlur}
-              // value={formik.values.firstName}
-              // errors={
-              //   formik.touched.firstName && formik.errors.firstName
-              //     ? formik.errors.firstName
-              //     : null
-              // }
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.satckOverflow}
+              errors={
+                formik.touched.satckOverflow && formik.errors.satckOverflow
+                  ? formik.errors.satckOverflow
+                  : null
+              }
             />
 
             <p style={{ marginLeft: "8%" }} className="selectPara">
@@ -365,21 +393,21 @@ const Believability = () => {
             <TextFieldGroup
               placeholder="https://www.kaggle.com"
               type="text"
-              name="firstName"
+              name="kaggle"
               sx={{
                 marginLeft: "8%",
                 width: "80%",
                 marginTop: "1%",
                 backgroundColor: "#FFF",
               }}
-              // onChange={formik.handleChange}
-              // onBlur={formik.handleBlur}
-              // value={formik.values.firstName}
-              // errors={
-              //   formik.touched.firstName && formik.errors.firstName
-              //     ? formik.errors.firstName
-              //     : null
-              // }
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.kaggle}
+              errors={
+                formik.touched.kaggle && formik.errors.kaggle
+                  ? formik.errors.kaggle
+                  : null
+              }
             />
 
             {/* <p style={{ marginLeft: "8%" }} className="selectPara">
@@ -419,7 +447,7 @@ const Believability = () => {
                   }}
                 />
               </Grid>
-              <Grid item xs={6} md={6}>
+              {/* <Grid item xs={6} md={6}>
                 <ButtonField
                   buttonStyle="submit"
                   type="submit"
@@ -432,7 +460,7 @@ const Believability = () => {
                   }}
                   // onClick={submitForm}
                 />
-              </Grid>
+              </Grid> */}
             </Grid>
           </Grid>
         </Grid>
