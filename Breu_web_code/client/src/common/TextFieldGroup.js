@@ -67,11 +67,10 @@
 
 // export default ReusableTextField;
 
-
-import React from 'react';
-import { InputAdornment, IconButton, TextField } from '@mui/material';
-import { Visibility, VisibilityOff } from '@mui/icons-material'
-import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import React from "react";
+import { InputAdornment, IconButton, TextField } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 
 const TextFieldGroup = ({
   label,
@@ -100,33 +99,41 @@ const TextFieldGroup = ({
   showPassword,
   passwordControl,
   placeholder,
-  renderValue,
+  // renderValue,
   sx,
 }) => {
-
   let icon = null;
-  if (name === 'password' || name === 'confirmPassword') {
+  if (name === "password" || name === "confirmPassword") {
     icon = (
       <InputAdornment position="end">
         <IconButton
           aria-label="toggle password visibility"
           onClick={passwordControl}
-          onMouseDown={text => (text)}
+          onMouseDown={(text) => text}
           size="small"
         >
-          {showPassword ? <Visibility fontSize="small" /> : <VisibilityOff fontSize="small" />}
+          {showPassword ? (
+            <Visibility fontSize="small" />
+          ) : (
+            <VisibilityOff fontSize="small" />
+          )}
         </IconButton>
       </InputAdornment>
-    )
+    );
   }
 
-  const errorText = (<div style={{
-    display: 'flex',
-    alignItems: 'center',
-    flexWrap: 'wrap',
-  }}>
-    <ErrorOutlineIcon fontSize='small' /><span> {errors}</span>
-  </div>);
+  const errorText = (
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        flexWrap: "wrap",
+      }}
+    >
+      <ErrorOutlineIcon fontSize="small" />
+      <span> {errors}</span>
+    </div>
+  );
 
   return (
     <>
@@ -135,7 +142,7 @@ const TextFieldGroup = ({
         label={label}
         className={inputClassName}
         type={type}
-        variant={varient || 'outlined'}
+        variant={varient || "outlined"}
         margin="dense"
         required
         placeholder={placeholder}
@@ -152,7 +159,7 @@ const TextFieldGroup = ({
         autoFocus={autoFocus}
         fullWidth
         value={value}
-        renderValue={renderValue}
+        // renderValue={renderValue}
         multiline={multiline}
         rows={rows}
         InputLabelProps={{ shrink: labelShink ? labelShink : false }}
@@ -161,7 +168,7 @@ const TextFieldGroup = ({
         InputProps={{
           endAdornment: icon,
           className: className,
-          startAdornment: startAdornment
+          startAdornment: startAdornment,
         }}
         sx={sx}
       />

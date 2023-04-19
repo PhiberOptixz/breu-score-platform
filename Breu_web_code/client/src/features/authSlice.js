@@ -25,21 +25,26 @@ export const registerCandidate = createAsyncThunk(
 export const candidateSignIn = createAsyncThunk(
   "candidateSignIn",
   async (data, { rejectWithValue, dispatch }) => {
-    axios
-      .post("/api/auth/candidateSignIn", data)
-      .then(async (response) => {
-        const result = response.data;
-        // Set token to localstorage
-        localStorage.setItem("breuai", JSON.stringify(result.token));
-        // Set token to Auth Header
-        setAuthToken(result.token);
-        SnackBar.success(response?.data?.message);
-        return await dispatch(candidateDetails());
-      })
-      .catch((error) => {
-        SnackBar.error(error?.response?.data?.message);
-        return rejectWithValue(error?.response?.data);
-      });
+    try {
+      axios
+        .post("/api/auth/candidateSignIn", data)
+        .then(async (response) => {
+          const result = response.data;
+          // Set token to localstorage
+          localStorage.setItem("breuai", JSON.stringify(result.token));
+          // Set token to Auth Header
+          setAuthToken(result.token);
+          SnackBar.success(response?.data?.message);
+          return await dispatch(candidateDetails());
+        })
+        .catch((error) => {
+          SnackBar.error(error?.response?.data?.message);
+          return rejectWithValue(error?.response?.data);
+        });
+    } catch (error) {
+      SnackBar.error(error?.response?.data?.message);
+      return rejectWithValue(error?.response?.data);
+    }
   }
 );
 
@@ -82,7 +87,6 @@ export const auth = createSlice({
     });
     builder.addCase(candidateSignIn.fulfilled, (state, action) => {
       state.loading = false;
-      state.isAuthenticated = true;
     });
     builder.addCase(candidateSignIn.rejected, (state, action) => {
       state.loading = false;

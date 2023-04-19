@@ -5,6 +5,8 @@ import Header from "../../common/header";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { styled } from "@mui/material/styles";
 import TextFieldGroup from "../../common/TextFieldGroup";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 import ButtonField from "../../common/button";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -38,235 +40,349 @@ const Believability = () => {
     dispatch(getRoleData());
   }, []);
 
+  const formik = useFormik({
+    initialValues: {
+      selectRole: "",
+      selectTotalExprience: "",
+      overallExprience: "",
+      selectProgrammingLanguage: "",
+      selectProficiency: "",
+      selectEducation: "",
+      selectDomain: "",
+    },
+    validationSchema: Yup.object({
+      selectRole: Yup.object()
+        .nullable()
+        .required("Select Role is reqired field"),
+      selectTotalExprience: Yup.object()
+        .nullable()
+        .required("Select Total Exprience is reqired field"),
+      overallExprience: Yup.object()
+        .nullable()
+        .required("Select Overall Exprience is reqired field"),
+      selectProgrammingLanguage: Yup.object()
+        .nullable()
+        .required("Select Programming Language is reqired field"),
+      selectProficiency: Yup.object()
+        .nullable()
+        .required("Select Proficiency is reqired field"),
+      selectEducation: Yup.object()
+        .nullable()
+        .required("Select Education is reqired field"),
+      selectDomain: Yup.object()
+        .nullable()
+        .required("Select Domain is reqired field"),
+    }),
+    onSubmit: async (values) => {
+      // dispatch(registerCandidate(values));
+      console.log("Believability", values);
+    },
+  });
+
   return (
     <>
       <Header />
-      <Grid container className="believabilityContainer">
-        <Grid item className="believabilityLeftGrid" sx={{}} xs={12} md={6}>
-          <p style={{ marginLeft: "8%" }} className="selectPara">
-            Role
-          </p>
-          <BreuSelect
-            align="center"
-            label="Choose your current role"
-            name="selectBatch"
-            sx={{
-              marginLeft: "8%",
-              width: "80%",
-              marginTop: "1%",
-              backgroundColor: "#FFF",
-            }}
-            className="believabilityBreuSelect"
-            values={believability.roleData}
-            onSelect={() => console.log("df")}
-          />
+      <form onSubmit={formik.handleSubmit} noValidate autoComplete="off">
+        <Grid container className="believabilityContainer">
+          <Grid item className="believabilityLeftGrid" sx={{}} xs={12} md={6}>
+            <p style={{ marginLeft: "8%" }} className="selectPara">
+              Role
+            </p>
+            <BreuSelect
+              align="center"
+              placeholder="Choose your current role"
+              name="selectRole"
+              sx={{
+                marginLeft: "8%",
+                width: "80%",
+                marginTop: "1%",
+                backgroundColor: "#FFF",
+              }}
+              className="believabilityBreuSelect"
+              values={believability.roleData}
+              onSelect={(role) => formik.setFieldValue("selectRole", role)}
+              // onSelect={(programDuration) => console.log(programDuration)}
+              selected={formik.values.selectRole}
+              errors={
+                formik.touched.selectRole && formik.errors.selectRole
+                  ? formik.errors.selectRole
+                  : null
+              }
+            />
 
-          <p style={{ marginLeft: "8%" }} className="selectPara">
-            Current Working Experience (*Experience in selected role)
-          </p>
-          <BreuSelect
-            align="center"
-            label="Total years of exprience"
-            name="selectBatch"
-            sx={{
-              marginLeft: "8%",
-              width: "80%",
-              marginTop: "1%",
-              backgroundColor: "#FFF",
-            }}
-            className="believabilityBreuSelect"
-            values={believability.experienceData}
-          />
+            <p style={{ marginLeft: "8%" }} className="selectPara">
+              Current Working Experience (*Experience in selected role)
+            </p>
+            <BreuSelect
+              align="center"
+              placeholder="Total years of exprience"
+              name="selectTotalExprience"
+              sx={{
+                marginLeft: "8%",
+                width: "80%",
+                marginTop: "1%",
+                backgroundColor: "#FFF",
+              }}
+              className="believabilityBreuSelect"
+              values={believability.experienceData}
+              onSelect={(totalExprience) =>
+                formik.setFieldValue("selectTotalExprience", totalExprience)
+              }
+              // onSelect={(programDuration) => console.log(programDuration)}
+              selected={formik.values.selectTotalExprience}
+              errors={
+                formik.touched.selectTotalExprience &&
+                formik.errors.selectTotalExprience
+                  ? formik.errors.selectTotalExprience
+                  : null
+              }
+            />
 
-          <p style={{ marginLeft: "8%" }} className="selectPara">
-            Overall Work Exprience
-          </p>
-          <BreuSelect
-            align="center"
-            label="Total overall years of exprience"
-            name="selectBatch"
-            sx={{
-              marginLeft: "8%",
-              width: "80%",
-              marginTop: "1%",
-              backgroundColor: "#FFF",
-            }}
-            className="believabilityBreuSelect"
-            values={believability.experienceData}
-          />
+            <p style={{ marginLeft: "8%" }} className="selectPara">
+              Overall Work Exprience
+            </p>
+            <BreuSelect
+              align="center"
+              placeholder="Total overall years of exprience"
+              name="overallExprience"
+              sx={{
+                marginLeft: "8%",
+                width: "80%",
+                marginTop: "1%",
+                backgroundColor: "#FFF",
+              }}
+              className="believabilityBreuSelect"
+              values={believability.experienceData}
+              onSelect={(overallExprience) =>
+                formik.setFieldValue("overallExprience", overallExprience)
+              }
+              // onSelect={(programDuration) => console.log(programDuration)}
+              selected={formik.values.overallExprience}
+              errors={
+                formik.touched.overallExprience &&
+                formik.errors.overallExprience
+                  ? formik.errors.overallExprience
+                  : null
+              }
+            />
 
-          <p style={{ marginLeft: "8%" }} className="selectPara">
-            Programming Language
-          </p>
-          <BreuSelect
-            align="center"
-            label="Most preferable programming lang."
-            name="selectBatch"
-            sx={{
-              marginLeft: "8%",
-              width: "80%",
-              marginTop: "1%",
-              backgroundColor: "#FFF",
-            }}
-            className="believabilityBreuSelect"
-            values={believability.languageData}
-          />
+            <p style={{ marginLeft: "8%" }} className="selectPara">
+              Programming Language
+            </p>
+            <BreuSelect
+              align="center"
+              placeholder="Most preferable programming lang."
+              name="selectProgrammingLanguage"
+              sx={{
+                marginLeft: "8%",
+                width: "80%",
+                marginTop: "1%",
+                backgroundColor: "#FFF",
+              }}
+              className="believabilityBreuSelect"
+              values={believability.languageData}
+              onSelect={(programmingLanguage) =>
+                formik.setFieldValue(
+                  "selectProgrammingLanguage",
+                  programmingLanguage
+                )
+              }
+              // onSelect={(programDuration) => console.log(programDuration)}
+              selected={formik.values.selectProgrammingLanguage}
+              errors={
+                formik.touched.selectProgrammingLanguage &&
+                formik.errors.selectProgrammingLanguage
+                  ? formik.errors.selectProgrammingLanguage
+                  : null
+              }
+            />
 
-          <p style={{ marginLeft: "8%" }} className="selectPara">
-            Proficiency
-          </p>
-          <BreuSelect
-            align="center"
-            label="Framework Proficiency"
-            name="selectBatch"
-            sx={{
-              marginLeft: "8%",
-              width: "80%",
-              marginTop: "1%",
-              backgroundColor: "#FFF",
-            }}
-            className="believabilityBreuSelect"
-            values={believability.proficiencyData}
-          />
+            <p style={{ marginLeft: "8%" }} className="selectPara">
+              Proficiency
+            </p>
+            <BreuSelect
+              align="center"
+              placeholder="Framework Proficiency"
+              name="selectProficiency"
+              sx={{
+                marginLeft: "8%",
+                width: "80%",
+                marginTop: "1%",
+                backgroundColor: "#FFF",
+              }}
+              className="believabilityBreuSelect"
+              values={believability.proficiencyData}
+              onSelect={(selectProficiency) =>
+                formik.setFieldValue("selectProficiency", selectProficiency)
+              }
+              // onSelect={(programDuration) => console.log(programDuration)}
+              selected={formik.values.selectProficiency}
+              errors={
+                formik.touched.selectProficiency &&
+                formik.errors.selectProficiency
+                  ? formik.errors.selectProficiency
+                  : null
+              }
+            />
 
-          <p style={{ marginLeft: "8%" }} className="selectPara">
-            Education
-          </p>
-          <BreuSelect
-            align="center"
-            label="Choose your education"
-            name="selectBatch"
-            sx={{
-              marginLeft: "8%",
-              width: "80%",
-              marginTop: "1%",
-              backgroundColor: "#FFF",
-            }}
-            className="believabilityBreuSelect"
-            values={believability.educationData}
-          />
+            <p style={{ marginLeft: "8%" }} className="selectPara">
+              Education
+            </p>
+            <BreuSelect
+              align="center"
+              placeholder="Choose your education"
+              name="selectEducation"
+              sx={{
+                marginLeft: "8%",
+                width: "80%",
+                marginTop: "1%",
+                backgroundColor: "#FFF",
+              }}
+              className="believabilityBreuSelect"
+              values={believability.educationData}
+              onSelect={(selectEducation) =>
+                formik.setFieldValue("selectEducation", selectEducation)
+              }
+              // onSelect={(programDuration) => console.log(programDuration)}
+              selected={formik.values.selectEducation}
+              errors={
+                formik.touched.selectEducation && formik.errors.selectEducation
+                  ? formik.errors.selectEducation
+                  : null
+              }
+            />
 
-          <p style={{ marginLeft: "8%" }} className="selectPara">
-            Domain
-          </p>
-          <BreuSelect
-            align="center"
-            label="Choose your strongest Domain"
-            name="selectBatch"
-            sx={{
-              marginLeft: "8%",
-              width: "80%",
-              marginTop: "1%",
-              backgroundColor: "#FFF",
-            }}
-            className="believabilityBreuSelect"
-            values={believability.domainData}
-          />
-        </Grid>
+            <p style={{ marginLeft: "8%" }} className="selectPara">
+              Domain
+            </p>
+            <BreuSelect
+              align="center"
+              placeholder="Choose your strongest Domain"
+              name="selectDomain"
+              sx={{
+                marginLeft: "8%",
+                width: "80%",
+                marginTop: "1%",
+                backgroundColor: "#FFF",
+              }}
+              className="believabilityBreuSelect"
+              values={believability.domainData}
+              onSelect={(selectDomain) =>
+                formik.setFieldValue("selectDomain", selectDomain)
+              }
+              // onSelect={(programDuration) => console.log(programDuration)}
+              selected={formik.values.selectDomain}
+              errors={
+                formik.touched.selectDomain && formik.errors.selectDomain
+                  ? formik.errors.selectDomain
+                  : null
+              }
+            />
+          </Grid>
 
-        <Grid item xs={12} md={6} sx={{}}>
-          <h2 style={{ paddingLeft: "6%" }}>Others-Provide Links</h2>
+          <Grid item xs={12} md={6} sx={{}}>
+            <h2 style={{ paddingLeft: "6%" }}>Others-Provide Links</h2>
 
-          <p style={{ marginLeft: "8%" }} className="selectPara">
-            LinkedIn
-          </p>
+            <p style={{ marginLeft: "8%" }} className="selectPara">
+              LinkedIn
+            </p>
 
-          <TextFieldGroup
-            placeholder="https://www.linkedin.com"
-            type="text"
-            name="firstName"
-            sx={{
-              marginLeft: "8%",
-              width: "80%",
-              marginTop: "1%",
-              backgroundColor: "#FFF",
-            }}
-            // onChange={formik.handleChange}
-            // onBlur={formik.handleBlur}
-            // value={formik.values.firstName}
-            // errors={
-            //   formik.touched.firstName && formik.errors.firstName
-            //     ? formik.errors.firstName
-            //     : null
-            // }
-          />
+            <TextFieldGroup
+              placeholder="https://www.linkedin.com"
+              type="text"
+              name="firstName"
+              sx={{
+                marginLeft: "8%",
+                width: "80%",
+                marginTop: "1%",
+                backgroundColor: "#FFF",
+              }}
+              // onChange={formik.handleChange}
+              // onBlur={formik.handleBlur}
+              // value={formik.values.firstName}
+              // errors={
+              //   formik.touched.firstName && formik.errors.firstName
+              //     ? formik.errors.firstName
+              //     : null
+              // }
+            />
 
-          <p
-            style={{ marginLeft: "8%", marginTop: "4%" }}
-            className="selectPara"
-          >
-            GitHub
-          </p>
+            <p
+              style={{ marginLeft: "8%", marginTop: "4%" }}
+              className="selectPara"
+            >
+              GitHub
+            </p>
 
-          <TextFieldGroup
-            placeholder="https://www.github.com"
-            type="text"
-            name="firstName"
-            sx={{
-              marginLeft: "8%",
-              width: "80%",
-              marginTop: "1%",
-              backgroundColor: "#FFF",
-            }}
-            // onChange={formik.handleChange}
-            // onBlur={formik.handleBlur}
-            // value={formik.values.firstName}
-            // errors={
-            //   formik.touched.firstName && formik.errors.firstName
-            //     ? formik.errors.firstName
-            //     : null
-            // }
-          />
+            <TextFieldGroup
+              placeholder="https://www.github.com"
+              type="text"
+              name="firstName"
+              sx={{
+                marginLeft: "8%",
+                width: "80%",
+                marginTop: "1%",
+                backgroundColor: "#FFF",
+              }}
+              // onChange={formik.handleChange}
+              // onBlur={formik.handleBlur}
+              // value={formik.values.firstName}
+              // errors={
+              //   formik.touched.firstName && formik.errors.firstName
+              //     ? formik.errors.firstName
+              //     : null
+              // }
+            />
 
-          <p style={{ marginLeft: "8%" }} className="selectPara">
-            Satck Overflow
-          </p>
+            <p style={{ marginLeft: "8%" }} className="selectPara">
+              Satck Overflow
+            </p>
 
-          <TextFieldGroup
-            placeholder="https://www.stackoverflow.com"
-            type="text"
-            name="firstName"
-            sx={{
-              marginLeft: "8%",
-              width: "80%",
-              marginTop: "1%",
-              backgroundColor: "#FFF",
-            }}
-            // onChange={formik.handleChange}
-            // onBlur={formik.handleBlur}
-            // value={formik.values.firstName}
-            // errors={
-            //   formik.touched.firstName && formik.errors.firstName
-            //     ? formik.errors.firstName
-            //     : null
-            // }
-          />
+            <TextFieldGroup
+              placeholder="https://www.stackoverflow.com"
+              type="text"
+              name="firstName"
+              sx={{
+                marginLeft: "8%",
+                width: "80%",
+                marginTop: "1%",
+                backgroundColor: "#FFF",
+              }}
+              // onChange={formik.handleChange}
+              // onBlur={formik.handleBlur}
+              // value={formik.values.firstName}
+              // errors={
+              //   formik.touched.firstName && formik.errors.firstName
+              //     ? formik.errors.firstName
+              //     : null
+              // }
+            />
 
-          <p style={{ marginLeft: "8%" }} className="selectPara">
-            Kaggle
-          </p>
+            <p style={{ marginLeft: "8%" }} className="selectPara">
+              Kaggle
+            </p>
 
-          <TextFieldGroup
-            placeholder="https://www.kaggle.com"
-            type="text"
-            name="firstName"
-            sx={{
-              marginLeft: "8%",
-              width: "80%",
-              marginTop: "1%",
-              backgroundColor: "#FFF",
-            }}
-            // onChange={formik.handleChange}
-            // onBlur={formik.handleBlur}
-            // value={formik.values.firstName}
-            // errors={
-            //   formik.touched.firstName && formik.errors.firstName
-            //     ? formik.errors.firstName
-            //     : null
-            // }
-          />
+            <TextFieldGroup
+              placeholder="https://www.kaggle.com"
+              type="text"
+              name="firstName"
+              sx={{
+                marginLeft: "8%",
+                width: "80%",
+                marginTop: "1%",
+                backgroundColor: "#FFF",
+              }}
+              // onChange={formik.handleChange}
+              // onBlur={formik.handleBlur}
+              // value={formik.values.firstName}
+              // errors={
+              //   formik.touched.firstName && formik.errors.firstName
+              //     ? formik.errors.firstName
+              //     : null
+              // }
+            />
 
-          {/* <p style={{ marginLeft: "8%" }} className="selectPara">
+            {/* <p style={{ marginLeft: "8%" }} className="selectPara">
             Patents
           </p>
 
@@ -289,37 +405,38 @@ const Believability = () => {
             //     : null
             // }
           /> */}
-          <Grid container sx={{ marginTop: "4%" }}>
-            <Grid item xs={6} md={6} align="center">
-              <ButtonField
-                buttonStyle="submit"
-                type="submit"
-                name="submit"
-                color="primary"
-                variant="contained"
-                sx={{
-                  width: "60%",
-                  backgroundColor: "#0a71b9",
-                }}
-              />
-            </Grid>
-            <Grid item xs={6} md={6}>
-              <ButtonField
-                buttonStyle="submit"
-                type="submit"
-                name="Next"
-                color="primary"
-                variant="contained"
-                sx={{
-                  width: "60%",
-                  backgroundColor: "#5a5a5c",
-                }}
-                // onClick={submitForm}
-              />
+            <Grid container sx={{ marginTop: "4%" }}>
+              <Grid item xs={6} md={6} align="center">
+                <ButtonField
+                  buttonStyle="submit"
+                  type="submit"
+                  name="submit"
+                  color="primary"
+                  variant="contained"
+                  sx={{
+                    width: "60%",
+                    backgroundColor: "#0a71b9",
+                  }}
+                />
+              </Grid>
+              <Grid item xs={6} md={6}>
+                <ButtonField
+                  buttonStyle="submit"
+                  type="submit"
+                  name="Next"
+                  color="primary"
+                  variant="contained"
+                  sx={{
+                    width: "60%",
+                    backgroundColor: "#5a5a5c",
+                  }}
+                  // onClick={submitForm}
+                />
+              </Grid>
             </Grid>
           </Grid>
         </Grid>
-      </Grid>
+      </form>
     </>
   );
 };
