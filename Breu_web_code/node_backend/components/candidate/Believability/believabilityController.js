@@ -1,4 +1,5 @@
 const believabilityDAL = require("./believabilityDAL");
+const believabilityValidations = require("./believabilityValidations");
 
 module.exports.getAllDomains = async (req, res, next) => {
   try {
@@ -57,5 +58,28 @@ module.exports.getAllRoles = async (req, res, next) => {
   } catch (error) {
     console.error(colors.red, `Error getting roles data`, error);
     return next(new AppError(error, 400));
+  }
+};
+
+module.exports.addBelievabilityDetails = async (req, res) => {
+  try {
+    const data = req.body;
+    try {
+      const { error, value } =
+        believabilityValidations.believabilitySchema.validate(data);
+    } catch (error) {
+      if (error.isJoi === true) return next(new AppError(error.message, 422));
+    }
+    data.completedBelievability = true;
+    data.updatedAt = new Date();
+    let updateFunction = await believabilityDAL.addBelievabilityDetails(data);
+    return res.status(200).send({
+      status: 200,
+      message: "Successfully added Believability Details",
+    });
+  } catch (error) {
+    return res
+      .status(400)
+      .send({ message: "Believability error", error: error });
   }
 };

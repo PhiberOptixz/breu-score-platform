@@ -4,6 +4,7 @@ const experienceModel = require("./experienceModel");
 const proficiencyModel = require("./proficiencyModel");
 const programmingLanguageModel = require("./programmingLanguageModel");
 const roleModel = require("./roleModel");
+const candidateModel = require("../candidateModel");
 
 async function getAllDomains() {
   try {
@@ -85,6 +86,21 @@ async function getAllRoles() {
   }
 }
 
+async function addBelievabilityDetails(data) {
+  try {
+    let result = await candidateModel.findOneAndUpdate(
+      { _id: data._id },
+      data,
+      {
+        new: true,
+      }
+    );
+    return result;
+  } catch (err) {
+    throw err;
+  }
+}
+
 module.exports = {
   getAllDomains,
   getAllEducations,
@@ -92,4 +108,5 @@ module.exports = {
   getAllLanguages,
   getAllProficiencies,
   getAllRoles,
+  addBelievabilityDetails,
 };

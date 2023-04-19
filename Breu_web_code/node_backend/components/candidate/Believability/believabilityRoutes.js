@@ -39,4 +39,10 @@ router.get(
   believabilityController.getAllRoles
 );
 
+router.post(
+  "/addBelievabilityData",
+  authJWT.verifyJWTToken,
+  believabilityController.addBelievabilityDetails
+);
+
 module.exports = router;
