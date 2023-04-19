@@ -17,6 +17,7 @@ if (localStorage.breuai) {
 
 const ProtectedRoute = ({ children }) => {
   if ((decoded && decoded.exp < currentTime) || !localStorage.breuai) {
+    localStorage.removeItem("breuai");
     return <Navigate to="/sign-in" replace />;
   }
 
