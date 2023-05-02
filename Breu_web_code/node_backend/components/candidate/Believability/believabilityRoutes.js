@@ -22,6 +22,12 @@ router.get(
 );
 
 router.get(
+  "/getAllOverallExperiences",
+  authJWT.verifyJWTToken,
+  believabilityController.getAllOverallExperiences
+);
+
+router.get(
   "/getAllLanguages",
   authJWT.verifyJWTToken,
   believabilityController.getAllLanguages
@@ -37,6 +43,12 @@ router.get(
   "/getAllRoles",
   authJWT.verifyJWTToken,
   believabilityController.getAllRoles
+);
+
+router.get(
+  "/getAllEmploymentModes",
+  authJWT.verifyJWTToken,
+  believabilityController.getAllEmploymentModes
 );
 
 router.post(

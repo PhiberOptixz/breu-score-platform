@@ -17,6 +17,8 @@ import {
   getProficiencyData,
   getRoleData,
   addBelievabilityData,
+  getAllOverallExperiences,
+  getAllEmploymentModes,
 } from "../../features/believabilitySlice";
 import { useNavigate } from "react-router-dom";
 
@@ -33,6 +35,8 @@ const Believability = () => {
   const dispatch = useDispatch();
   const { believability, auth } = useSelector((state) => state);
   const navigate = useNavigate();
+  const [overallExperienceData, setOverallExperienceData] = useState([]);
+  const [proficiencyData, setProficiencyData] = useState([]);
 
   useEffect(() => {
     dispatch(getDomainData());
@@ -41,36 +45,90 @@ const Believability = () => {
     dispatch(getLanguageData());
     dispatch(getProficiencyData());
     dispatch(getRoleData());
+    dispatch(getAllOverallExperiences());
+    dispatch(getAllEmploymentModes());
   }, []);
 
   useEffect(() => {
     if (auth?.isAuthenticated) {
-      if (auth?.user?.completedBelievability) {
-        navigate("/reliability");
+      if (auth?.user) {
+        formik.setFieldValue("selectRole", auth?.user?.jobRole);
+        formik.setFieldValue(
+          "selectTotalExperience",
+          auth?.user?.currentJobExperience
+        );
+        formik.setFieldValue(
+          "overallExperience",
+          auth?.user?.overallJobExperience
+        );
+        formik.setFieldValue(
+          "selectProgrammingLanguage",
+          auth?.user?.preferredProgrammingLanguage
+        );
+        formik.setFieldValue("selectProficiency", auth?.user?.proficiency);
+        formik.setFieldValue("selectEducation", auth?.user?.highestEducation);
+        formik.setFieldValue("selectDomain", auth?.user?.domain);
+        formik.setFieldValue("linkedIn", auth?.user?.linkedInLink || "");
+        formik.setFieldValue("gitHub", auth?.user?.githubLink || "");
+        formik.setFieldValue(
+          "satckOverflow",
+          auth?.user?.stackOverFlowLink || ""
+        );
+        formik.setFieldValue("kaggle", auth?.user?.kaggleLink || "");
       }
     }
   }, [auth]);
 
+  useEffect(() => {
+    if (believability.overallExperienceData) {
+      setOverallExperienceData(believability.overallExperienceData);
+    }
+    if (believability.proficiencyData) {
+      setProficiencyData(believability.proficiencyData);
+    }
+  }, [believability.overallExperienceData]);
+
+  const filterExperienceData = (data) => {
+    formik.setFieldValue("selectTotalExperience", data);
+    const filteredData = believability?.overallExperienceData?.filter(
+      (item) => item.order === data.order
+    );
+    setOverallExperienceData(filteredData);
+  };
+
+  const filterProficiencyData = (data) => {
+    formik.setFieldValue("selectProgrammingLanguage", data);
+    const filteredData = believability.proficiencyData?.filter(
+      (item) => item.language === data.name || item.language === "Others"
+    );
+    setProficiencyData(filteredData);
+  };
+
   const formik = useFormik({
     initialValues: {
       selectRole: "",
-      selectTotalExprience: "",
-      overallExprience: "",
+      selectTotalExperience: "",
+      overallExperience: "",
       selectProgrammingLanguage: "",
       selectProficiency: "",
       selectEducation: "",
       selectDomain: "",
+      selectEmploymentMode: "",
+      linkedIn: "",
+      kaggle: "",
+      gitHub: "",
+      satckOverflow: "",
     },
     validationSchema: Yup.object({
       selectRole: Yup.object()
         .nullable()
         .required("Select Role is reqired field"),
-      selectTotalExprience: Yup.object()
+      selectTotalExperience: Yup.object()
         .nullable()
-        .required("Select Total Exprience is reqired field"),
-      overallExprience: Yup.object()
+        .required("Select Total Experience is reqired field"),
+      overallExperience: Yup.object()
         .nullable()
-        .required("Select Overall Exprience is reqired field"),
+        .required("Select Overall Experience is reqired field"),
       selectProgrammingLanguage: Yup.object()
         .nullable()
         .required("Select Programming Language is reqired field"),
@@ -83,17 +141,22 @@ const Believability = () => {
       selectDomain: Yup.object()
         .nullable()
         .required("Select Domain is reqired field"),
+      linkedIn: Yup.string().url("Please enter valid url"),
+      kaggle: Yup.string().url("Please enter valid url"),
+      gitHub: Yup.string().url("Please enter valid url"),
+      satckOverflow: Yup.string().url("Please enter valid url"),
     }),
     onSubmit: async (values) => {
       const data = {
         _id: auth?.user?._id,
         jobRole: values?.selectRole?._id,
-        currentJobExperience: values?.selectTotalExprience?._id,
-        overallJobExperience: values?.overallExprience?._id,
+        currentJobExperience: values?.selectTotalExperience?._id,
+        overallJobExperience: values?.overallExperience?._id,
         preferredProgrammingLanguage: values?.selectProgrammingLanguage?._id,
         proficiency: values?.selectProficiency?._id,
         highestEducation: values?.selectEducation?._id,
         domain: values?.selectDomain?._id,
+        employmentMode: values?.selectEmploymentMode?._id,
         githubLink: values?.gitHub,
         stackOverFlowLink: values?.satckOverflow,
         kaggleLink: values?.kaggle,
@@ -129,7 +192,7 @@ const Believability = () => {
               className="believabilityBreuSelect"
               values={believability.roleData}
               onSelect={(role) => formik.setFieldValue("selectRole", role)}
-              // onSelect={(programDuration) => console.log(programDuration)}
+              disabled={auth?.user?.completedBelievability}
               selected={formik.values.selectRole}
               errors={
                 formik.touched.selectRole && formik.errors.selectRole
@@ -143,8 +206,8 @@ const Believability = () => {
             </p>
             <BreuSelect
               align="center"
-              placeholder="Total years of exprience"
-              name="selectTotalExprience"
+              placeholder="Current Working Experience"
+              name="selectTotalExperience"
               sx={{
                 marginLeft: "8%",
                 width: "80%",
@@ -153,26 +216,26 @@ const Believability = () => {
               }}
               className="believabilityBreuSelect"
               values={believability.experienceData}
-              onSelect={(totalExprience) =>
-                formik.setFieldValue("selectTotalExprience", totalExprience)
+              onSelect={(totalExperience) =>
+                filterExperienceData(totalExperience)
               }
-              // onSelect={(programDuration) => console.log(programDuration)}
-              selected={formik.values.selectTotalExprience}
+              disabled={auth?.user?.completedBelievability}
+              selected={formik.values.selectTotalExperience}
               errors={
-                formik.touched.selectTotalExprience &&
-                formik.errors.selectTotalExprience
-                  ? formik.errors.selectTotalExprience
+                formik.touched.selectTotalExperience &&
+                formik.errors.selectTotalExperience
+                  ? formik.errors.selectTotalExperience
                   : null
               }
             />
 
             <p style={{ marginLeft: "8%" }} className="selectPara">
-              Overall Work Exprience
+              Overall Work Experience
             </p>
             <BreuSelect
               align="center"
-              placeholder="Total overall years of exprience"
-              name="overallExprience"
+              placeholder="Total overall years of Experience"
+              name="overallExperience"
               sx={{
                 marginLeft: "8%",
                 width: "80%",
@@ -180,16 +243,22 @@ const Believability = () => {
                 backgroundColor: "#FFF",
               }}
               className="believabilityBreuSelect"
-              values={believability.experienceData}
-              onSelect={(overallExprience) =>
-                formik.setFieldValue("overallExprience", overallExprience)
+              values={overallExperienceData}
+              onSelect={(overallExperience) =>
+                formik.setFieldValue("overallExperience", overallExperience)
+              }
+              disabled={
+                auth?.user?.completedBelievability ||
+                !formik.values.selectTotalExperience
+                  ? true
+                  : false
               }
               // onSelect={(programDuration) => console.log(programDuration)}
-              selected={formik.values.overallExprience}
+              selected={formik.values.overallExperience}
               errors={
-                formik.touched.overallExprience &&
-                formik.errors.overallExprience
-                  ? formik.errors.overallExprience
+                formik.touched.overallExperience &&
+                formik.errors.overallExperience
+                  ? formik.errors.overallExperience
                   : null
               }
             />
@@ -210,12 +279,9 @@ const Believability = () => {
               className="believabilityBreuSelect"
               values={believability.languageData}
               onSelect={(programmingLanguage) =>
-                formik.setFieldValue(
-                  "selectProgrammingLanguage",
-                  programmingLanguage
-                )
+                filterProficiencyData(programmingLanguage)
               }
-              // onSelect={(programDuration) => console.log(programDuration)}
+              disabled={auth?.user?.completedBelievability}
               selected={formik.values.selectProgrammingLanguage}
               errors={
                 formik.touched.selectProgrammingLanguage &&
@@ -239,11 +305,11 @@ const Believability = () => {
                 backgroundColor: "#FFF",
               }}
               className="believabilityBreuSelect"
-              values={believability.proficiencyData}
+              values={proficiencyData}
               onSelect={(selectProficiency) =>
                 formik.setFieldValue("selectProficiency", selectProficiency)
               }
-              // onSelect={(programDuration) => console.log(programDuration)}
+              disabled={auth?.user?.completedBelievability}
               selected={formik.values.selectProficiency}
               errors={
                 formik.touched.selectProficiency &&
@@ -271,7 +337,7 @@ const Believability = () => {
               onSelect={(selectEducation) =>
                 formik.setFieldValue("selectEducation", selectEducation)
               }
-              // onSelect={(programDuration) => console.log(programDuration)}
+              disabled={auth?.user?.completedBelievability}
               selected={formik.values.selectEducation}
               errors={
                 formik.touched.selectEducation && formik.errors.selectEducation
@@ -298,7 +364,7 @@ const Believability = () => {
               onSelect={(selectDomain) =>
                 formik.setFieldValue("selectDomain", selectDomain)
               }
-              // onSelect={(programDuration) => console.log(programDuration)}
+              disabled={auth?.user?.completedBelievability}
               selected={formik.values.selectDomain}
               errors={
                 formik.touched.selectDomain && formik.errors.selectDomain
@@ -309,6 +375,36 @@ const Believability = () => {
           </Grid>
 
           <Grid item xs={12} md={6} sx={{}}>
+            <p style={{ marginLeft: "8%" }} className="selectPara">
+              Preferred Mode of Employment
+            </p>
+            <BreuSelect
+              align="center"
+              placeholder="Choose your Preferred Mode"
+              name="selectEmploymentMode"
+              sx={{
+                marginLeft: "8%",
+                width: "80%",
+                marginTop: "1%",
+                backgroundColor: "#FFF",
+              }}
+              className="believabilityBreuSelect"
+              values={believability.employmentModes}
+              onSelect={(selectEmploymentMode) =>
+                formik.setFieldValue(
+                  "selectEmploymentMode",
+                  selectEmploymentMode
+                )
+              }
+              disabled={auth?.user?.completedBelievability}
+              selected={formik.values.selectEmploymentMode}
+              errors={
+                formik.touched.selectEmploymentMode &&
+                formik.errors.selectEmploymentMode
+                  ? formik.errors.selectEmploymentMode
+                  : null
+              }
+            />
             <h2 style={{ paddingLeft: "6%" }}>Others-Provide Links</h2>
 
             <p style={{ marginLeft: "8%" }} className="selectPara">
@@ -328,6 +424,7 @@ const Believability = () => {
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.linkedIn}
+              disabled={auth?.user?.completedBelievability}
               errors={
                 formik.touched.linkedIn && formik.errors.linkedIn
                   ? formik.errors.linkedIn
@@ -353,6 +450,7 @@ const Believability = () => {
                 backgroundColor: "#FFF",
               }}
               onChange={formik.handleChange}
+              disabled={auth?.user?.completedBelievability}
               onBlur={formik.handleBlur}
               value={formik.values.gitHub}
               errors={
@@ -379,6 +477,7 @@ const Believability = () => {
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.satckOverflow}
+              disabled={auth?.user?.completedBelievability}
               errors={
                 formik.touched.satckOverflow && formik.errors.satckOverflow
                   ? formik.errors.satckOverflow
@@ -403,6 +502,7 @@ const Believability = () => {
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.kaggle}
+              disabled={auth?.user?.completedBelievability}
               errors={
                 formik.touched.kaggle && formik.errors.kaggle
                   ? formik.errors.kaggle
@@ -435,32 +535,36 @@ const Believability = () => {
           /> */}
             <Grid container sx={{ marginTop: "4%" }}>
               <Grid item xs={6} md={6} align="center">
-                <ButtonField
-                  buttonStyle="submit"
-                  type="submit"
-                  name="submit"
-                  color="primary"
-                  variant="contained"
-                  sx={{
-                    width: "60%",
-                    backgroundColor: "#0a71b9",
-                  }}
-                />
+                {!auth?.user?.completedBelievability ? (
+                  <ButtonField
+                    buttonStyle="submit"
+                    type="submit"
+                    name="submit"
+                    color="primary"
+                    variant="contained"
+                    sx={{
+                      width: "60%",
+                      backgroundColor: "#0a71b9",
+                    }}
+                  />
+                ) : null}
               </Grid>
-              {/* <Grid item xs={6} md={6}>
-                <ButtonField
-                  buttonStyle="submit"
-                  type="submit"
-                  name="Next"
-                  color="primary"
-                  variant="contained"
-                  sx={{
-                    width: "60%",
-                    backgroundColor: "#5a5a5c",
-                  }}
-                  // onClick={submitForm}
-                />
-              </Grid> */}
+              <Grid item xs={6} md={6}>
+                {auth?.user?.completedBelievability ? (
+                  <ButtonField
+                    buttonStyle="submit"
+                    type="submit"
+                    name="Next"
+                    color="primary"
+                    variant="contained"
+                    sx={{
+                      width: "60%",
+                      backgroundColor: "#5a5a5c",
+                    }}
+                    onClick={() => navigate("/reliability")}
+                  />
+                ) : null}
+              </Grid>
             </Grid>
           </Grid>
         </Grid>

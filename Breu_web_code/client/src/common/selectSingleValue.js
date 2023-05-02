@@ -1,8 +1,8 @@
 import React from "react";
-import Autocomplete from '@mui/material/Autocomplete';
+import Autocomplete from "@mui/material/Autocomplete";
 // import { makeStyles } from "@material-ui/core/styles";
-import TextField from '@mui/material/TextField';
-import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import TextField from "@mui/material/TextField";
+import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 
 // const useStyles = makeStyles((theme) => ({
 //   root: {
@@ -27,18 +27,22 @@ const SelectSingleValues = ({
   label,
   size,
   values,
-  disabled, sx
+  disabled,
+  sx,
 }) => {
   //   const classes = useStyles();
 
   const errorText = (
-    <div style={{
-      display: 'flex',
-      alignItems: 'center',
-      flexWrap: 'wrap',
-      marginTop:'2%',
-    }}>
-      <ErrorOutlineIcon fontSize='small' /><span> {errors}</span>
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        flexWrap: "wrap",
+        marginTop: "2%",
+      }}
+    >
+      <ErrorOutlineIcon fontSize="small" />
+      <span> {errors}</span>
     </div>
   );
   return (
@@ -52,6 +56,7 @@ const SelectSingleValues = ({
         getOptionLabel={(option) => option.name || ""}
         getOptionSelected={(option, selected) => option.name === selected.name}
         defaultValue={selected}
+        disabled={disabled || false}
         value={selected}
         onChange={(event, value) => {
           onSelect(value);

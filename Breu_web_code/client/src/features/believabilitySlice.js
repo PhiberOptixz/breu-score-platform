@@ -48,6 +48,23 @@ export const getExperienceData = createAsyncThunk(
 );
 
 //get Dropdown data
+export const getAllOverallExperiences = createAsyncThunk(
+  "getAllOverallExperiences",
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(
+        "/api/believability/getAllOverallExperiences"
+      );
+      const result = response.data;
+      return result;
+    } catch (error) {
+      SnackBar.error(error?.response?.data?.message);
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
+//get Dropdown data
 export const getLanguageData = createAsyncThunk(
   "getLanguageData",
   async (data, { rejectWithValue }) => {
@@ -94,6 +111,23 @@ export const getRoleData = createAsyncThunk(
   }
 );
 
+//get Dropdown data
+export const getAllEmploymentModes = createAsyncThunk(
+  "getAllEmploymentModes",
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(
+        "/api/believability/getAllEmploymentModes"
+      );
+      const result = response.data;
+      return result;
+    } catch (error) {
+      SnackBar.error(error?.response?.data?.message);
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
 //add believability data
 export const addBelievabilityData = createAsyncThunk(
   "addBelievabilityData",
@@ -121,9 +155,11 @@ export const believability = createSlice({
     domainData: [],
     educationData: [],
     experienceData: [],
+    overallExperienceData: [],
     languageData: [],
     proficiencyData: [],
     roleData: [],
+    employmentModes: [],
   },
   extraReducers: (builder) => {
     builder.addCase(getDomainData.pending, (state) => {
@@ -159,6 +195,17 @@ export const believability = createSlice({
       state.loading = false;
       state.error = action.payload;
     });
+    builder.addCase(getAllOverallExperiences.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(getAllOverallExperiences.fulfilled, (state, action) => {
+      state.loading = false;
+      state.overallExperienceData = action.payload.data;
+    });
+    builder.addCase(getAllOverallExperiences.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
     builder.addCase(getLanguageData.pending, (state) => {
       state.loading = true;
     });
@@ -189,6 +236,17 @@ export const believability = createSlice({
       state.roleData = action.payload.data;
     });
     builder.addCase(getRoleData.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
+    builder.addCase(getAllEmploymentModes.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(getAllEmploymentModes.fulfilled, (state, action) => {
+      state.loading = false;
+      state.employmentModes = action.payload.data;
+    });
+    builder.addCase(getAllEmploymentModes.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload;
     });

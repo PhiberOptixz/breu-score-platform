@@ -38,6 +38,10 @@ const believabilitySchema = Joi.object({
     "string.empty": "Highest Education is not allowed to be empty",
     "any.required": "Highest Education is required",
   }),
+  employmentMode: Joi.string().min(24).max(24).required().messages({
+    "string.empty": "Preferred Employment Mode is not allowed to be empty",
+    "any.required": "Preferred Employment Mode is required",
+  }),
   githubLink: Joi.any(),
   stackOverFlowLink: Joi.any(),
   kaggleLink: Joi.any(),

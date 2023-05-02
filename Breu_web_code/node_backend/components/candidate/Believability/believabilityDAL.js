@@ -1,9 +1,11 @@
 const domainModel = require("./domainModel");
 const educationModel = require("./educationModel");
 const experienceModel = require("./experienceModel");
+const overallExperienceModel = require("./overallExperienceModel");
 const proficiencyModel = require("./proficiencyModel");
 const programmingLanguageModel = require("./programmingLanguageModel");
 const roleModel = require("./roleModel");
+const believabilityModesModel = require("./believabilityModesModel");
 const candidateModel = require("../candidateModel");
 
 async function getAllDomains() {
@@ -46,6 +48,21 @@ async function getAllExperiences() {
     }
   }
 }
+
+async function getAllOverallExperiences() {
+  try {
+    let result = await overallExperienceModel.find({}).lean();
+    return result;
+  } catch (err) {
+    console.log(err);
+    if (err.message) {
+      throw err.message;
+    } else {
+      throw err;
+    }
+  }
+}
+
 async function getAllProficiencies() {
   try {
     let result = await proficiencyModel.find({}).lean();
@@ -86,6 +103,20 @@ async function getAllRoles() {
   }
 }
 
+async function getAllEmploymentModes() {
+  try {
+    let result = await believabilityModesModel.find({}).lean();
+    return result;
+  } catch (err) {
+    console.log(err);
+    if (err.message) {
+      throw err.message;
+    } else {
+      throw err;
+    }
+  }
+}
+
 async function addBelievabilityDetails(data) {
   try {
     let result = await candidateModel.findOneAndUpdate(
@@ -109,4 +140,6 @@ module.exports = {
   getAllProficiencies,
   getAllRoles,
   addBelievabilityDetails,
+  getAllOverallExperiences,
+  getAllEmploymentModes,
 };

@@ -2,7 +2,49 @@ const candidateModel = require("./candidateModel");
 
 async function getCandidateById(data) {
   try {
-    let result = await candidateModel.findById({ _id: data }).lean();
+    let result = await candidateModel
+      .findById({ _id: data })
+      .populate({
+        path: "jobRole",
+        model: "believabilityRoles",
+        select: "name",
+      })
+      .populate({
+        path: "currentJobExperience",
+        model: "believabilityExperiences",
+        select: "name",
+      })
+      .populate({
+        path: "overallJobExperience",
+        model: "believabilityExperiences",
+        select: "name",
+      })
+      .populate({
+        path: "overallJobExperience",
+        model: "believabilityOverallExperiences",
+        select: "name",
+      })
+      .populate({
+        path: "preferredProgrammingLanguage",
+        model: "believabilityLanguages",
+        select: "name",
+      })
+      .populate({
+        path: "proficiency",
+        model: "believabilityProficiencys",
+        select: "name",
+      })
+      .populate({
+        path: "highestEducation",
+        model: "believabilityEducations",
+        select: "name",
+      })
+      .populate({
+        path: "domain",
+        model: "believabilityDomains",
+        select: "name",
+      })
+      .lean();
     return result;
   } catch (err) {
     console.log(err);

@@ -51,6 +51,10 @@ let candidateSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "believabilityDomains",
   },
+  employmentMode: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "believabilityEmploymentModes",
+  },
   githubLink: {
     type: String,
   },

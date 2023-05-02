@@ -31,6 +31,16 @@ module.exports.getAllExperiences = async (req, res, next) => {
   }
 };
 
+module.exports.getAllOverallExperiences = async (req, res, next) => {
+  try {
+    const data = await believabilityDAL.getAllOverallExperiences();
+    return res.send({ message: "SUCCESS", data: data });
+  } catch (error) {
+    console.error(colors.red, `Error getting experiences data`, error);
+    return next(new AppError(error, 400));
+  }
+};
+
 module.exports.getAllLanguages = async (req, res, next) => {
   try {
     const data = await believabilityDAL.getAllLanguages();
@@ -54,6 +64,16 @@ module.exports.getAllProficiencies = async (req, res, next) => {
 module.exports.getAllRoles = async (req, res, next) => {
   try {
     const data = await believabilityDAL.getAllRoles();
+    return res.send({ message: "SUCCESS", data: data });
+  } catch (error) {
+    console.error(colors.red, `Error getting roles data`, error);
+    return next(new AppError(error, 400));
+  }
+};
+
+module.exports.getAllEmploymentModes = async (req, res, next) => {
+  try {
+    const data = await believabilityDAL.getAllEmploymentModes();
     return res.send({ message: "SUCCESS", data: data });
   } catch (error) {
     console.error(colors.red, `Error getting roles data`, error);
