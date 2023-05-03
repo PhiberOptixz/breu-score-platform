@@ -1,0 +1,60 @@
+.optionCard {
+  margin-top: 1%;
+  //   margin-left: 8%;
+  //   margin-right: 8%;
+  height: 15px;
+  background: #ffffff;
+  border-radius: 10px;
+  border: 1px solid #E6E8EC;
+  @media only screen and (max-width: 440px) {
+    margin-top: 10%;
+    height: 40px;
+  }
+}
+
+.optionCardParagraph {
+  color: #777e90;
+  padding-left: 4%;
+//   padding-top: 1%;
+  font-weight: 400;
+  font-size: 20px;
+  font-family: "Inter";
+  font-style: normal;
+  margin: 0%;
+  @media only screen and (max-width: 820px) {
+    padding-top: 5%;
+  }
+  @media only screen and (max-width: 440px) {
+    padding-top: 2%;
+  }
+}
+
+.optionCardRadio {
+  color: #777e90;
+  padding-left: 4%;
+  @media only screen and (max-width: 820px) {
+    padding-top: 5%;
+  }
+  @media only screen and (max-width: 440px) {
+    padding-top: 2%;
+  }
+}
+
+pre.codesnippet {
+  background: white;
+  padding: 1rem;
+  overflow: auto;
+  border-radius: 3px;
+  margin-left: 3%;
+  max-width: 80ch;
+}
+
+pre code {
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.5;
+//   color: aqua;
+}
