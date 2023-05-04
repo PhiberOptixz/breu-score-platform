@@ -10,7 +10,7 @@ import Radio from "@mui/material/Radio";
 const code = `
 {
   int (*p)[R][C];
-  printf("%d",     sizeof(*p ));
+  printf("%d",sizeof(*p ));
   getchar();
   return 0;
 }
@@ -19,7 +19,7 @@ const code = `
 const Reliability = () => {
   return (
     <>
-      <Header name="Reliability" />
+      <Header name="Reliability" caption="make the world believe in your skills" />
       <Grid container className="believabilityContainer">
         <Grid item  xs={3} md={3}></Grid>
         <Grid

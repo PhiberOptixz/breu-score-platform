@@ -172,7 +172,7 @@ const Believability = () => {
 
   return (
     <>
-      <Header />
+       <Header name="Believability" caption="help us to know you better" />
       <form onSubmit={formik.handleSubmit} noValidate autoComplete="off">
         <Grid container className="believabilityContainer">
           <Grid item className="believabilityLeftGrid" sx={{}} xs={12} md={6}>
