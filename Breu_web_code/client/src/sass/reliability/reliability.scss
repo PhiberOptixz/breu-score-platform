@@ -6,6 +6,7 @@
   background: #ffffff;
   border-radius: 10px;
   border: 1px solid #E6E8EC;
+  max-width: 80ch;
   @media only screen and (max-width: 440px) {
     margin-top: 10%;
     height: 40px;
@@ -57,4 +58,15 @@ pre code {
   word-wrap: normal;
   line-height: 1.5;
 //   color: aqua;
+}
+
+.reliabilityButton{
+  width: 105%;
+  font-size: 120%;
+  background-color: #0a71b9;
+}
+.reliabilityButton1{
+  width: 105%;
+  font-size: 120%;
+  background-color: #5a5a5c;
 }
