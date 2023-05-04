@@ -48,7 +48,68 @@ const SignIn = () => {
 
   return (
     <Grid container className="signInContainer">
-      <Grid item xs={12} md={6}></Grid>
+      <Grid item xs={12} md={6} className="sig">
+        <ThemeProvider theme={theme}>
+          <Container component="main" maxWidth="xs">
+            <CssBaseline />
+            <Box
+              sx={{
+                marginTop: 15,
+                padding: 2,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                background: "white",
+                // marginLeft: 20,
+                border: "1px solid #0a71b9",
+                borderRadius: "25px",
+              }}
+            >
+              <Typography
+                sx={{ fontSize: "22px", color: "#0a71b9", fontWeight: "600" }}
+              >
+                Worlds first Platform to combine Emotions with AI to make your
+                Profile Human
+              </Typography>
+
+              <ul style={{ fontSize: "18px", color: "#0a71b9" }}>
+                <li>
+                  <Typography>
+                    Believability – Helps you to build most relevant Technical
+                    profile
+                  </Typography>
+                </li>
+
+                <li>
+                  <Typography>
+                    Reliability – Supports you to prove your technical skills
+                    through simple assessment
+                  </Typography>
+                </li>
+
+                <li>
+                  <Typography>
+                    Emotional Intelligence – Connect your self to the profile by
+                    expressing your key accomplishments
+                  </Typography>
+                </li>
+
+                <li>
+                  <Typography>
+                    Undesirability – The AI platform helps you to be your best
+                    by avoiding undesirable pitfalls
+                  </Typography>
+                </li>
+              </ul>
+
+              {/* <Typography>
+                * Patent Link – Click here to understand BREU better
+              </Typography> */}
+            </Box>
+            {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}
+          </Container>
+        </ThemeProvider>
+      </Grid>
       <Grid item xs={12} md={6}>
         <ThemeProvider theme={theme}>
           <Container component="main" maxWidth="xs">

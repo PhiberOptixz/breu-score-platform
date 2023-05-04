@@ -20,168 +20,176 @@ const Reliability = () => {
   return (
     <>
       <Header name="Reliability" caption="make the world believe in your skills" />
-      <Grid container className="believabilityContainer">
-        <Grid item  xs={3} md={3}></Grid>
-        <Grid
-          item
-          xs={7}
-          md={7}
-          style={{ marginTop: "50px" }}
-        >
-          <Typography sx={{ fontFamily: 'Inter', fontWeight: "700", fontSize: "40px" }}>Java Test</Typography>
-        </Grid>
-        <Grid item  xs={2} md={2}></Grid>
-        <Grid item
-          xs={3}
-          md={3}></Grid>
-        <Grid
-          item
-          xs={7}
-          md={7}
-        >
-          <Typography sx={{ fontFamily: 'Inter', fontWeight: "700", fontSize: "30px" }}>01-Predict the outpout of the following c program</Typography>
-        </Grid>
-        <Grid item
-          xs={2}
-          md={2}></Grid>
-        <Grid item
-          xs={3}
-          md={3}></Grid>
-        <Grid
-          item
-          xs={7}
-          md={7}
-          // style={{marginTop:"-30px"}}
-        >
-          <pre className="codesnippet">
-            <code>
-             {code}
-            </code>
-          </pre>
-        </Grid>
-        <Grid item
-          xs={2}
-          md={2}></Grid>
+      <Grid container>
+        <Grid item xs={1} md={2}></Grid>
+        <Grid item xs={10} md={8}>
+          <Grid container>
+            <Grid item xs={12} md={12} sx={{ marginTop: "2%" }}>
+              <Typography
+                sx={{
+                  fontFamily: "Inter",
+                  fontWeight: "600",
+                  fontSize: "36px",
+                }}
+              >
+                Java Test
+              </Typography>
+            </Grid>
+            <Grid item xs={12} md={12} sx={{ marginTop: "1%" }}>
+              <Typography
+                sx={{
+                  fontFamily: "Inter",
+                  fontWeight: "700",
+                  fontSize: "28px",
+                }}
+              >
+                01-Predict the outpout of the following c program
+              </Typography>
 
-        <Grid item xs={3} md={3}></Grid>
-        <Grid item xs={7} md={7}>
-          <CardContent className="optionCard">
-            <Grid container>
-              <Grid item md={11} xs={11}>
-                <Typography className="optionCardParagraph">120 200 16</Typography>
+              <Grid item xs={12} md={12}>
+                <pre className="codesnippet">
+                  <code>{code}</code>
+                </pre>
               </Grid>
-              <Grid item md={1} xs={1} alignItems="top">
-                <Radio
-                  sx={{
-                    "& .MuiSvgIcon-root": {
-                    },
-                    "&, &.Mui-checked": {
-                      color: "#777E90",
-                    },
-                  }}
-                  className="optionCardRadio"
-                  size="small"
-                />
-              </Grid>
-            </Grid>
-          </CardContent>
-        </Grid>
-        <Grid item xs={2} md={2}></Grid>
 
-        <Grid item xs={3} md={3}></Grid>
-        <Grid item xs={7} md={7}>
-          <CardContent className="optionCard">
-            <Grid container>
-              <Grid item md={11} xs={11}>
-                <Typography className="optionCardParagraph">120 200 16</Typography>
+              <Grid item xs={12} md={12}>
+                <CardContent className="optionCard">
+                  <Grid container>
+                    <Grid item md={11} xs={11}>
+                      <Typography className="optionCardParagraph">
+                        120 200 16
+                      </Typography>
+                    </Grid>
+                    <Grid item md={1} xs={1} alignItems="top">
+                      <Radio
+                        sx={{
+                          "& .MuiSvgIcon-root": { marginTop: "-8%" },
+                          "&, &.Mui-checked": {
+                            color: "#777E90",
+                            marginTop: "-8%",
+                          },
+                        }}
+                        className="optionCardRadio"
+                        size="small"
+                      />
+                    </Grid>
+                  </Grid>
+                </CardContent>
               </Grid>
-              <Grid item md={1} xs={1}>
-                <Radio
-                  sx={{
-                    "&, &.Mui-checked": {
-                      color: "#777E90",
-                    },
-                  }}
-                  className="optionCardRadio"
-                  size="small"
-                />
+
+              <Grid item xs={12} md={12}>
+                <CardContent className="optionCard">
+                  <Grid container>
+                    <Grid item md={11} xs={11}>
+                      <Typography className="optionCardParagraph">
+                        120 200 16
+                      </Typography>
+                    </Grid>
+                    <Grid item md={1} xs={1} alignItems="top">
+                      <Radio
+                        sx={{
+                          "& .MuiSvgIcon-root": { marginTop: "-8%" },
+                          "&, &.Mui-checked": {
+                            color: "#777E90",
+                            marginTop: "-8%",
+                          },
+                        }}
+                        className="optionCardRadio"
+                        size="small"
+                      />
+                    </Grid>
+                  </Grid>
+                </CardContent>
+              </Grid>
+
+              <Grid item xs={12} md={12}>
+                <CardContent className="optionCard">
+                  <Grid container>
+                    <Grid item md={11} xs={11}>
+                      <Typography className="optionCardParagraph">
+                        120 200 16
+                      </Typography>
+                    </Grid>
+                    <Grid item md={1} xs={1} alignItems="top">
+                      <Radio
+                        sx={{
+                          "& .MuiSvgIcon-root": { marginTop: "-8%" },
+                          "&, &.Mui-checked": {
+                            color: "#777E90",
+                            marginTop: "-8%",
+                          },
+                        }}
+                        className="optionCardRadio"
+                        size="small"
+                      />
+                    </Grid>
+                  </Grid>
+                </CardContent>
+              </Grid>
+
+              <Grid item xs={12} md={12}>
+                <CardContent className="optionCard">
+                  <Grid container>
+                    <Grid item md={11} xs={11}>
+                      <Typography className="optionCardParagraph">
+                        120 200 16
+                      </Typography>
+                    </Grid>
+                    <Grid item md={1} xs={1} alignItems="top">
+                      <Radio
+                        sx={{
+                          "& .MuiSvgIcon-root": { marginTop: "-8%" },
+                          "&, &.Mui-checked": {
+                            color: "#777E90",
+                            marginTop: "-8%",
+                          },
+                        }}
+                        className="optionCardRadio"
+                        size="small"
+                      />
+                    </Grid>
+                  </Grid>
+                </CardContent>
               </Grid>
             </Grid>
-          </CardContent>
-        </Grid>
-        <Grid item xs={2} md={2}></Grid>
-        <Grid item xs={3} md={3}></Grid>
-        <Grid item xs={7} md={7}>
-          <CardContent className="optionCard">
-            <Grid container>
-              <Grid item md={11} xs={11}>
-                <Typography className="optionCardParagraph">120 200 16</Typography>
-              </Grid>
-              <Grid item md={1} xs={1}>
-                <Radio
-                  sx={{
-                    "&, &.Mui-checked": {
-                      color: "#777E90",
-                    },
-                  }}
-                  className="optionCardRadio"
-                  size="small"
-                />
-              </Grid>
-            </Grid>
-          </CardContent>
-        </Grid>
-        <Grid item xs={2} md={2}></Grid>
-        <Grid item xs={3} md={3}></Grid>
-        <Grid item xs={7} md={7}>
-          <CardContent className="optionCard">
-            <Grid container>
-              <Grid item md={11} xs={11}>
-                <Typography className="optionCardParagraph">120 200 16</Typography>
-              </Grid>
-              <Grid item md={1} xs={1}>
-                <Radio
-                  sx={{
-                    "&, &.Mui-checked": {
-                      color: "#777E90",
-                    },
-                  }}
-                  className="optionCardRadio"
-                  size="small"
-                />
-              </Grid>
-            </Grid>
-          </CardContent>
-        </Grid>
-        <Grid item xs={2} md={2}></Grid>
-        <Grid container sx={{ marginTop: "4%" }}>
-          <Grid item xs={6} md={6} align="center">
-            <ButtonField
-              buttonStyle="submit"
-              type="submit"
-              name="submit"
-              color="primary"
-              variant="contained"
-              sx={{
-                width: "60%",
-                backgroundColor: "#0a71b9",
-              }}
-            />
           </Grid>
-          <Grid item xs={6} md={6}>
-            <ButtonField
-              buttonStyle="submit"
-              type="submit"
-              name="Next"
-              color="primary"
-              variant="contained"
-              sx={{
-                width: "60%",
-                backgroundColor: "#5a5a5c",
-              }}
+        </Grid>
+        <Grid item xs={1} md={2}></Grid>
+      </Grid>
+
+      <Grid container sx={{ marginTop: "2%", marginBottom: "2%" }}>
+        <Grid item xs={0.5} md={1.5}></Grid>
+        <Grid item xs={6} md={4} align="center">
+          <ButtonField
+            buttonStyle="submit"
+            type="submit"
+            name="submit"
+            color="primary"
+            variant="contained"
+            className="reliabilityButton"
+            sx={{
+              width: "60%",
+              fontSize: "120%",
+              backgroundColor: "#0a71b9",
+            }}
+          />
+        </Grid>
+        <Grid item xs={5.5} md={4}>
+          <ButtonField
+            buttonStyle="submit"
+            type="submit"
+            name="Next"
+            color="primary"
+            variant="contained"
+            className="reliabilityButton1"
+            sx={{
+              width: "60%",
+              fontSize: "120%",
+              backgroundColor: "#5a5a5c",
+            }}
             // onClick={() => navigate("/reliability")}
-            />
-          </Grid>
+          />
+          <Grid item xs={0} md={2}></Grid>
         </Grid>
       </Grid>
     </>
