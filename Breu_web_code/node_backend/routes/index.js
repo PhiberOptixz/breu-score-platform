@@ -7,5 +7,9 @@ router.use(
   "/believability",
   require("../components/candidate/Believability/believabilityRoutes")
 );
+router.use(
+  "/reliability",
+  require("../components/candidate/Reliability/reliabilityRoutes")
+);
 
 module.exports = router;

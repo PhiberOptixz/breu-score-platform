@@ -44,6 +44,11 @@ async function getCandidateById(data) {
         model: "believabilityDomains",
         select: "name",
       })
+      .populate({
+        path: "employmentMode",
+        model: "believabilityEmploymentModes",
+        select: "name",
+      })
       .lean();
     return result;
   } catch (err) {

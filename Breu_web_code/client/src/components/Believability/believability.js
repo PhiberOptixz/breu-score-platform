@@ -68,6 +68,10 @@ const Believability = () => {
         formik.setFieldValue("selectProficiency", auth?.user?.proficiency);
         formik.setFieldValue("selectEducation", auth?.user?.highestEducation);
         formik.setFieldValue("selectDomain", auth?.user?.domain);
+        formik.setFieldValue(
+          "selectEmploymentMode",
+          auth?.user?.employmentMode
+        );
         formik.setFieldValue("linkedIn", auth?.user?.linkedInLink || "");
         formik.setFieldValue("gitHub", auth?.user?.githubLink || "");
         formik.setFieldValue(

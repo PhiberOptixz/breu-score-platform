@@ -2,10 +2,15 @@ const mongoose = require("mongoose");
 
 // Create User Schema
 let questionsSchema = new mongoose.Schema({
-  name: {
+  description: {
     type: String,
     required: true,
   },
+  codeSnippet: {
+    type: String,
+  },
+  questionChoices: [{ type: String }],
+  questionAnswer: { type: String },
   languages: [
     {
       type: mongoose.Schema.Types.ObjectId,
@@ -30,7 +35,6 @@ let questionsSchema = new mongoose.Schema({
       ref: "believabilityOverallExperiences",
     },
   ],
-
   status: {
     type: Boolean,
     default: true,
@@ -45,4 +49,8 @@ let questionsSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("questions", questionsSchema, "questions");
+module.exports = mongoose.model(
+  "believabilityQuestions",
+  questionsSchema,
+  "believabilityQuestions"
+);

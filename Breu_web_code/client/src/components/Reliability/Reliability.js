@@ -6,6 +6,8 @@ import { Typography } from "@mui/material";
 import ButtonField from "../../common/button";
 import CardContent from "@mui/material/CardContent";
 import Radio from "@mui/material/Radio";
+import { fetchQuestions } from "../../features/reliabilitySlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const code = `
 {
@@ -14,12 +16,22 @@ const code = `
   getchar();
   return 0;
 }
-`
+`;
 
 const Reliability = () => {
+  const dispatch = useDispatch();
+  const { reliability, auth } = useSelector((state) => state);
+
+  useEffect(() => {
+    dispatch(fetchQuestions());
+  }, []);
+
   return (
     <>
-      <Header name="Reliability" caption="make the world believe in your skills" />
+      <Header
+        name="Reliability"
+        caption="make the world believe in your skills"
+      />
       <Grid container>
         <Grid item xs={1} md={2}></Grid>
         <Grid item xs={10} md={8}>
@@ -32,10 +44,160 @@ const Reliability = () => {
                   fontSize: "36px",
                 }}
               >
-                Java Test
+                Reliability Assessments
               </Typography>
             </Grid>
-            <Grid item xs={12} md={12} sx={{ marginTop: "1%" }}>
+            {reliability?.questionsData?.map((item) => {
+              return (
+                <>
+                  <Grid item xs={12} md={12} sx={{ marginTop: "1%" }}>
+                    <Typography
+                      sx={{
+                        fontFamily: "Inter",
+                        fontWeight: "700",
+                        fontSize: "28px",
+                      }}
+                    >
+                      {item?.description}
+                    </Typography>
+
+                    <Grid item xs={12} md={12}>
+                      <pre className="codesnippet">
+                        <code>{code}</code>
+                      </pre>
+                    </Grid>
+                    {item?.questionChoices?.map((choice) => {
+                      return (
+                        <Grid item xs={12} md={12}>
+                          <CardContent className="optionCard">
+                            <Grid container>
+                              <Grid item md={11} xs={11}>
+                                <Typography className="optionCardParagraph">
+                                  {choice}
+                                </Typography>
+                              </Grid>
+                              <Grid item md={1} xs={1} alignItems="top">
+                                <Radio
+                                  sx={{
+                                    "& .MuiSvgIcon-root": { marginTop: "-8%" },
+                                    "&, &.Mui-checked": {
+                                      color: "#777E90",
+                                      marginTop: "-8%",
+                                    },
+                                  }}
+                                  className="optionCardRadio"
+                                  size="small"
+                                />
+                              </Grid>
+                            </Grid>
+                          </CardContent>
+                        </Grid>
+                      );
+                    })}
+                    {/* <Grid item xs={12} md={12}>
+                      <CardContent className="optionCard">
+                        <Grid container>
+                          <Grid item md={11} xs={11}>
+                            <Typography className="optionCardParagraph">
+                              120 200 16
+                            </Typography>
+                          </Grid>
+                          <Grid item md={1} xs={1} alignItems="top">
+                            <Radio
+                              sx={{
+                                "& .MuiSvgIcon-root": { marginTop: "-8%" },
+                                "&, &.Mui-checked": {
+                                  color: "#777E90",
+                                  marginTop: "-8%",
+                                },
+                              }}
+                              className="optionCardRadio"
+                              size="small"
+                            />
+                          </Grid>
+                        </Grid>
+                      </CardContent>
+                    </Grid>
+
+                    <Grid item xs={12} md={12}>
+                      <CardContent className="optionCard">
+                        <Grid container>
+                          <Grid item md={11} xs={11}>
+                            <Typography className="optionCardParagraph">
+                              120 200 16
+                            </Typography>
+                          </Grid>
+                          <Grid item md={1} xs={1} alignItems="top">
+                            <Radio
+                              sx={{
+                                "& .MuiSvgIcon-root": { marginTop: "-8%" },
+                                "&, &.Mui-checked": {
+                                  color: "#777E90",
+                                  marginTop: "-8%",
+                                },
+                              }}
+                              className="optionCardRadio"
+                              size="small"
+                            />
+                          </Grid>
+                        </Grid>
+                      </CardContent>
+                    </Grid>
+
+                    <Grid item xs={12} md={12}>
+                      <CardContent className="optionCard">
+                        <Grid container>
+                          <Grid item md={11} xs={11}>
+                            <Typography className="optionCardParagraph">
+                              120 200 16
+                            </Typography>
+                          </Grid>
+                          <Grid item md={1} xs={1} alignItems="top">
+                            <Radio
+                              sx={{
+                                "& .MuiSvgIcon-root": { marginTop: "-8%" },
+                                "&, &.Mui-checked": {
+                                  color: "#777E90",
+                                  marginTop: "-8%",
+                                },
+                              }}
+                              className="optionCardRadio"
+                              size="small"
+                            />
+                          </Grid>
+                        </Grid>
+                      </CardContent>
+                    </Grid>
+
+                    <Grid item xs={12} md={12}>
+                      <CardContent className="optionCard">
+                        <Grid container>
+                          <Grid item md={11} xs={11}>
+                            <Typography className="optionCardParagraph">
+                              120 200 16
+                            </Typography>
+                          </Grid>
+                          <Grid item md={1} xs={1} alignItems="top">
+                            <Radio
+                              sx={{
+                                "& .MuiSvgIcon-root": { marginTop: "-8%" },
+                                "&, &.Mui-checked": {
+                                  color: "#777E90",
+                                  marginTop: "-8%",
+                                },
+                              }}
+                              className="optionCardRadio"
+                              size="small"
+                            />
+                          </Grid>
+                        </Grid>
+                      </CardContent>
+                    </Grid> */}
+                  </Grid>
+                </>
+              );
+            })}
+            {/* <Grid item xs={12} md={12} sx={{ marginTop: "1%" }}>
               <Typography
                 sx={{
                   fontFamily: "Inter",
@@ -151,7 +313,7 @@ const Reliability = () => {
                   </Grid>
                 </CardContent>
               </Grid>
-            </Grid>
+            </Grid> */}
           </Grid>
         </Grid>
         <Grid item xs={1} md={2}></Grid>
