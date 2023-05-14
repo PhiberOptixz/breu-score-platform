@@ -74,6 +74,10 @@ let candidateSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  completedReliability: {
+    type: Boolean,
+    default: false,
+  },
   createdAt: {
     type: Date,
     default: new Date(),

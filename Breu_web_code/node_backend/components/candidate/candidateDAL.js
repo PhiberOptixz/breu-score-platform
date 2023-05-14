@@ -93,8 +93,24 @@ async function getCandidateByPhoneNumber(data) {
   }
 }
 
+async function updateCandidateDetails(data) {
+  try {
+    let result = await candidateModel.findOneAndUpdate(
+      { _id: data._id },
+      data,
+      {
+        new: true,
+      }
+    );
+    return result;
+  } catch (err) {
+    throw err;
+  }
+}
+
 module.exports = {
   getCandidateByEmail,
   getCandidateByPhoneNumber,
   getCandidateById,
+  updateCandidateDetails,
 };

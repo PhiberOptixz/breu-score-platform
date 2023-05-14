@@ -45,7 +45,7 @@ async function fetchQuestions(data) {
       },
       {
         $sample: {
-          size: 4,
+          size: 10,
         },
       },
     ]);

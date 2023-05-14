@@ -11,7 +11,7 @@ import CardContent from "@mui/material/CardContent";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-
+// import video from "../BREU TRAILER 720.mp4";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import { Link } from "react-router-dom";
@@ -33,9 +33,14 @@ const Landing = () => {
       <Grid container>
         <Grid item xs={12} md={7}>
           <div className="player-wrapper LandingVideoGrid">
+            {/* <video loop autoPlay style={{ width: "300px" }}>
+              <source src={video} type="video/mp4" />
+            </video> */}
             <ReactPlayer
               className="react-player"
               url="https://www.youtube.com/watch?v=ysz5S6PUM-U"
+              // controls
+              // url={video}
               width="100%"
               height="100%"
               playing={true}

@@ -5,7 +5,7 @@
   height: 15px;
   background: #ffffff;
   border-radius: 10px;
-  border: 1px solid #E6E8EC;
+  border: 1px solid #e6e8ec;
   max-width: 80ch;
   @media only screen and (max-width: 440px) {
     margin-top: 10%;
@@ -16,7 +16,7 @@
 .optionCardParagraph {
   color: #777e90;
   padding-left: 4%;
-//   padding-top: 1%;
+  //   padding-top: 1%;
   font-weight: 400;
   font-size: 20px;
   font-family: "Inter";
@@ -48,6 +48,7 @@ pre.codesnippet {
   border-radius: 3px;
   margin-left: 3%;
   max-width: 80ch;
+  font-size: large;
 }
 
 pre code {
@@ -57,15 +58,15 @@ pre code {
   word-break: normal;
   word-wrap: normal;
   line-height: 1.5;
-//   color: aqua;
+  //   color: aqua;
 }
 
-.reliabilityButton{
+.reliabilityButton {
   width: 105%;
   font-size: 120%;
   background-color: #0a71b9;
 }
-.reliabilityButton1{
+.reliabilityButton1 {
   width: 105%;
   font-size: 120%;
   background-color: #5a5a5c;

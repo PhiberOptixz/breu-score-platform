@@ -18,6 +18,25 @@ export const fetchQuestions = createAsyncThunk(
   }
 );
 
+//add reliability data
+export const addReliabilityData = createAsyncThunk(
+  "addReliabilityData",
+  async (data, { rejectWithValue }) => {
+    axios
+      .post("/api/reliability/addReliabilityData", data.data)
+      .then((response) => {
+        const result = response.data;
+        SnackBar.success(response?.data?.message);
+        data.navigate("/undesirability");
+        return result;
+      })
+      .catch((error) => {
+        SnackBar.error(error?.response?.data?.message);
+        return rejectWithValue(error?.response?.data);
+      });
+  }
+);
+
 export const auth = createSlice({
   name: "reliability",
   initialState: {
@@ -34,6 +53,16 @@ export const auth = createSlice({
       state.questionsData = action?.payload?.data;
     });
     builder.addCase(fetchQuestions.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
+    builder.addCase(addReliabilityData.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(addReliabilityData.fulfilled, (state, action) => {
+      state.loading = false;
+    });
+    builder.addCase(addReliabilityData.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload;
     });

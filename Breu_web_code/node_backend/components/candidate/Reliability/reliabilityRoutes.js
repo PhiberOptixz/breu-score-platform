@@ -3,7 +3,17 @@ const router = express.Router();
 const reliabilityController = require("./reliabilityController");
 const authJWT = require("../../../middlewares/authJWT");
 
-router.post("/addQuestions", reliabilityController.addQuestions);
+router.post(
+  "/addQuestions",
+  authJWT.verifyJWTToken,
+  reliabilityController.addQuestions
+);
+
+router.post(
+  "/addReliabilityData",
+  authJWT.verifyJWTToken,
+  reliabilityController.postCandidateAnswers
+);
 
 router.get(
   "/fetchQuestions",

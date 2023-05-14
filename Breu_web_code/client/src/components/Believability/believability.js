@@ -47,6 +47,7 @@ const Believability = () => {
     dispatch(getRoleData());
     dispatch(getAllOverallExperiences());
     dispatch(getAllEmploymentModes());
+    document.title = "Breu.ai - Believability";
   }, []);
 
   useEffect(() => {
@@ -176,7 +177,7 @@ const Believability = () => {
 
   return (
     <>
-       <Header name="Believability" caption="help us to know you better" />
+      <Header name="Believability" caption="help us to know you better" />
       <form onSubmit={formik.handleSubmit} noValidate autoComplete="off">
         <Grid container className="believabilityContainer">
           <Grid item className="believabilityLeftGrid" sx={{}} xs={12} md={6}>
@@ -465,7 +466,7 @@ const Believability = () => {
             />
 
             <p style={{ marginLeft: "8%" }} className="selectPara">
-              Satck Overflow
+              Stack Overflow
             </p>
 
             <TextFieldGroup
