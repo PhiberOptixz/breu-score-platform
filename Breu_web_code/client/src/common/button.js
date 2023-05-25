@@ -2,8 +2,6 @@
 // import PropTypes from 'prop-types';
 // import Button from '@mui/material/Button';
 
-
-
 // function BreuButton(props) {
 
 //     const { variant, color, text, onClick } = props;
@@ -33,7 +31,6 @@
 
 // export default BreuButton;
 
-
 import React from "react";
 // import { withStyles } from "@material-ui/core/styles";
 import { Button } from "@mui/material";
@@ -51,19 +48,21 @@ export default function ButtonField({
   color,
   disabled,
   sx,
+  startIcon,
+  endIcon,
 }) {
-//   const ColorButton = withStyles((theme) => ({
-//     root: {
-//       color: "#fff",
-//       backgroundColor: color ? color : $themeBlue ,
-//       fontWeight: 600,
-//       textTransform: "capitalize",
-//       letterSpacing: 1,
-//       "&:hover": {
-//         backgroundColor: "#008dd2",
-//       },
-//     },
-//   }))(MuiButton);
+  //   const ColorButton = withStyles((theme) => ({
+  //     root: {
+  //       color: "#fff",
+  //       backgroundColor: color ? color : $themeBlue ,
+  //       fontWeight: 600,
+  //       textTransform: "capitalize",
+  //       letterSpacing: 1,
+  //       "&:hover": {
+  //         backgroundColor: "#008dd2",
+  //       },
+  //     },
+  //   }))(MuiButton);
   return (
     <Button
       type={type}
@@ -74,6 +73,8 @@ export default function ButtonField({
       onClick={onClick}
       disabled={disabled}
       sx={sx}
+      startIcon={startIcon}
+      endIcon={endIcon}
     >
       {icon} {name} {fileTag}
     </Button>

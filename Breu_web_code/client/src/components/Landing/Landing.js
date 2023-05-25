@@ -104,7 +104,7 @@ const Landing = () => {
                   sx={{ mt: 2, mb: 1, width: "70%", height: "50px" }}
                 >
                   <Link
-                    to="/sign-up"
+                    to="/sign-in"
                     style={{ textDecoration: "none", color: "#FFFFFF" }}
                   >
                     Continue
