@@ -8,7 +8,8 @@ import Believability from "./components/Believability/believability";
 import ProtectedRoute from "./common/ProtectedRoute";
 import Reliability from "./components/Reliability/Reliability";
 import EmotionalUndesirability from "./components/EmotionalUndesirability/EmotionalUndesirability";
-import Intro from "./components/BREUInfoPage/Intro"
+import Intro from "./components/BREUInfoPage/Intro";
+import BreuScore from "./components/BreuScore/BreuScore";
 
 function App() {
   return (
@@ -17,7 +18,7 @@ function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sign-up" element={<Singup />} />
-        <Route path="/intro" element={<Intro/>}/>
+        <Route path="/intro" element={<Intro />} />
         <Route
           path="/believability"
           element={
@@ -39,6 +40,15 @@ function App() {
           element={
             <ProtectedRoute>
               <EmotionalUndesirability />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="*" element={<div>404 Not found</div>} />
+        <Route
+          path="/breuscore"
+          element={
+            <ProtectedRoute>
+              <BreuScore />
             </ProtectedRoute>
           }
         />

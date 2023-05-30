@@ -7,6 +7,8 @@ import ButtonField from "../../common/button";
 import Replay10OutlinedIcon from "@mui/icons-material/Replay10Outlined";
 import Forward10OutlinedIcon from "@mui/icons-material/Forward10Outlined";
 
+import { SnackBar } from "../../common/Snackbar";
+import { useNavigate } from "react-router-dom";
 import VideocamOutlinedIcon from "@mui/icons-material/VideocamOutlined";
 import VideocamOffOutlinedIcon from "@mui/icons-material/VideocamOffOutlined";
 import RadioButtonCheckedOutlinedIcon from "@mui/icons-material/RadioButtonCheckedOutlined";
@@ -21,7 +23,11 @@ const EmotionalUndesirability = () => {
   const [disableRecord, setDisableRecord] = useState(true);
   const [disablePlay, setDisablePlay] = useState(true);
   const [disableDownload, setDisableDownload] = useState(true);
-
+  const [demo, setDemo] = useState("Demo 1");
+  const [title, setTitle] = useState(
+    "Demo – What is expected (tech stack selection, design choices tradeoffs, your contribution, learnings if any)"
+  );
+  const navigate = useNavigate();
   const [showRecorded, setShowRecorded] = useState(false);
   const [record, setRecord] = useState("Start Recording");
   const [webcam, setWebcam] = useState("Start Camera");
@@ -32,13 +38,15 @@ const EmotionalUndesirability = () => {
 
   useEffect(() => {
     document.title = "Breu.ai - Undesirability";
+    localStorage.removeItem("tries");
+    localStorage.removeItem("video");
   }, []);
 
   const startCamera = async (e) => {
     const constraints = {
       audio: true,
       video: {
-        width: 1280,
+        width: 1080,
         height: 720,
       },
     };
@@ -97,8 +105,22 @@ const EmotionalUndesirability = () => {
 
   const recordVideo = () => {
     if (record === "Start Recording") {
-      setRecord("Stop Recording");
-      startRecording();
+      if (localStorage.getItem("tries")) {
+        const noOfTries = parseInt(localStorage.getItem("tries"));
+        if (noOfTries >= 2) {
+          SnackBar.error(
+            "You have exceeded the recording limit please submit the last recorded video"
+          );
+        } else {
+          localStorage.setItem("tries", noOfTries + 1);
+          setRecord("Stop Recording");
+          startRecording();
+        }
+      } else {
+        localStorage.setItem("tries", 1);
+        setRecord("Stop Recording");
+        startRecording();
+      }
     } else {
       setRecord("Start Recording");
       setDisablePlay(false);
@@ -127,7 +149,8 @@ const EmotionalUndesirability = () => {
     //   "with options",
     //   options
     // );
-    recordButton.textContent = "Stop Recording";
+    setRecord("Stop Recording");
+    // recordButton.textContent = "Stop Recording";
     setDisablePlay(true);
     setShowRecorded(false);
     setDisableDownload(true);
@@ -172,22 +195,76 @@ const EmotionalUndesirability = () => {
     setShowRecorded(true);
   };
 
-  const downloadVideo = () => {
-    const blob = new Blob(recordedBlobs, { type: "video/mp4" });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.style.display = "none";
-    a.href = url;
-    console.log(a, "sdfsfd", url);
-    // a.download = 'test.mp4';
-    // document.body.appendChild(a);
-    // a.click();
-    // setTimeout(() => {
-    //     document.body.removeChild(a);
-    //     window.URL.revokeObjectURL(url);
-    // }, 100);
-    const formData = new FormData();
-    formData.append("video", blob);
+  const handleSubmit = () => {
+    if (localStorage.getItem("video")) {
+      const noOfVideos = parseInt(localStorage.getItem("video"));
+      if (noOfVideos > 0) {
+        setDemo("Demo-2");
+        setTitle(
+          "Demo – What is expected (Critical thinking, problem solving, learnings if any)"
+        );
+        localStorage.removeItem("tries");
+        localStorage.setItem("video", noOfVideos + 1);
+        const blob = new Blob(recordedBlobs, { type: "video/mp4" });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.style.display = "none";
+        a.href = url;
+        // console.log(a, "sdfsfd", url);
+        a.download = "test.mp4";
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(() => {
+          document.body.removeChild(a);
+          window.URL.revokeObjectURL(url);
+        }, 100);
+        const formData = new FormData();
+        formData.append("video", blob);
+        navigate("/breuscore");
+      }
+      // else {
+      //   localStorage.removeItem("tries");
+      //   localStorage.removeItem("video");
+      //   const blob = new Blob(recordedBlobs, { type: "video/mp4" });
+      //   const url = window.URL.createObjectURL(blob);
+      //   const a = document.createElement("a");
+      //   a.style.display = "none";
+      //   a.href = url;
+      //   // console.log(a, "sdfsfd", url);
+      //   a.download = "test.mp4";
+      //   document.body.appendChild(a);
+      //   a.click();
+      //   setTimeout(() => {
+      //     document.body.removeChild(a);
+      //     window.URL.revokeObjectURL(url);
+      //   }, 100);
+      //   const formData = new FormData();
+      //   formData.append("video", blob);
+      //   navigate("/breuscore");
+      // }
+    } else {
+      setDemo("Demo-2");
+      setTitle(
+        "Demo – What is expected (Critical thinking, problem solving, learnings if any)"
+      );
+      localStorage.removeItem("tries");
+      localStorage.setItem("video", 1);
+      const blob = new Blob(recordedBlobs, { type: "video/mp4" });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.style.display = "none";
+      a.href = url;
+      // console.log(a, "sdfsfd", url);
+      a.download = "test.mp4";
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(() => {
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+      }, 100);
+      const formData = new FormData();
+      formData.append("video", blob);
+    }
   };
 
   return (
@@ -199,11 +276,8 @@ const EmotionalUndesirability = () => {
 
       <Grid container sx={{ marginLeft: "2%" }}>
         <Grid item xs={12} md={5} sx={{ marginLeft: "2%", marginRight: "2%" }}>
-          <h1>Demo-1</h1>
-          <p style={{ fontSize: "20px", marginRight: "5%" }}>
-            Demo – What is expected (tech stack selection, design choices
-            tradeoffs, your contribution, learnings if any)
-          </p>
+          <h1>{demo}</h1>
+          <p style={{ fontSize: "20px", marginRight: "5%" }}>{title}</p>
 
           <Paper
             elevation={0}
@@ -243,10 +317,7 @@ const EmotionalUndesirability = () => {
 
         <Grid item xs={12} md={5} sx={{ marginLeft: "2%" }}>
           <h1>Capture</h1>
-          <p style={{ fontSize: "20px", marginRight: "5%" }}>
-            Demo – What is expected (tech stack selection, design choices
-            tradeoffs, your contribution, learnings if any)
-          </p>
+          <p style={{ fontSize: "20px", marginRight: "5%" }}>{title}</p>
 
           {/* <ButtonField
             id="start"
@@ -280,6 +351,7 @@ const EmotionalUndesirability = () => {
                 width: "100%",
                 height: "30%",
                 borderRadius: "0% 0% 2% 2%",
+                height: "44vh",
               }}
               playsInline
               autoPlay
@@ -292,6 +364,7 @@ const EmotionalUndesirability = () => {
                 width: "100%",
                 height: "30%",
                 borderRadius: "0% 0% 2% 2%",
+                height: "44vh",
               }}
               playsinliplaysInlinene
               loop
@@ -299,7 +372,7 @@ const EmotionalUndesirability = () => {
             <Grid container sx={{ paddingTop: "2%", paddingBottom: "2%" }}>
               <Grid item xs={4} md={4} align="center">
                 {/* <Replay10OutlinedIcon sx={{ fontSize: "30px" }} /> */}
-                <ButtonField
+                {/* <ButtonField
                   id="start"
                   onClick={startCamera}
                   buttonStyle="submit"
@@ -319,13 +392,24 @@ const EmotionalUndesirability = () => {
                     color: "#0a71b9",
                     marginBottom: "2%",
                   }}
-                />
+                /> */}
+                {webcam === "Start Camera" ? (
+                  <VideocamOutlinedIcon
+                    onClick={startCamera}
+                    sx={{ fontSize: "30px" }}
+                  />
+                ) : (
+                  <VideocamOffOutlinedIcon
+                    onClick={startCamera}
+                    sx={{ fontSize: "30px" }}
+                  />
+                )}
               </Grid>
               <Grid item xs={4} md={4} align="center">
-                <ButtonField
+                {/* <ButtonField
                   id="record"
                   disabled={disableRecord}
-                  onClick={recordVideo}
+                  onClick={() => recordVideo()}
                   buttonStyle="submit"
                   type="submit"
                   endIcon={
@@ -347,10 +431,21 @@ const EmotionalUndesirability = () => {
                     color: "#0a71b9",
                     marginBottom: "2%",
                   }}
-                />
+                /> */}
+                {record === "Start Recording" ? (
+                  <RadioButtonCheckedOutlinedIcon
+                    onClick={() => recordVideo()}
+                    sx={{ fontSize: "30px" }}
+                  />
+                ) : (
+                  <RadioButtonUncheckedOutlinedIcon
+                    onClick={() => recordVideo()}
+                    sx={{ fontSize: "30px" }}
+                  />
+                )}
               </Grid>
               <Grid item xs={4} md={4} align="left">
-                <ButtonField
+                {/* <ButtonField
                   id="play"
                   disabled={disablePlay}
                   onClick={playRecorded}
@@ -368,7 +463,13 @@ const EmotionalUndesirability = () => {
                     color: "#0a71b9",
                     marginBottom: "2%",
                   }}
-                />
+                /> */}
+                {
+                  <PlayCircleFilledWhiteOutlinedIcon
+                    onClick={playRecorded}
+                    sx={{ fontSize: "30px" }}
+                  />
+                }
               </Grid>
             </Grid>
           </Paper>
@@ -377,10 +478,10 @@ const EmotionalUndesirability = () => {
         <Grid item xs={12} md={12} align="center">
           <ButtonField
             disabled={disablePlay}
-            onClick={() => console.log("submit Done")}
+            onClick={() => handleSubmit()}
             buttonStyle="submit"
-            type="submit"
-            name="Submit"
+            type="button"
+            name="Submit & Proceed"
             variant="contained"
             color="primary"
             sx={{
@@ -391,30 +492,6 @@ const EmotionalUndesirability = () => {
           />
         </Grid>
       </Grid>
-
-      {/* <div id="container">
-        <div className="buttonContainer">
-          <button id="start" onClick={startCamera}>
-            {webcam}
-          </button>
-          <button id="record" disabled={disableRecord} onClick={recordVideo}>
-            {record}
-          </button>
-          <button id="play" disabled={disablePlay} onClick={playRecorded}>
-            Play
-          </button>
-          <button
-            id="download"
-            disabled={disableDownload}
-            onClick={downloadVideo}
-          >
-            Submit
-          </button>
-        </div>
-        <div>
-          <span id="errorMsg"></span>
-        </div>
-      </div> */}
     </>
   );
 };
