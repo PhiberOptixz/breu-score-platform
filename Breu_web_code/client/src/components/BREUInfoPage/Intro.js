@@ -35,6 +35,7 @@ const Intro = () => {
             backgroundColor:
                 theme.palette.mode === 'dark' ? theme.palette.grey[800] : '#eaeaf0',
             borderRadius: 1,
+            marginTop:4,
         },
     }));
 
@@ -65,10 +66,12 @@ const Intro = () => {
 
 
         const icons = {
-            1: <h1 onClick={() => setVideo("https://www.youtube.com/embed/kMUcwWWmWug")}>B</h1>,
-            2: <h1 onClick={() => setVideo("https://www.youtube.com/embed/3pmC0SRynFY")}>R</h1>,
-            3: <h1 onClick={() => setVideo("https://www.youtube.com/embed/kMUcwWWmWug")}>E</h1>,
-            4: <h1 onClick={() => setVideo("https://www.youtube.com/embed/3pmC0SRynFY")}>U</h1>,
+            1: <h2 onClick={() => setVideo("https://www.youtube.com/embed/3pmC0SRynFY")}>I</h2>,
+            2: <h2 onClick={() => setVideo("https://www.youtube.com/embed/kMUcwWWmWug")}>B</h2>,
+            3: <h2 onClick={() => setVideo("https://www.youtube.com/embed/3pmC0SRynFY")}>R</h2>,
+            4: <h2 onClick={() => setVideo("https://www.youtube.com/embed/kMUcwWWmWug")}>E</h2>,
+            5: <h2 onClick={() => setVideo("https://www.youtube.com/embed/3pmC0SRynFY")}>U</h2>,
+            6: <h2 onClick={() => setVideo("https://www.youtube.com/embed/kMUcwWWmWug")}>S</h2>,
         };
 
         return (
@@ -96,7 +99,7 @@ const Intro = () => {
         icon: PropTypes.node,
     };
 
-    const steps = ['Believablility', 'Reliability', 'Emotion', 'Understandability'];
+    const steps = ['Introduction','Believablility', 'Reliability', 'Emotion', 'Understandability','Score'];
 
 
 
@@ -107,18 +110,18 @@ const Intro = () => {
                 caption={"Exploring BREU"}
             />
 
-            <Grid container sx={{ marginLeft: "2%" }}>
+            <Grid container>
                 <Grid item xs={12} md={3}></Grid>
                 <Grid item xs={12} md={6} sx={{ marginLeft: "2%", marginRight: "2%" }}>
 
-                    <Paper
+                    {/* <Paper
                         elevation={0}
                         sx={{
-                            //   background: "#0a71b9",
+                             background: "#0a71b9",
                             color: "white",
                             width: "100%",
                         }}
-                    >
+                    > */}
 
                         <div className="player-wrapper LandingVideoGrid">
                             {/* <video loop autoPlay style={{ width: "300px" }}>
@@ -140,20 +143,20 @@ const Intro = () => {
                             src={video}
                             type="video/mp4"
                         /> */}
-                    </Paper>
+                    {/* </Paper> */}
                 </Grid>
                 <Grid item xs={12} md={3}></Grid>
-                <Grid item xs={12} md={12}>
-                <Stack sx={{ width: '100%', marginTop: "2%", cursor: "pointer" }} spacing={4 }>
-                    <Stepper alternativeLabel activeStep={0} connector={<ColorlibConnector />}>
+                <Grid item xs={12} md={12} sx={{marginTop: "2%", cursor: "pointer" }}>
+                {/* <Stack sx={{ width: '100%', marginTop: "2%", cursor: "pointer" }} spacing={4}> */}
+                    <Stepper alternativeLabel activeStep={5} connector={<ColorlibConnector />}>
                         {steps.map((label) => (
                             <Step key={label} sx={{  cursor: "pointer" }}>
                                 <StepLabel StepIconComponent={ColorlibStepIcon} >{label}</StepLabel>
                             </Step>
                         ))}
                     </Stepper>
-                </Stack>
-                </Grid>
+                {/* </Stack> */}
+                </Grid> 
             </Grid>
         </>
     );
