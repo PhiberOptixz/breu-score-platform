@@ -10,6 +10,8 @@ import Reliability from "./components/Reliability/Reliability";
 import EmotionalUndesirability from "./components/EmotionalUndesirability/EmotionalUndesirability";
 import Intro from "./components/BREUInfoPage/Intro";
 import BreuScore from "./components/BreuScore/BreuScore";
+import Prologue from "./components/Prologue/Prologue"
+import Undesirability from "./components/Undesirability/Undesirability"
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sign-up" element={<Singup />} />
         <Route path="/intro" element={<Intro />} />
+        <Route path="/prologue" element={<Prologue />} />
+        <Route path="/undesirability" element={<Undesirability />} />
         <Route
           path="/believability"
           element={
