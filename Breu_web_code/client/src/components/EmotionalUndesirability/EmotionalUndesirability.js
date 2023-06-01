@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import Header from "../../common/header";
-import { Grid, Paper } from "@mui/material";
+import { Grid, Paper, Button } from "@mui/material";
 import PlayCircleFilledWhiteOutlinedIcon from "@mui/icons-material/PlayCircleFilledWhiteOutlined";
 import ReactPlayer from "react-player";
 import ButtonField from "../../common/button";
@@ -349,7 +349,7 @@ const EmotionalUndesirability = () => {
               style={{
                 display: showRecorded ? "none" : "block",
                 width: "100%",
-                height: "30%",
+                // height: "10%",
                 borderRadius: "0% 0% 2% 2%",
                 height: "44vh",
               }}
@@ -364,13 +364,13 @@ const EmotionalUndesirability = () => {
                 width: "100%",
                 height: "30%",
                 borderRadius: "0% 0% 2% 2%",
-                height: "44vh",
+                height: "46vh",
               }}
               playsinliplaysInlinene
               loop
             ></video>
             <Grid container sx={{ paddingTop: "2%", paddingBottom: "2%" }}>
-              <Grid item xs={4} md={4} align="center">
+              <Grid item xs={4} md={4} align="right">
                 {/* <Replay10OutlinedIcon sx={{ fontSize: "30px" }} /> */}
                 {/* <ButtonField
                   id="start"
@@ -393,17 +393,29 @@ const EmotionalUndesirability = () => {
                     marginBottom: "2%",
                   }}
                 /> */}
-                {webcam === "Start Camera" ? (
-                  <VideocamOutlinedIcon
-                    onClick={startCamera}
-                    sx={{ fontSize: "30px" }}
-                  />
-                ) : (
-                  <VideocamOffOutlinedIcon
-                    onClick={startCamera}
-                    sx={{ fontSize: "30px" }}
-                  />
-                )}
+                <ButtonField
+                  // disabled={true}
+                  sx={{
+                    // width: "100%",
+                    // height: "100%",
+                    backgroundColor: "#0a71b9",
+                  }}
+                  onClick={startCamera}
+                  name={
+                    webcam === "Start Camera" ? (
+                      <VideocamOutlinedIcon
+                        // disabled={true}
+                        sx={{ fontSize: "30px" }}
+                      />
+                    ) : (
+                      <VideocamOffOutlinedIcon
+                        // onClick={startCamera}
+                        sx={{ fontSize: "30px" }}
+                      />
+                    )
+                  }
+                />
+                {/* </Button> */}
               </Grid>
               <Grid item xs={4} md={4} align="center">
                 {/* <ButtonField
@@ -432,7 +444,31 @@ const EmotionalUndesirability = () => {
                     marginBottom: "2%",
                   }}
                 /> */}
-                {record === "Start Recording" ? (
+
+                <ButtonField
+                  disabled={webcam === "Start Camera" ? true : false}
+                  sx={{
+                    // width: "100%",
+                    // height: "100%",
+                    backgroundColor: "#0a71b9",
+                  }}
+                  onClick={() => recordVideo()}
+                  name={
+                    record === "Start Recording" ? (
+                      <RadioButtonCheckedOutlinedIcon
+                        // onClick={() => recordVideo()}
+                        sx={{ fontSize: "30px" }}
+                      />
+                    ) : (
+                      <RadioButtonUncheckedOutlinedIcon
+                        // onClick={() => recordVideo()}
+                        sx={{ fontSize: "30px" }}
+                      />
+                    )
+                  }
+                />
+
+                {/* {record === "Start Recording" ? (
                   <RadioButtonCheckedOutlinedIcon
                     onClick={() => recordVideo()}
                     sx={{ fontSize: "30px" }}
@@ -442,7 +478,7 @@ const EmotionalUndesirability = () => {
                     onClick={() => recordVideo()}
                     sx={{ fontSize: "30px" }}
                   />
-                )}
+                )} */}
               </Grid>
               <Grid item xs={4} md={4} align="left">
                 {/* <ButtonField
@@ -464,12 +500,28 @@ const EmotionalUndesirability = () => {
                     marginBottom: "2%",
                   }}
                 /> */}
-                {
+
+                <ButtonField
+                  disabled={disablePlay}
+                  sx={{
+                    // width: "100%",
+                    // height: "100%",
+                    backgroundColor: "#0a71b9",
+                  }}
+                  onClick={playRecorded}
+                  name={
+                    <PlayCircleFilledWhiteOutlinedIcon
+                      // onClick={playRecorded}
+                      sx={{ fontSize: "30px" }}
+                    />
+                  }
+                />
+                {/* {
                   <PlayCircleFilledWhiteOutlinedIcon
                     onClick={playRecorded}
                     sx={{ fontSize: "30px" }}
                   />
-                }
+                } */}
               </Grid>
             </Grid>
           </Paper>
