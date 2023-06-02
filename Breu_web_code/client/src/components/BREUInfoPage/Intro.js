@@ -82,7 +82,7 @@ const Intro = () => {
             setNodeNumber(0);
           }}
         >
-          I
+          P
         </h2>
       ),
       2: (
@@ -182,7 +182,7 @@ const Intro = () => {
   };
 
   const steps = [
-    "Introduction",
+    "Prologue",
     "Believablility",
     "Reliability",
     "Emotion",
@@ -233,7 +233,8 @@ const Intro = () => {
             ))}
           </Stepper>
         </Grid>
-        <Grid item xs={6} md={6}>
+        <Grid item xs={5} md={5} ></Grid>
+        <Grid item xs={6} md={6} sx={{marginTop:"2%"}}>
                 {repeat === 1 ? (
                   <ButtonField
                     buttonStyle="submit"
@@ -242,10 +243,10 @@ const Intro = () => {
                     color="primary"
                     variant="contained"
                     sx={{
-                      width: "60%",
+                      width: "30%",
                       backgroundColor: "#5a5a5c",
                     }}
-                    onClick={() => navigate("/believability")}
+                    onClick={() => navigate("/prologue")}
                   />
                 ) : null}
               </Grid>

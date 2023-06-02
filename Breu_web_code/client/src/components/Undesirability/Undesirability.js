@@ -6,10 +6,12 @@ import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
 import ListItemText from '@mui/material/ListItemText';
 import Header from "../../common/header";
 import { Grid } from "@mui/material";
+import ButtonField from "../../common/button";
+import { useNavigate } from "react-router-dom";
 
 
 const Undesirability = () => {
-
+    const navigate = useNavigate();
     return (
         <>
             <Header
@@ -41,7 +43,21 @@ const Undesirability = () => {
                         </ListItem>
                     </List>
                 </Grid>
-
+                <Grid item xs={10} md={10} ></Grid>
+        <Grid item xs={2} md={2} sx={{marginTop:"2%"}}>
+                  <ButtonField
+                    buttonStyle="submit"
+                    type="submit"
+                    name="Next"
+                    color="primary"
+                    variant="contained"
+                    sx={{
+                      width: "30%",
+                      backgroundColor: "#5a5a5c",
+                    }}
+                    onClick={() => navigate("/breuscore")}
+                  />
+              </Grid>
             </Grid>
         </>
     );
