@@ -8,10 +8,18 @@ import Header from "../../common/header";
 import { Grid } from "@mui/material";
 import ButtonField from "../../common/button";
 import { useNavigate } from "react-router-dom";
+import Checkbox from '@mui/material/Checkbox';
+
 
 
 const Undesirability = () => {
     const navigate = useNavigate();
+    const [checked, setChecked] = useState(false);
+
+    const handleChange = (event) => {
+        setChecked(event.target.checked);
+    };
+
     return (
         <>
             <Header
@@ -43,21 +51,45 @@ const Undesirability = () => {
                         </ListItem>
                     </List>
                 </Grid>
-                <Grid item xs={10} md={10} ></Grid>
-        <Grid item xs={2} md={2} sx={{marginTop:"2%"}}>
-                  <ButtonField
-                    buttonStyle="submit"
-                    type="submit"
-                    name="Next"
-                    color="primary"
-                    variant="contained"
-                    sx={{
-                      width: "30%",
-                      backgroundColor: "#5a5a5c",
-                    }}
-                    onClick={() => navigate("/breuscore")}
-                  />
-              </Grid>
+                <Grid item xs={10} md={10} style={{marginTop:"4%"}} >
+                    <Checkbox
+                        // label="I agree to the terms and conditions"
+                        checked={checked}
+                        onChange={handleChange}
+                        inputProps={{ 'aria-label': 'controlled' }}
+                    />
+                    <span>"I understand the above conditions and certify that the provided information is true to the best of my knowledge"</span>
+                </Grid>
+                <Grid item xs={2} md={2} sx={{ marginTop: "4%" }}>
+               { checked ?   
+                    <ButtonField
+                        buttonStyle="submit"
+                        type="submit"
+                        name="Next"
+                        color="primary"
+                        variant="contained"
+                        sx={{
+                            width: "30%",
+                            backgroundColor: "#5a5a5c",
+                        }}
+                        onClick={() => navigate("/breuscore")}
+                    />
+                        :
+                <ButtonField
+                        disabled
+                        buttonStyle="submit"
+                        type="submit"
+                        name="Next"
+                        color="primary"
+                        variant="contained"
+                        sx={{
+                            width: "30%",
+                            backgroundColor: "#5a5a5c",
+                        }}
+                        onClick={() => navigate("/breuscore")}
+                    />
+}
+                </Grid>
             </Grid>
         </>
     );
