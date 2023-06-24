@@ -295,7 +295,7 @@ const Reliability = () => {
                 fontSize: "120%",
                 backgroundColor: "#5a5a5c",
               }}
-              onClick={() => navigate("/undesirability")}
+              onClick={() => navigate("/emotional")}
             />
           )}
 
