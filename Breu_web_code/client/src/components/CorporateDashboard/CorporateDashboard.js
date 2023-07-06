@@ -5,30 +5,27 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
-import PlayCircleFilledWhiteRoundedIcon from '@mui/icons-material/PlayCircleFilledWhiteRounded';
 import ListItemText from '@mui/material/ListItemText';
 import Header from "../../common/header";
 import { Grid } from "@mui/material";
 import ButtonField from "../../common/button";
 import { Button } from '@mui/material';
 import { useNavigate } from "react-router-dom";
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+import PlayCircleFilledWhiteRoundedIcon from '@mui/icons-material/PlayCircleFilledWhiteRounded';
 import CustomizedDialogs from "../../common/customDailougeBox";
 
-const RecruiterLanding = () => {
+const CorporateDashboard = () => {
 
     const [age, setAge] = useState('');
     const [video, setVideo] = useState('');
     const [open, setOpen] = useState(false);
 
+
     const handleChange = (event) => {
         setAge(event.target.value);
     };
 
-    const handleClick = () => {
+   const handleClick = () => {
         setVideo("https://dz1fjbrbuvu21.cloudfront.net/video1.mp4")
         setOpen(true);
     }
@@ -42,14 +39,10 @@ const RecruiterLanding = () => {
     ];
 
     const columns = [
-        // {
-        // // headerAlign: 'center',
-        // 
-        // },
         {
             field: "id",
             headerName: "ID",
-            width: 100,
+            width: 150,
             headerAlign: 'center',
             align: 'center',
         },
@@ -64,21 +57,20 @@ const RecruiterLanding = () => {
             field: "score",
             headerName: "Score",
             type: 'number',
-            width: 100,
+            width: 150,
             headerAlign: 'center',
             align: 'center',
         },
         {
             field: "scale",
             headerName: "Scale",
-            width: 280,
+            width: 200,
             headerAlign: 'center',
             align: 'center',
         },
         {
             field: "firstvideo",
             headerName: "Video 1",
-            // width: 100,
             headerAlign: 'center',
             align: 'center',
             renderCell: (params) => (
@@ -88,44 +80,10 @@ const RecruiterLanding = () => {
         {
             field: "secondvideo",
             headerName: "Video 2",
-            // width: 100,
             headerAlign: 'center',
             align: 'center',
             renderCell: (params) => (
                 <PlayCircleFilledWhiteRoundedIcon fontSize="large" sx={{ color: "blue" }} />
-            )
-        },
-        {
-            field: "dropdown",
-            headerName: "Company",
-            headerAlign: 'center',
-            width: 200,
-            sortable: false,
-            align: 'center',
-            renderCell: (params) => (
-                <FormControl sx={{ m: 1, minWidth: 150 }} size="small">
-                    <Select
-                        value={age}
-                        onChange={handleChange}
-                        displayEmpty
-                        inputProps={{ 'aria-label': 'Without label' }}
-                    >
-                        <MenuItem value={10}>Infy</MenuItem>
-                        <MenuItem value={20}>TCS</MenuItem>
-                        <MenuItem value={30}>Dell</MenuItem>
-                    </Select>
-                </FormControl>
-            )
-        },
-        {
-            field: "button",
-            headerName: "Confirmation",
-            headerAlign: 'center',
-            width: 200,
-            sortable: false,
-            align: 'center',
-            renderCell: (params) => (
-                <Button variant="contained">Send</Button>
             )
         },
     ];
@@ -134,11 +92,11 @@ const RecruiterLanding = () => {
     return (
         <>
             <Header
-               name="Recruiter"
-               caption={"Your Choice Matters"}
+              name="Corporate"
+              caption={"Your Choice Matters"}
             />
 
-            <Grid container>
+<Grid container>
                 <Grid item xs={12} md={12}>
                     <div style={{ height: 350, width: '100%' }}>
                         <DataGrid
@@ -170,7 +128,7 @@ const RecruiterLanding = () => {
 
 }
 
-export default RecruiterLanding;
+export default CorporateDashboard;
 
 
 

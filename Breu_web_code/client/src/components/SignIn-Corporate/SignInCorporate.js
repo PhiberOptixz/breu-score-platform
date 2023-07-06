@@ -17,7 +17,7 @@ import { candidateSignIn } from "../../features/authSlice";
 
 const theme = createTheme();
 
-const SignInRecruiter = () => {
+const SignInCorporate = () => {
   const dispatch = useDispatch();
   const { auth } = useSelector((state) => state);
   const [showPassword, setShowPassword] = useState(false);
@@ -41,7 +41,7 @@ const SignInRecruiter = () => {
   useEffect(() => {
     if (isAuthenticated) {
       // if (!auth?.user?.completedBelievability) {
-      navigate("/recruiterlanding");
+      navigate("/corporatedashoard");
       // }
     }
   }, [auth]);
@@ -129,7 +129,7 @@ const SignInRecruiter = () => {
               </Avatar>
 
               <Typography component="h1" variant="h5">
-                Sign in-Recruiter
+                Sign in-Corporate
               </Typography>
               <Box sx={{ mt: 1 }}>
                 <form
@@ -200,4 +200,4 @@ const SignInRecruiter = () => {
     </Grid>
   );
 };
-export default SignInRecruiter;
+export default SignInCorporate;

@@ -12,6 +12,10 @@ import Intro from "./components/BREUInfoPage/Intro";
 import BreuScore from "./components/BreuScore/BreuScore";
 import Prologue from "./components/Prologue/Prologue"
 import Undesirability from "./components/Undesirability/Undesirability"
+import RecruiterLanding from "./components/RecruiterLanding/RecruiterLanding";
+import SignInRecruiter from "./components/Signin-Recruters/SignInRecruiter";
+import CorporateDashoard from "./components/CorporateDashboard/CorporateDashboard";
+import SignInCorporate from "./components/SignIn-Corporate/SignInCorporate";
 
 function App() {
   return (
@@ -23,6 +27,10 @@ function App() {
         <Route path="/intro" element={<Intro />} />
         <Route path="/prologue" element={<Prologue />} />
         <Route path="/undesirability" element={<Undesirability />} />
+        <Route path="/recruiterlanding" element={<RecruiterLanding />} />
+        <Route path="/corporatedashoard" element={<CorporateDashoard />} />
+        <Route path="/signInRecruiter" element={<SignInRecruiter />} />
+        <Route path="/signInCorporate" element={<SignInCorporate />} />
         <Route
           path="/believability"
           element={
