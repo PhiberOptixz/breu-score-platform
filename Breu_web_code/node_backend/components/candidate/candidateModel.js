@@ -78,6 +78,14 @@ let candidateSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  completedInterestingVideo: {
+    type: Boolean,
+    default: false,
+  },
+  completedConflictVideo: {
+    type: Boolean,
+    default: false,
+  },
   createdAt: {
     type: Date,
     default: new Date(),

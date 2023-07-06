@@ -5,7 +5,7 @@ async function addCandidateVideo(data) {
   data.updatedAt = new Date();
   try {
     let result = await reliabilityModel.findOneAndUpdate(
-      { _id: data._id },
+      { candidateId: data.candidateId },
       data,
       {
         new: true,

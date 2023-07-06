@@ -11,5 +11,9 @@ router.use(
   "/reliability",
   require("../components/candidate/Reliability/reliabilityRoutes")
 );
+router.use(
+  "/intelligibility",
+  require("../components/candidate/Emotional/emotionalRoutes")
+);
 
 module.exports = router;

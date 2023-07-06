@@ -1,12 +1,13 @@
 import { useEffect, useState, useRef } from "react";
 import Header from "../../common/header";
-import { Grid, Paper, Button } from "@mui/material";
+import { Grid, Paper, Button, Typography } from "@mui/material";
 import PlayCircleFilledWhiteOutlinedIcon from "@mui/icons-material/PlayCircleFilledWhiteOutlined";
 import ReactPlayer from "react-player";
 import ButtonField from "../../common/button";
 import Replay10OutlinedIcon from "@mui/icons-material/Replay10Outlined";
 import Forward10OutlinedIcon from "@mui/icons-material/Forward10Outlined";
-
+import { useSelector, useDispatch } from "react-redux";
+import { uploadCandidateVideo } from "../../features/intelligibilitySlice";
 import { SnackBar } from "../../common/Snackbar";
 import { useNavigate } from "react-router-dom";
 import VideocamOutlinedIcon from "@mui/icons-material/VideocamOutlined";
@@ -18,6 +19,8 @@ const EmotionalUndesirability = () => {
   const errorMsgElement = document.querySelector("span#errorMsg");
   const recordedVideo = document.querySelector("video#recorded");
   const recordButton = document.querySelector("button#record");
+  const { auth } = useSelector((state) => state);
+  const dispatch = useDispatch();
   const playButton = document.querySelector("button#play");
   const downloadButton = document.querySelector("button#download");
   const [disableRecord, setDisableRecord] = useState(true);
@@ -27,19 +30,46 @@ const EmotionalUndesirability = () => {
   const [title, setTitle] = useState(
     "Demo – What is expected (tech stack selection, design choices tradeoffs, your contribution, learnings if any)"
   );
+  const [questionTitle, setQuestionTitle] = useState(
+    "Explain Your last Interesting Project – 1 mins"
+  );
   const navigate = useNavigate();
   const [showRecorded, setShowRecorded] = useState(false);
   const [record, setRecord] = useState("Start Recording");
   const [webcam, setWebcam] = useState("Start Camera");
   const [recordedBlobs, setRecordedBlobs] = useState([]);
+  const [demoVideoURL, setDemoVideoURL] = useState(
+    "https://www.youtube.com/embed/v4sby5j4dTY?autoplay=1&mute=1"
+  );
   const [webStream, setWebStream] = useState(null);
   const [recorder, setRecorder] = useState(null);
   const videoRef = useRef(null);
+  const [noOfVideos, setNoOfVideos] = useState(
+    parseInt(localStorage.getItem("video"))
+  );
 
   useEffect(() => {
     document.title = "Breu.ai - Undesirability";
-    localStorage.removeItem("tries");
-    localStorage.removeItem("video");
+    if (
+      auth.user.completedInterestingVideo &&
+      !auth.user.completedConflictVideo
+    ) {
+      setNoOfVideos(1);
+      localStorage.setItem("video", 1);
+      setDemo("Demo-2");
+      setTitle(
+        "Demo – What is expected (conflicts if any with team members/manager, on what ground & how did you do ?"
+      );
+      setQuestionTitle("Conflict Resolution – 1 mins");
+    } else if (auth.user.completedConflictVideo) {
+      setNoOfVideos(2);
+      localStorage.setItem("video", 2);
+      localStorage.setItem("tries", 0);
+    } else {
+      setNoOfVideos(0);
+      localStorage.removeItem("tries");
+      localStorage.removeItem("video");
+    }
   }, []);
 
   const startCamera = async (e) => {
@@ -73,7 +103,6 @@ const EmotionalUndesirability = () => {
 
   const handleSuccess = (stream) => {
     setDisableRecord(false);
-    console.log("getUserMedia() got stream:", stream);
     window.stream = stream;
     let video = videoRef.current;
     video.srcObject = stream;
@@ -81,14 +110,12 @@ const EmotionalUndesirability = () => {
   };
 
   const handleStop = (stream) => {
-    console.log(stream);
     const video = document.querySelector("#gum");
     for (const track of video.srcObject.getTracks()) {
       track.stop();
     }
     video.srcObject = null;
     stream.getTracks().forEach(function (track) {
-      console.log(track, track.stop());
       let video = videoRef.current;
       video.pause();
       video.srcObject = null;
@@ -97,7 +124,6 @@ const EmotionalUndesirability = () => {
       //     track.stop();
       // }
     });
-    console.log(stream, stream.getTracks());
     setDisableRecord(true);
     setDisablePlay(true);
     setDisableDownload(true);
@@ -142,39 +168,21 @@ const EmotionalUndesirability = () => {
       )}`;
       return;
     }
-
-    // console.log(
-    //   "Created MediaRecorder",
-    //   mediaRecorder,
-    //   "with options",
-    //   options
-    // );
     setRecord("Stop Recording");
-    // recordButton.textContent = "Stop Recording";
     setDisablePlay(true);
     setShowRecorded(false);
     setDisableDownload(true);
-    mediaRecorder.onstop = (event) => {
-      // console.log("Recorder stopped: ", event);
-      // console.log("Recorded Blobs: ", recordedBlobs);
-    };
+    mediaRecorder.onstop = (event) => {};
     mediaRecorder.ondataavailable = handleDataAvailable;
     mediaRecorder.start();
-    // console.log("MediaRecorder started", mediaRecorder);
     setRecorder(mediaRecorder);
   };
 
   const handleDataAvailable = (event) => {
-    console.log("handleDataAvailable", event);
     if (event.data && event.data.size > 0) {
-      // console.log(recordedBlobs, "before");
       setRecordedBlobs([]);
       let blobs = recordedBlobs.slice(-1);
-      // console.log(blobs, "jjdfnjsnf", event.data);
-      // blobs.push(event.data);
       setRecordedBlobs([event.data]);
-      // console.log([recordedBlobs[recordedBlobs.length - 1]], "after");
-      // recordedBlobs.push(event.data);
     }
   };
 
@@ -186,7 +194,6 @@ const EmotionalUndesirability = () => {
 
   const playRecorded = () => {
     const superBuffer = new Blob(recordedBlobs, { type: "video/webm" });
-    // console.log(superBuffer, window.URL.createObjectURL(superBuffer));
     recordedVideo.src = null;
     recordedVideo.srcObject = null;
     recordedVideo.src = window.URL.createObjectURL(superBuffer);
@@ -197,73 +204,48 @@ const EmotionalUndesirability = () => {
 
   const handleSubmit = () => {
     if (localStorage.getItem("video")) {
-      const noOfVideos = parseInt(localStorage.getItem("video"));
       if (noOfVideos > 0) {
         setDemo("Demo-2");
         setTitle(
-          "Demo – What is expected (Critical thinking, problem solving, learnings if any)"
+          "Demo – What is expected (conflicts if any with team members/manager, on what ground & how did you do ?"
+        );
+        setQuestionTitle("Conflict Resolution – 1 mins");
+        setDemoVideoURL(
+          "https://www.youtube.com/embed/4UAg4Axhg6g?autoplay=1&mute=1"
         );
         localStorage.removeItem("tries");
         localStorage.setItem("video", noOfVideos + 1);
         const blob = new Blob(recordedBlobs, { type: "video/mp4" });
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.style.display = "none";
-        a.href = url;
-        // console.log(a, "sdfsfd", url);
-        a.download = "test.mp4";
-        document.body.appendChild(a);
-        a.click();
-        setTimeout(() => {
-          document.body.removeChild(a);
-          window.URL.revokeObjectURL(url);
-        }, 100);
         const formData = new FormData();
         formData.append("video", blob);
-        navigate("/breuscore");
+        formData.append("type", demo);
+        formData.append("candidateId", auth?.user?._id);
+        dispatch(uploadCandidateVideo(formData));
+        setWebcam("Start Camera");
+        setShowRecorded(false);
+        handleStop(webStream);
+        navigate("/undesirability");
       }
-      // else {
-      //   localStorage.removeItem("tries");
-      //   localStorage.removeItem("video");
-      //   const blob = new Blob(recordedBlobs, { type: "video/mp4" });
-      //   const url = window.URL.createObjectURL(blob);
-      //   const a = document.createElement("a");
-      //   a.style.display = "none";
-      //   a.href = url;
-      //   // console.log(a, "sdfsfd", url);
-      //   a.download = "test.mp4";
-      //   document.body.appendChild(a);
-      //   a.click();
-      //   setTimeout(() => {
-      //     document.body.removeChild(a);
-      //     window.URL.revokeObjectURL(url);
-      //   }, 100);
-      //   const formData = new FormData();
-      //   formData.append("video", blob);
-      //   navigate("/breuscore");
-      // }
     } else {
       setDemo("Demo-2");
       setTitle(
-        "Demo – What is expected (Critical thinking, problem solving, learnings if any)"
+        "Demo – What is expected (conflicts if any with team members/manager, on what ground & how did you do ?"
       );
+      setQuestionTitle("Conflict Resolution – 1 mins");
       localStorage.removeItem("tries");
       localStorage.setItem("video", 1);
+      setDemoVideoURL(
+        "https://www.youtube.com/embed/4UAg4Axhg6g?autoplay=1&mute=1"
+      );
       const blob = new Blob(recordedBlobs, { type: "video/mp4" });
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.style.display = "none";
-      a.href = url;
-      // console.log(a, "sdfsfd", url);
-      a.download = "test.mp4";
-      document.body.appendChild(a);
-      a.click();
-      setTimeout(() => {
-        document.body.removeChild(a);
-        window.URL.revokeObjectURL(url);
-      }, 100);
+      setWebcam("Start Camera");
+      handleStop(webStream);
+      setShowRecorded(false);
       const formData = new FormData();
       formData.append("video", blob);
+      formData.append("type", demo);
+      formData.append("candidateId", auth?.user?._id);
+      dispatch(uploadCandidateVideo(formData));
     }
   };
 
@@ -273,53 +255,87 @@ const EmotionalUndesirability = () => {
         name="Emotional Intelligibility"
         caption={"Exploring your Emotional dimension"}
       />
-
-      <Grid container sx={{ marginLeft: "2%" }}>
-        <Grid item xs={12} md={5} sx={{ marginLeft: "2%", marginRight: "2%" }}>
-          <h1>{demo}</h1>
-          <p style={{ fontSize: "20px", marginRight: "5%" }}>{title}</p>
-
-          <Paper
-            elevation={0}
-            sx={{
-              background: "#0a71b9",
-              color: "white",
-              width: "100%",
-              // borderRadius: "2% 0% 0% 0%",
-            }}
+      {noOfVideos === 2 ? (
+        <>
+          <Typography variant="h5" color={"red"} align="center">
+            You have successfully submitted the videos. Please click next to see
+            BREU score
+          </Typography>
+          <Typography align="center">
+            <ButtonField
+              onClick={() => navigate("/undesirability")}
+              buttonStyle="submit"
+              type="button"
+              name="Next"
+              variant="contained"
+              color="primary"
+              sx={{
+                width: "20%",
+                marginTop: "2%",
+                marginBottom: "2%",
+              }}
+            />
+          </Typography>
+        </>
+      ) : (
+        <Grid container sx={{ marginLeft: "2%" }}>
+          <Grid
+            item
+            xs={12}
+            md={5}
+            sx={{ marginLeft: "2%", marginRight: "2%" }}
           >
-            <video
+            <h1>{demo}</h1>
+            <p style={{ fontSize: "20px", marginRight: "5%" }}>{title}</p>
+
+            <Paper
+              elevation={0}
+              sx={{
+                background: "#0a71b9",
+                color: "white",
+                width: "100%",
+                // borderRadius: "2% 0% 0% 0%",
+              }}
+            >
+              <iframe
+                width={"99%"}
+                height={"290px"}
+                src={demoVideoURL}
+              ></iframe>
+              {/* <video
               width="100%"
-              controls
+              // controls
               style={{ borderRadius: "0% 0% 2% 2%" }}
             >
               <source
                 src="https://www.youtube.com/watch?v=ysz5S6PUM-U"
                 type="video/mp4"
               />
-            </video>
-            <Grid container sx={{ paddingTop: "2%", paddingBottom: "2%" }}>
-              <Grid item xs={4} md={4} align="right">
-                <Replay10OutlinedIcon sx={{ fontSize: "30px" }} />
+            </video> */}
+              <Grid container sx={{ paddingTop: "2%", paddingBottom: "2%" }}>
+                <Grid item xs={4} md={4} align="right">
+                  {/* <Replay10OutlinedIcon sx={{ fontSize: "30px" }} /> */}
+                </Grid>
+                <Grid item xs={4} md={4} align="center">
+                  <PlayCircleFilledWhiteOutlinedIcon
+                    sx={{ fontSize: "30px" }}
+                    // onClick={console.log("Play click")}
+                  />
+                </Grid>
+                <Grid item xs={4} md={4} align="left">
+                  {/* <Forward10OutlinedIcon sx={{ fontSize: "30px" }} /> */}
+                </Grid>
               </Grid>
-              <Grid item xs={4} md={4} align="center">
-                <PlayCircleFilledWhiteOutlinedIcon
-                  sx={{ fontSize: "30px" }}
-                  onClick={console.log("Play click")}
-                />
-              </Grid>
-              <Grid item xs={4} md={4} align="left">
-                <Forward10OutlinedIcon sx={{ fontSize: "30px" }} />
-              </Grid>
-            </Grid>
-          </Paper>
-        </Grid>
+            </Paper>
+          </Grid>
 
-        <Grid item xs={12} md={5} sx={{ marginLeft: "2%" }}>
-          <h1>Capture</h1>
-          <p style={{ fontSize: "20px", marginRight: "5%" }}>{title}</p>
+          <Grid item xs={12} md={5} sx={{ marginLeft: "2%" }}>
+            <h1>Capture</h1>
+            <p style={{ fontSize: "20px", marginRight: "5%" }}>
+              {questionTitle}
+            </p>
 
-          {/* <ButtonField
+            {/* <ButtonField
             id="start"
             onClick={startCamera}
             buttonStyle="submit"
@@ -334,45 +350,46 @@ const EmotionalUndesirability = () => {
             }}
           /> */}
 
-          <Paper
-            elevation={0}
-            sx={{
-              background: "#0a71b9",
-              color: "white",
-              width: "100%",
-              // borderRadius: "2% 0% 0% 0%",
-            }}
-          >
-            <video
-              id="gum"
-              ref={videoRef}
-              style={{
-                display: showRecorded ? "none" : "block",
+            <Paper
+              elevation={0}
+              sx={{
+                background: "#0a71b9",
+                color: "white",
                 width: "100%",
-                // height: "10%",
-                borderRadius: "0% 0% 2% 2%",
-                height: "44vh",
+                marginTop: "8%",
+                // borderRadius: "2% 0% 0% 0%",
               }}
-              playsInline
-              autoPlay
-              muted
-            ></video>
-            <video
-              id="recorded"
-              style={{
-                display: showRecorded ? "block" : "none",
-                width: "100%",
-                height: "30%",
-                borderRadius: "0% 0% 2% 2%",
-                height: "46vh",
-              }}
-              playsinliplaysInlinene
-              loop
-            ></video>
-            <Grid container sx={{ paddingTop: "2%", paddingBottom: "2%" }}>
-              <Grid item xs={4} md={4} align="right">
-                {/* <Replay10OutlinedIcon sx={{ fontSize: "30px" }} /> */}
-                {/* <ButtonField
+            >
+              <video
+                id="gum"
+                ref={videoRef}
+                style={{
+                  display: showRecorded ? "none" : "block",
+                  width: "100%",
+                  // height: "10%",
+                  borderRadius: "0% 0% 2% 2%",
+                  height: "44vh",
+                }}
+                playsInline
+                autoPlay
+                muted
+              ></video>
+              <video
+                id="recorded"
+                style={{
+                  display: showRecorded ? "block" : "none",
+                  width: "100%",
+                  height: "30%",
+                  borderRadius: "0% 0% 2% 2%",
+                  height: "44vh",
+                }}
+                playsinliplaysInlinene
+                loop
+              ></video>
+              <Grid container sx={{ paddingTop: "2%", paddingBottom: "2%" }}>
+                <Grid item xs={4} md={4} align="right">
+                  {/* <Replay10OutlinedIcon sx={{ fontSize: "30px" }} /> */}
+                  {/* <ButtonField
                   id="start"
                   onClick={startCamera}
                   buttonStyle="submit"
@@ -393,32 +410,32 @@ const EmotionalUndesirability = () => {
                     marginBottom: "2%",
                   }}
                 /> */}
-                <ButtonField
-                  // disabled={true}
-                  sx={{
-                    // width: "100%",
-                    // height: "100%",
-                    backgroundColor: "#0a71b9",
-                  }}
-                  onClick={startCamera}
-                  name={
-                    webcam === "Start Camera" ? (
-                      <VideocamOutlinedIcon
-                        // disabled={true}
-                        sx={{ fontSize: "30px" }}
-                      />
-                    ) : (
-                      <VideocamOffOutlinedIcon
-                        // onClick={startCamera}
-                        sx={{ fontSize: "30px" }}
-                      />
-                    )
-                  }
-                />
-                {/* </Button> */}
-              </Grid>
-              <Grid item xs={4} md={4} align="center">
-                {/* <ButtonField
+                  <ButtonField
+                    // disabled={true}
+                    sx={{
+                      // width: "100%",
+                      // height: "100%",
+                      backgroundColor: "#0a71b9",
+                    }}
+                    onClick={startCamera}
+                    name={
+                      webcam === "Start Camera" ? (
+                        <VideocamOutlinedIcon
+                          // disabled={true}
+                          sx={{ fontSize: "30px" }}
+                        />
+                      ) : (
+                        <VideocamOffOutlinedIcon
+                          // onClick={startCamera}
+                          sx={{ fontSize: "30px" }}
+                        />
+                      )
+                    }
+                  />
+                  {/* </Button> */}
+                </Grid>
+                <Grid item xs={4} md={4} align="center">
+                  {/* <ButtonField
                   id="record"
                   disabled={disableRecord}
                   onClick={() => recordVideo()}
@@ -445,30 +462,30 @@ const EmotionalUndesirability = () => {
                   }}
                 /> */}
 
-                <ButtonField
-                  disabled={webcam === "Start Camera" ? true : false}
-                  sx={{
-                    // width: "100%",
-                    // height: "100%",
-                    backgroundColor: "#0a71b9",
-                  }}
-                  onClick={() => recordVideo()}
-                  name={
-                    record === "Start Recording" ? (
-                      <RadioButtonCheckedOutlinedIcon
-                        // onClick={() => recordVideo()}
-                        sx={{ fontSize: "30px" }}
-                      />
-                    ) : (
-                      <RadioButtonUncheckedOutlinedIcon
-                        // onClick={() => recordVideo()}
-                        sx={{ fontSize: "30px" }}
-                      />
-                    )
-                  }
-                />
+                  <ButtonField
+                    disabled={webcam === "Start Camera" ? true : false}
+                    sx={{
+                      // width: "100%",
+                      // height: "100%",
+                      backgroundColor: "#0a71b9",
+                    }}
+                    onClick={() => recordVideo()}
+                    name={
+                      record === "Start Recording" ? (
+                        <RadioButtonCheckedOutlinedIcon
+                          // onClick={() => recordVideo()}
+                          sx={{ fontSize: "30px" }}
+                        />
+                      ) : (
+                        <RadioButtonUncheckedOutlinedIcon
+                          // onClick={() => recordVideo()}
+                          sx={{ fontSize: "30px" }}
+                        />
+                      )
+                    }
+                  />
 
-                {/* {record === "Start Recording" ? (
+                  {/* {record === "Start Recording" ? (
                   <RadioButtonCheckedOutlinedIcon
                     onClick={() => recordVideo()}
                     sx={{ fontSize: "30px" }}
@@ -479,9 +496,9 @@ const EmotionalUndesirability = () => {
                     sx={{ fontSize: "30px" }}
                   />
                 )} */}
-              </Grid>
-              <Grid item xs={4} md={4} align="left">
-                {/* <ButtonField
+                </Grid>
+                <Grid item xs={4} md={4} align="left">
+                  {/* <ButtonField
                   id="play"
                   disabled={disablePlay}
                   onClick={playRecorded}
@@ -501,49 +518,50 @@ const EmotionalUndesirability = () => {
                   }}
                 /> */}
 
-                <ButtonField
-                  disabled={disablePlay}
-                  sx={{
-                    // width: "100%",
-                    // height: "100%",
-                    backgroundColor: "#0a71b9",
-                  }}
-                  onClick={playRecorded}
-                  name={
-                    <PlayCircleFilledWhiteOutlinedIcon
-                      // onClick={playRecorded}
-                      sx={{ fontSize: "30px" }}
-                    />
-                  }
-                />
-                {/* {
+                  <ButtonField
+                    disabled={disablePlay}
+                    sx={{
+                      // width: "100%",
+                      // height: "100%",
+                      backgroundColor: "#0a71b9",
+                    }}
+                    onClick={playRecorded}
+                    name={
+                      <PlayCircleFilledWhiteOutlinedIcon
+                        // onClick={playRecorded}
+                        sx={{ fontSize: "30px" }}
+                      />
+                    }
+                  />
+                  {/* {
                   <PlayCircleFilledWhiteOutlinedIcon
                     onClick={playRecorded}
                     sx={{ fontSize: "30px" }}
                   />
                 } */}
+                </Grid>
               </Grid>
-            </Grid>
-          </Paper>
-        </Grid>
+            </Paper>
+          </Grid>
 
-        <Grid item xs={12} md={12} align="center">
-          <ButtonField
-            disabled={disablePlay}
-            onClick={() => handleSubmit()}
-            buttonStyle="submit"
-            type="button"
-            name="Submit & Proceed"
-            variant="contained"
-            color="primary"
-            sx={{
-              width: "20%",
-              marginTop: "2%",
-              marginBottom: "2%",
-            }}
-          />
+          <Grid item xs={12} md={12} align="center">
+            <ButtonField
+              disabled={disablePlay}
+              onClick={() => handleSubmit()}
+              buttonStyle="submit"
+              type="button"
+              name="Submit & Proceed"
+              variant="contained"
+              color="primary"
+              sx={{
+                width: "20%",
+                marginTop: "2%",
+                marginBottom: "2%",
+              }}
+            />
+          </Grid>
         </Grid>
-      </Grid>
+      )}
     </>
   );
 };

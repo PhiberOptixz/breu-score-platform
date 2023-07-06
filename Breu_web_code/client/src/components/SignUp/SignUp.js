@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import { useFormik } from "formik";
@@ -20,6 +20,7 @@ const theme = createTheme();
 const SignUp = () => {
   const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
   const phoneRegExp =
     "^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$";
@@ -64,7 +65,11 @@ const SignUp = () => {
         .required("Phone number is required field"),
     }),
     onSubmit: async (values) => {
-      dispatch(registerCandidate(values));
+      const data = {
+        values,
+        navigate,
+      };
+      dispatch(registerCandidate(data));
     },
   });
 

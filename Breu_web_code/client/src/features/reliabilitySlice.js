@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { SnackBar } from "../common/Snackbar";
-import setAuthToken from "../common/setAuthToken";
+import { candidateDetails } from "./authSlice";
 
 //fetch questions
 export const fetchQuestions = createAsyncThunk(
@@ -21,13 +21,14 @@ export const fetchQuestions = createAsyncThunk(
 //add reliability data
 export const addReliabilityData = createAsyncThunk(
   "addReliabilityData",
-  async (data, { rejectWithValue }) => {
+  async (data, { rejectWithValue, dispatch }) => {
     axios
       .post("/api/reliability/addReliabilityData", data.data)
       .then((response) => {
         const result = response.data;
         SnackBar.success(response?.data?.message);
-        data.navigate("/undesirability");
+        data.navigate("/emotional");
+        dispatch(candidateDetails());
         return result;
       })
       .catch((error) => {

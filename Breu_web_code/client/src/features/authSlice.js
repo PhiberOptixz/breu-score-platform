@@ -8,10 +8,11 @@ export const registerCandidate = createAsyncThunk(
   "registerCandidate",
   async (data, { rejectWithValue }) => {
     axios
-      .post("/api/auth/registerCandidate", data)
+      .post("/api/auth/registerCandidate", data.values)
       .then((response) => {
         const result = response.data;
         SnackBar.success(response?.data?.message);
+        data.navigate("/sign-in");
         return result;
       })
       .catch((error) => {

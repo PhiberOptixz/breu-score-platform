@@ -41,7 +41,7 @@ const SignIn = () => {
   useEffect(() => {
     if (isAuthenticated) {
       // if (!auth?.user?.completedBelievability) {
-      navigate("/believability");
+      navigate("/intro");
       // }
     }
   }, [auth]);

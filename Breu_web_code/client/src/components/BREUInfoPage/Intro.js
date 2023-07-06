@@ -13,12 +13,27 @@ import StepConnector, {
   stepConnectorClasses,
 } from "@mui/material/StepConnector";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Intro = () => {
+  const { auth } = useSelector((state) => state);
   const [video, setVideo] = useState(
     "https://www.youtube.com/embed/3pmC0SRynFY"
   );
   const navigate = useNavigate();
+  const [nodeNumber, setNodeNumber] = useState();
+  const [preNodeNumber, setPreNodeNumber] = useState(-1);
+  const [repeat, setRepeat] = useState(0);
+
+  useEffect(() => {
+    if (auth?.isAuthenticated) {
+      if (auth?.user?.completedBelievability) {
+        setRepeat(1);
+        setNodeNumber(5);
+      }
+    }
+  }, [auth]);
+
   const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
     [`&.${stepConnectorClasses.alternativeLabel}`]: {
       top: 20,
@@ -67,10 +82,6 @@ const Intro = () => {
     }),
   }));
 
-  const [nodeNumber, setNodeNumber] = useState();
-  const [preNodeNumber, setPreNodeNumber] = useState(-1);
-  const [repeat, setRepeat] = useState(0);
-
   function ColorlibStepIcon(props) {
     const { active, completed, className } = props;
 
@@ -89,7 +100,7 @@ const Intro = () => {
         <h2
           onClick={() => {
             if (preNodeNumber === -1 || repeat === 1) {
-              setVideo("https://www.youtube.com/embed/kMUcwWWmWug");
+              setVideo("https://youtu.be/brrQ9L88OFo");
               setPreNodeNumber(0);
               setNodeNumber(1);
             }
@@ -102,7 +113,7 @@ const Intro = () => {
         <h2
           onClick={() => {
             if (preNodeNumber === 0 || repeat === 1) {
-              setVideo("https://www.youtube.com/embed/3pmC0SRynFY");
+              setVideo("https://youtu.be/jWRdd7FFGgY");
               setPreNodeNumber(1);
               setNodeNumber(2);
             }
@@ -185,8 +196,8 @@ const Intro = () => {
     "Prologue",
     "Believablility",
     "Reliability",
-    "Emotion",
-    "Understandability",
+    "Emotional Intelligibility",
+    "Undesirability",
     "Score",
   ];
 
@@ -194,7 +205,7 @@ const Intro = () => {
     <>
       <Header name="BREU Journey" caption={"Exploring BREU"} />
 
-      <Grid container >
+      <Grid container>
         <Grid item xs={0} md={3}></Grid>
         <Grid item xs={12} md={6}>
           <div className="player-wrapper LandingVideoGrid">
@@ -213,19 +224,14 @@ const Intro = () => {
           </div>
         </Grid>
         <Grid item xs={0} md={3}></Grid>
-        <Grid
-          item
-          xs={12}
-          md={12}
-          sx={{ marginLeft: "2%", marginRight: "2%", marginTop: "4%" }}
-        >
+        <Grid item xs={12} md={11} sx={{ marginTop: "4%" }}>
           <Stepper
             alternativeLabel
             activeStep={nodeNumber}
             connector={<ColorlibConnector />}
           >
             {steps.map((label) => (
-              <Step key={label} sx={{ cursor: "pointer"  }}>
+              <Step key={label} sx={{ cursor: "pointer" }}>
                 <StepLabel StepIconComponent={ColorlibStepIcon}>
                   {label}
                 </StepLabel>
@@ -233,23 +239,23 @@ const Intro = () => {
             ))}
           </Stepper>
         </Grid>
-        <Grid item xs={5} md={5} ></Grid>
-        <Grid item xs={6} md={6} sx={{marginTop:"2%"}}>
-                {repeat === 1 ? (
-                  <ButtonField
-                    buttonStyle="submit"
-                    type="submit"
-                    name="Next"
-                    color="primary"
-                    variant="contained"
-                    sx={{
-                      width: "30%",
-                      backgroundColor: "#5a5a5c",
-                    }}
-                    onClick={() => navigate("/prologue")}
-                  />
-                ) : null}
-              </Grid>
+
+        <Grid item xs={12} md={1} sx={{ marginTop: "4.2%" }}>
+          {repeat === 1 ? (
+            <ButtonField
+              buttonStyle="submit"
+              type="submit"
+              name="Next"
+              color="primary"
+              variant="contained"
+              sx={{
+                width: "30%",
+                backgroundColor: "#5a5a5c",
+              }}
+              onClick={() => navigate("/prologue")}
+            />
+          ) : null}
+        </Grid>
       </Grid>
     </>
   );
