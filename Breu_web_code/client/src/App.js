@@ -26,6 +26,12 @@ function App() {
         <Route path="/sign-up" element={<Singup />} />
         <Route path="/prologue" element={<Prologue />} />
         <Route path="/undesirability" element={<Undesirability />} />
+        <Route path="/recruiterDashboard" element={<RecruiterLanding />} />
+        <Route path="/corporateDashboard" element={<CorporateDashoard />} />
+        <Route path="/sign-in-recruiter" element={<SignInRecruiter />} />
+        <Route path="/sign-in-corporate" element={<SignInCorporate />} />
+
+        
         <Route
           path="/believability"
           element={
