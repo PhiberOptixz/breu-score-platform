@@ -88,7 +88,7 @@ export default function CustomizedDialogs({
                         <Grid item xs={11} md={11}>
                         { title }
                         </Grid>
-                        <Grid item xs={1} md={1}>
+                        <Grid item xs={1} md={1} align="right">
                         <CloseRoundedIcon 
                         onClick={() => setOpenPopup(false)}/>
                         </Grid>

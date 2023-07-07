@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import React,{ useEffect, useState, useRef, } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import Radio from "@mui/material/Radio";
 import List from '@mui/material/List';
@@ -30,6 +30,13 @@ const CorporateDashboard = () => {
         setOpen(true);
     }
 
+    // const getRowSpacing = React.useCallback((params) => {
+    //     return {
+    //       top: params.isFirstVisible ? 0 : 5,
+    //       bottom: params.isLastVisible ? 0 : 5,
+    //     };
+    //   }, []);
+
     const rows = [
         { id: 1, firstName: "Javier", score: 3.5, scale: "scale comes here", firstvideo: "videolink,", secondvideo: "videolink" },
         { id: 2, firstName: "Xenon", score: 2.9, scale: "scale comes here", firstvideo: "videolink,", secondvideo: "videolink" },
@@ -39,6 +46,9 @@ const CorporateDashboard = () => {
     ];
 
     const columns = [
+        {
+            headerAlign: 'center',
+        },
         {
             field: "id",
             headerName: "ID",
@@ -105,6 +115,7 @@ const CorporateDashboard = () => {
                             autoHeight
                             disableColumnMenu
                             hideFooterSelectedRowCount
+                            //  getRowSpacing={getRowSpacing}
                             // rowsPerPageOptions={[100]}
                             // autoPageSize
                             disableRowSelectionOnClick
@@ -115,7 +126,7 @@ const CorporateDashboard = () => {
 
                 <CustomizedDialogs
                     title={"Video"}
-                    children={<video width="700px" height="400px" autoplay>
+                    children={<video width="500px" height="350px" autoplay>
                         <source src={video} type="video/mp4" />
                     </video>}
                     openPopup={open}

@@ -20,16 +20,13 @@ import Footer from "../../common/Footer";
 
 const Landing = () => {
   const [selectedValue, setSelectedValue] = React.useState("a");
-
-  const handleChange = (event) => {
-    setSelectedValue(event.target.value);
-  };
+  const[slectedUser,setSlectedUser]=React.useState("Candidate")
 
   const theme = createTheme();
 
   return (
     <div>
-      <Header name="BREU.ai" />
+      <Header name="BREU.ai" page={true} />
       <Grid container>
         <Grid item xs={12} md={7}>
           <div className="player-wrapper LandingVideoGrid">
@@ -65,12 +62,15 @@ const Landing = () => {
                   <Grid item md={2} xs={2}>
                     <Radio
                       sx={{
-                        paddingTop: "40%",
+                        paddingTop: "20%",
                         "&, &.Mui-checked": {
                           color: "#FFFFFF",
                         },
                       }}
                       className="candidateCardParagraph"
+                      value="Candidate" 
+                      checked={slectedUser === "Candidate" ? true :false  }
+                      onClick={()=>setSlectedUser("Candidate")}
                     />
                   </Grid>
                 </Grid>
@@ -79,17 +79,42 @@ const Landing = () => {
               <CardContent className="candidateCard">
                 <Grid container>
                   <Grid item md={10} xs={10}>
-                    <p className="candidateCardParagraph">Candidate</p>
+                    <p className="candidateCardParagraph">Corporate</p>
                   </Grid>
                   <Grid item md={2} xs={2}>
                     <Radio
                       sx={{
-                        paddingTop: "40%",
+                        paddingTop: "20%",
                         "&, &.Mui-checked": {
                           color: "#FFFFFF",
                         },
                       }}
                       className="candidateCardParagraph"
+                      value="Corporate" 
+                      checked={slectedUser === "Corporate" ? true :false  }
+                      onClick={()=>setSlectedUser("Corporate")}
+                    />
+                  </Grid>
+                </Grid>
+              </CardContent>
+
+              <CardContent className="candidateCard">
+                <Grid container>
+                  <Grid item md={10} xs={10}>
+                    <p className="candidateCardParagraph">Recruiter</p>
+                  </Grid>
+                  <Grid item md={2} xs={2}>
+                    <Radio
+                      sx={{
+                        paddingTop: "20%",
+                        "&, &.Mui-checked": {
+                          color: "#FFFFFF",
+                        },
+                      }}
+                      className="candidateCardParagraph"
+                      value="Recruiter" 
+                      checked={slectedUser === "Recruiter" ? true :false  }
+                      onClick={()=>setSlectedUser("Recruiter")}
                     />
                   </Grid>
                 </Grid>
