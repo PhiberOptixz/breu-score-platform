@@ -1,0 +1,25 @@
+.scoresText{
+font-size: 22px;
+}
+.scoreBreakdownCard{
+  cursor: pointer;
+  border-style: solid;
+//   border-color: red;
+  border-radius: 20px;
+  border-width: 3px;
+  width: 100%;
+  height: 100%
+}
+.scoreBreakdownCardP1{
+    padding-left: 8%;
+font-size: 18px;
+}
+.scoreBreakdownCardP2{
+    padding-left: 8%;
+}
+.scoreBreakdownCard:hover{
+    // margin-top: 35px;
+    transform: scale(1.05);
+    // color: #FFE481;
+    // box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+}

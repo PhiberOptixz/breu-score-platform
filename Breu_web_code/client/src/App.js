@@ -16,6 +16,7 @@ import RecruiterLanding from "./components/RecruiterLanding/RecruiterLanding";
 import SignInRecruiter from "./components/Signin-Recruters/SignInRecruiter";
 import CorporateDashoard from "./components/CorporateDashboard/CorporateDashboard";
 import SignInCorporate from "./components/SignIn-Corporate/SignInCorporate";
+import ResultScreen from "./components/Results/ResultScreen";
 
 function App() {
   return (
@@ -30,8 +31,15 @@ function App() {
         <Route path="/corporateDashboard" element={<CorporateDashoard />} />
         <Route path="/sign-in-recruiter" element={<SignInRecruiter />} />
         <Route path="/sign-in-corporate" element={<SignInCorporate />} />
+        <Route
+          path="/intro"
+          element={
+            <ProtectedRoute>
+              <Intro />
+            </ProtectedRoute>
+          }
+        />
 
-        
         <Route
           path="/believability"
           element={
@@ -45,6 +53,14 @@ function App() {
           element={
             <ProtectedRoute>
               <Reliability />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/resultScreen"
+          element={
+            <ProtectedRoute>
+              <ResultScreen />
             </ProtectedRoute>
           }
         />
