@@ -4,6 +4,8 @@ import HorizontalGauge from "react-horizontal-gauge";
 
 // import CardContent from "@mui/material/CardContent";
 import { Grid, Card } from "@mui/material";
+import ProgressBar from "../../common/ProgressBar";
+import { DataGrid } from "@mui/x-data-grid";
 import DataGridReusable from "../../common/DataGridReusable";
 
 const ResultScreen = () => {
@@ -12,19 +14,19 @@ const ResultScreen = () => {
 
   const believeabilityColumns = [
     {
-      field: "metric",
+      field: "id",
       headerName: "Metric ",
-      width: 100,
+      width: 180,
       headerAlign: "center",
       align: "center",
     },
-    {
-      field: "value",
-      headerName: "Value ",
-      width: 100,
-      headerAlign: "center",
-      align: "center",
-    },
+    // {
+    //   field: "value",
+    //   headerName: "Value ",
+    //   width: 100,
+    //   headerAlign: "center",
+    //   align: "center",
+    // },
     {
       field: "percentile",
       headerName: "Percentile",
@@ -42,9 +44,9 @@ const ResultScreen = () => {
   ];
 
   const believeabilityRows = [
-    { metric: 1, value: "Javier", percentile: 3.5, score: "3" },
-    { metric: 2, value: "Javier", percentile: 3.5, score: "3" },
-    { metric: 3, value: "Javier", percentile: 3.5, score: "3" },
+    { id: "Qualification", percentile: 3.5, score: "3" },
+    { id: "Social Score", percentile: 3.5, score: "3" },
+    { id: "Patents", percentile: 3.5, score: "3" },
   ];
 
   return (
@@ -147,11 +149,27 @@ const ResultScreen = () => {
           </Grid>
         </Grid>
 
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={12} align="center">
           {/* <div style={{ height: 350, width: "100%" }}> */}
-          <DataGridReusable rows={rows} columns={columns} />
+          {/* <DataGrid
+              rows={believeabilityRows}
+              columns={believeabilityColumns}
+              autoHeight
+              disableColumnMenu
+              hideFooterSelectedRowCount
+              //  getRowSpacing={getRowSpacing}
+              // rowsPerPageOptions={[100]}
+              // autoPageSize
+              disableRowSelectionOnClick
+              pagination
+            /> */}
+          <DataGridReusable
+            rows={believeabilityRows}
+            columns={believeabilityColumns}
+          />
           {/* </div> */}
         </Grid>
+        <ProgressBar />
       </Grid>
     </>
   );

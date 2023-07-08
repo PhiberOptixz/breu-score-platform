@@ -39,7 +39,7 @@ const EmotionalUndesirability = () => {
   const [webcam, setWebcam] = useState("Start Camera");
   const [recordedBlobs, setRecordedBlobs] = useState([]);
   const [demoVideoURL, setDemoVideoURL] = useState(
-    "https://www.youtube.com/embed/v4sby5j4dTY?autoplay=1&mute=1"
+    "https://www.youtube.com/embed/egkAQbWuw9c?rel=0&autoplay=1&mute=1"
   );
   const [webStream, setWebStream] = useState(null);
   const [recorder, setRecorder] = useState(null);
@@ -211,7 +211,7 @@ const EmotionalUndesirability = () => {
         );
         setQuestionTitle("Conflict Resolution – 1 mins");
         setDemoVideoURL(
-          "https://www.youtube.com/embed/4UAg4Axhg6g?autoplay=1&mute=1"
+          "https://www.youtube.com/embed/vsRRs_362-M?rel=0&autoplay=1&mute=1"
         );
         localStorage.removeItem("tries");
         localStorage.setItem("video", noOfVideos + 1);
@@ -235,7 +235,7 @@ const EmotionalUndesirability = () => {
       localStorage.removeItem("tries");
       localStorage.setItem("video", 1);
       setDemoVideoURL(
-        "https://www.youtube.com/embed/4UAg4Axhg6g?autoplay=1&mute=1"
+        "https://www.youtube.com/embed/vsRRs_362-M?rel=0&autoplay=1&mute=1"
       );
       const blob = new Blob(recordedBlobs, { type: "video/mp4" });
       setWebcam("Start Camera");
