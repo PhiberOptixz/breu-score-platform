@@ -1,3 +1,1 @@
-Steps to work with the project - all developers must follow these steps
-
-
+Steps to work with the breu project - This is to ensure that all the developers will be work with it
