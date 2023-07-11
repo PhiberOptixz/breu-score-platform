@@ -17,6 +17,8 @@ import SignInRecruiter from "./components/Signin-Recruters/SignInRecruiter";
 import CorporateDashoard from "./components/CorporateDashboard/CorporateDashboard";
 import SignInCorporate from "./components/SignIn-Corporate/SignInCorporate";
 import ResultScreen from "./components/Results/ResultScreen";
+import Admin from "./components/Admin/Admin";
+import BelievabilityScore from "./components/Score/BeliveabilityScore";
 
 function App() {
   return (
@@ -31,6 +33,8 @@ function App() {
         <Route path="/corporateDashboard" element={<CorporateDashoard />} />
         <Route path="/sign-in-recruiter" element={<SignInRecruiter />} />
         <Route path="/sign-in-corporate" element={<SignInCorporate />} />
+        <Route path="/b-score" element={<BelievabilityScore />} />
+        <Route path="/admin" element={<Admin/>} />
         <Route
           path="/intro"
           element={

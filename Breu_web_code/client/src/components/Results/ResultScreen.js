@@ -2,11 +2,9 @@ import React, { Component, useState } from "react";
 
 import HorizontalGauge from "react-horizontal-gauge";
 
-// import CardContent from "@mui/material/CardContent";
 import { Grid, Card } from "@mui/material";
 import ProgressBar from "../../common/ProgressBar";
-import { DataGrid } from "@mui/x-data-grid";
-import DataGridReusable from "../../common/DataGridReusable";
+import BelievabilityScore from "../Score/BeliveabilityScore";
 
 const ResultScreen = () => {
   const [columns, setColumns] = useState();
@@ -148,26 +146,12 @@ const ResultScreen = () => {
             {/* <Grid item xs={false} md={1}></Grid> */}
           </Grid>
         </Grid>
-
-        <Grid item xs={12} md={12} align="center">
-          {/* <div style={{ height: 350, width: "100%" }}> */}
-          {/* <DataGrid
-              rows={believeabilityRows}
-              columns={believeabilityColumns}
-              autoHeight
-              disableColumnMenu
-              hideFooterSelectedRowCount
-              //  getRowSpacing={getRowSpacing}
-              // rowsPerPageOptions={[100]}
-              // autoPageSize
-              disableRowSelectionOnClick
-              pagination
-            /> */}
-          <DataGridReusable
-            rows={believeabilityRows}
-            columns={believeabilityColumns}
-          />
-          {/* </div> */}
+        <Grid item xs={2} md={2} >
+        </Grid>
+        <Grid item xs={8} md={8}>
+          <BelievabilityScore/>
+        </Grid>
+        <Grid item xs={2} md={2}>
         </Grid>
         <ProgressBar />
       </Grid>
