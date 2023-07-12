@@ -86,14 +86,14 @@ const CorporateDashboard = () => {
     {
       field: "id",
       headerName: "ID",
-      width: 150,
+      width: 175,
       headerAlign: "center",
       align: "center",
     },
     {
       field: "firstName",
       headerName: "First Name",
-      width: 150,
+      width: 175,
       headerAlign: "center",
       align: "center",
     },
@@ -101,37 +101,32 @@ const CorporateDashboard = () => {
       field: "score",
       headerName: "Score",
       type: "number",
-      width: 150,
+      width: 175,
       headerAlign: "center",
       align: "center",
     },
     {
       field: "scale",
       headerName: "Scale",
-      width: 200,
+      width: 250,
       headerAlign: "center",
       align: "center",
       renderCell: (params) => (
-        <Grid item xs={12} md={6} align="left" style={{ paddingLeft: "10%" }}>
-          <p className="scoresText" align="left">
-            Scores
-          </p>
-          <HorizontalGauge
-            ticks={[
-              { label: "0", value: 0 },
-              { label: "1", value: 1 },
-              { label: "2", value: 2 },
-              { label: "3", value: 3 },
-              { label: "4", value: 4 },
-              { label: "5", value: 5 },
-            ]}
-            height={70}
-            width={300}
-            min={0}
-            max={5}
-            value={1}
-          />
-        </Grid>
+        <HorizontalGauge
+          ticks={[
+            { label: "0", value: 0 },
+            { label: "1", value: 1 },
+            { label: "2", value: 2 },
+            { label: "3", value: 3 },
+            { label: "4", value: 4 },
+            { label: "5", value: 5 },
+          ]}
+          height={45}
+          width={250}
+          min={0}
+          max={5}
+          value={1.5}
+        />
       ),
     },
     {
@@ -139,6 +134,7 @@ const CorporateDashboard = () => {
       headerName: "Video 1",
       headerAlign: "center",
       align: "center",
+      width: 175,
       renderCell: (params) => (
         <PlayCircleFilledWhiteRoundedIcon
           fontSize="large"
@@ -152,6 +148,7 @@ const CorporateDashboard = () => {
       headerName: "Video 2",
       headerAlign: "center",
       align: "center",
+      width: 175,
       renderCell: (params) => (
         <PlayCircleFilledWhiteRoundedIcon
           fontSize="large"
@@ -168,11 +165,12 @@ const CorporateDashboard = () => {
 
       <Grid container>
         <Grid item xs={12} md={12}>
-          <div style={{ height: 350, width: "100%" }}>
+          <div style={{ height: "100%", width: "100%" }}>
             <DataGrid
               rows={rows}
               columns={columns}
-              autoHeight
+              rowHeight={75}
+              // autoHeight
               disableColumnMenu
               hideFooterSelectedRowCount
               //  getRowSpacing={getRowSpacing}

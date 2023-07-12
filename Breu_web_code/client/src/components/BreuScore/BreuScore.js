@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import Header from "../../common/header";
 import { Grid } from "@mui/material";
 import { TextField } from "@mui/material";
+import ResultScreen from "../Results/ResultScreen";
 
 const BreuScore = () => {
   useEffect(() => {
@@ -14,12 +15,13 @@ const BreuScore = () => {
         name="Breu Score"
         caption={"Exploring your Emotional dimension"}
       />
-      <Grid container>
+      {/* <Grid container>
         <h3 style={{ margin: "auto" }}>
           {" "}
           You did it !! Your breu score will be available in 24 hours
         </h3>
-      </Grid>
+      </Grid> */}
+      <ResultScreen />
       {/* <Grid container sx={{ marginLeft: "2%" }}>
         <TextField variant="h3" color="success">
           You did it !! Your breu score will be available in 24 hours

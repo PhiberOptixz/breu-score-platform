@@ -4,11 +4,17 @@ import HorizontalGauge from "react-horizontal-gauge";
 
 import { Grid, Card } from "@mui/material";
 import ProgressBar from "../../common/ProgressBar";
+
 import BelievabilityScore from "../Score/BeliveabilityScore";
+import ReliabilityScore from "../Score/ReliabilityScore";
+import EiScore from "../Score/EiScore";
+import Undesireability from "../Score/Undesireability";
 
 const ResultScreen = () => {
   const [columns, setColumns] = useState();
   const [rows, setRows] = useState();
+  const [comp, setComp] = useState(<BelievabilityScore />);
+  const [tableName, setTableName] = useState("Believability Score");
 
   const believeabilityColumns = [
     {
@@ -49,26 +55,12 @@ const ResultScreen = () => {
 
   return (
     <>
-      <Grid container>
+      <Grid container style={{ marginTop: "2%" }}>
         <Grid item xs={12} md={6} align="left" style={{ paddingLeft: "10%" }}>
           <p className="scoresText" align="left">
             Scores
           </p>
-          <HorizontalGauge
-            ticks={[
-              { label: "0", value: 0 },
-              { label: "1", value: 1 },
-              { label: "2", value: 2 },
-              { label: "3", value: 3 },
-              { label: "4", value: 4 },
-              { label: "5", value: 5 },
-            ]}
-            height={70}
-            width={300}
-            min={0}
-            max={5}
-            value={1}
-          />
+          <ProgressBar value={1} />
         </Grid>
         {/* <Grid item xs={12} md={6}></Grid> */}
         <Grid item xs={12} md={6} style={{ padding: "2%", paddingTop: "0%" }}>
@@ -82,8 +74,10 @@ const ResultScreen = () => {
                 className="scoreBreakdownCard"
                 style={{ borderColor: "red" }}
                 onClick={() => {
-                  setColumns(believeabilityColumns);
-                  setRows(believeabilityRows);
+                  // setColumns(believeabilityColumns);
+                  // setRows(believeabilityRows);
+                  setComp(<BelievabilityScore />);
+                  setTableName("Believability Score");
                 }}
               >
                 <p className="scoreBreakdownCardP1" style={{ color: "red" }}>
@@ -97,6 +91,12 @@ const ResultScreen = () => {
               <Card
                 className="scoreBreakdownCard"
                 style={{ borderColor: "orange" }}
+                onClick={() => {
+                  // setColumns(believeabilityColumns);
+                  // setRows(believeabilityRows);
+                  setComp(<ReliabilityScore />);
+                  setTableName("Reliability Score");
+                }}
               >
                 <p className="scoreBreakdownCardP1" style={{ color: "orange" }}>
                   2
@@ -109,6 +109,12 @@ const ResultScreen = () => {
               <Card
                 className="scoreBreakdownCard"
                 style={{ borderColor: "yellow" }}
+                onClick={() => {
+                  // setColumns(believeabilityColumns);
+                  // setRows(believeabilityRows);
+                  setComp(<EiScore />);
+                  setTableName("EI Score");
+                }}
               >
                 <p className="scoreBreakdownCardP1" style={{ color: "yellow" }}>
                   2
@@ -121,6 +127,12 @@ const ResultScreen = () => {
               <Card
                 className="scoreBreakdownCard"
                 style={{ borderColor: "#4CBB17" }}
+                onClick={() => {
+                  // setColumns(believeabilityColumns);
+                  // setRows(believeabilityRows);
+                  setComp(<Undesireability />);
+                  setTableName("Undesireability Score");
+                }}
               >
                 <p
                   className="scoreBreakdownCardP1"
@@ -132,28 +144,19 @@ const ResultScreen = () => {
               </Card>
             </Grid>
 
-            <Grid item xs={4} md={3}>
-              <Card
-                className="scoreBreakdownCard"
-                style={{ borderColor: "green" }}
-              >
-                <p className="scoreBreakdownCardP1" style={{ color: "green" }}>
-                  5
-                </p>
-                <p className="scoreBreakdownCardP2">Excellent</p>
-              </Card>
-            </Grid>
             {/* <Grid item xs={false} md={1}></Grid> */}
           </Grid>
         </Grid>
-        <Grid item xs={2} md={2} >
+        <Grid container style={{ marginTop: "4%" }}>
+          <Grid item xs={12} md={12} align="center">
+            <p className="scoresText">{tableName}</p>
+          </Grid>
+          {/* <Grid item xs={2} md={2}></Grid> */}
+          <Grid item xs={12} md={12}>
+            {comp}
+          </Grid>
+          {/* <Grid item xs={} md={2}></Grid> */}
         </Grid>
-        <Grid item xs={8} md={8}>
-          <BelievabilityScore/>
-        </Grid>
-        <Grid item xs={2} md={2}>
-        </Grid>
-        <ProgressBar />
       </Grid>
     </>
   );
