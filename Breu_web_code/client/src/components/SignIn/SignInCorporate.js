@@ -13,16 +13,16 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import TextFieldGroup from "../../common/TextFieldGroup";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { candidateSignIn } from "../../features/authSlice";
+import { corporateSignIn } from "../../features/corporateAuthSlice";
 
 const theme = createTheme();
 
 const SignInCorporate = () => {
   const dispatch = useDispatch();
-  const { auth } = useSelector((state) => state);
+  const { corporateAuth } = useSelector((state) => state);
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
-  const { isAuthenticated, user } = auth;
+  const { isAuthenticated, user } = corporateAuth;
 
   const formik = useFormik({
     initialValues: {
@@ -34,17 +34,17 @@ const SignInCorporate = () => {
       password: Yup.string().required("Password is required field"),
     }),
     onSubmit: async (values) => {
-      dispatch(candidateSignIn(values));
+      dispatch(corporateSignIn(values));
     },
   });
 
   useEffect(() => {
     if (isAuthenticated) {
-      // if (!auth?.user?.completedBelievability) {
-      navigate("/corporatedashoard");
+      // if (!corporateAuth?.user?.completedBelievability) {
+      navigate("/corporateDashboard");
       // }
     }
-  }, [auth]);
+  }, [corporateAuth]);
 
   return (
     <Grid container className="signInContainer">

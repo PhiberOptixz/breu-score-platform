@@ -13,9 +13,9 @@ import BreuScore from "./components/BreuScore/BreuScore";
 import Prologue from "./components/Prologue/Prologue";
 import Undesirability from "./components/Undesirability/Undesirability";
 import RecruiterLanding from "./components/RecruiterLanding/RecruiterLanding";
-import SignInRecruiter from "./components/Signin-Recruters/SignInRecruiter";
+import SignInRecruiter from "./components/SignIn/SignInRecruiter";
 import CorporateDashoard from "./components/CorporateDashboard/CorporateDashboard";
-import SignInCorporate from "./components/SignIn-Corporate/SignInCorporate";
+import SignInCorporate from "./components/SignIn/SignInCorporate";
 import ResultScreen from "./components/Results/ResultScreen";
 import Admin from "./components/Admin/Admin";
 import BelievabilityScore from "./components/Score/BeliveabilityScore";
@@ -31,10 +31,10 @@ function App() {
         <Route path="/undesirability" element={<Undesirability />} />
         <Route path="/recruiterDashboard" element={<RecruiterLanding />} />
         <Route path="/corporateDashboard" element={<CorporateDashoard />} />
-        <Route path="/sign-in-recruiter" element={<SignInRecruiter />} />
-        <Route path="/sign-in-corporate" element={<SignInCorporate />} />
+        <Route path="/recruiter-sign-in" element={<SignInRecruiter />} />
+        <Route path="/corporate-sign-in" element={<SignInCorporate />} />
         <Route path="/b-score" element={<BelievabilityScore />} />
-        <Route path="/admin" element={<Admin/>} />
+        <Route path="/admin" element={<Admin />} />
         <Route
           path="/intro"
           element={

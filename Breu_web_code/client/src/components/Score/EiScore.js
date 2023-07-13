@@ -14,53 +14,53 @@ const EiScore = () => {
           </tr>
           <tr className="trn">
             <td className="tdh">Team work</td>
-            <td className="tdh">Maria Anders</td>
-            <td className="tdh">Germany</td>
+            <td className="tdh">10</td>
+            <td className="tdh">3</td>
           </tr>
           <tr className="trn">
             <td className="tdh">Complexity handling</td>
-            <td className="tdh">Francisco Chang</td>
-            <td className="tdh">Mexico</td>
+            <td className="tdh">10</td>
+            <td className="tdh">4</td>
           </tr>
           <tr className="trn">
             <td className="tdh">Conflict resolution</td>
-            <td className="tdh">Roland Mendel</td>
-            <td className="tdh">Austria</td>
+            <td className="tdh">10</td>
+            <td className="tdh">3</td>
           </tr>
           <tr className="trn">
             <td className="tdh">Initiative</td>
-            <td className="tdh">Helen Bennett</td>
-            <td className="tdh">UK</td>
+            <td className="tdh">10</td>
+            <td className="tdh">3</td>
           </tr>
           <tr className="trn">
             <td className="tdh">Cultural Fit</td>
-            <td className="tdh">Yoshi Tannamuri</td>
-            <td className="tdh">Canada</td>
+            <td className="tdh">15</td>
+            <td className="tdh">2</td>
           </tr>
           <tr className="trn">
             <td className="tdh">Presentation</td>
-            <td className="tdh">Giovanni Rovelli</td>
-            <td className="tdh">Italy</td>
+            <td className="tdh">10</td>
+            <td className="tdh">2</td>
           </tr>
           <tr className="trn">
             <td className="tdh">Communication</td>
-            <td className="tdh">Giovanni Rovelli</td>
-            <td className="tdh">Italy</td>
+            <td className="tdh">10</td>
+            <td className="tdh">4</td>
           </tr>
           <tr className="trn">
             <td className="tdh">Ownership</td>
-            <td className="tdh">Giovanni Rovelli</td>
-            <td className="tdh">Italy</td>
+            <td className="tdh">10</td>
+            <td className="tdh">4</td>
           </tr>
           <tr className="trn">
             <td className="tdh">Empathy</td>
-            <td className="tdh">Giovanni Rovelli</td>
-            <td className="tdh">Italy</td>
+            <td className="tdh">10</td>
+            <td className="tdh">5</td>
           </tr>
           <tr className="trn">
             <td className="tdh">Openness</td>
-            <td className="tdh">Giovanni Rovelli</td>
-            <td className="tdh">Italy</td>
+            <td className="tdh">10</td>
+            <td className="tdh">3</td>
           </tr>
         </table>
       </Grid>

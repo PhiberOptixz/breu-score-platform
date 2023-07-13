@@ -14,23 +14,23 @@ const UndesireabilityScore = () => {
           </tr>
           <tr className="trn">
             <td className="tdh">Metric</td>
-            <td className="tdh">Maria Anders</td>
-            <td className="tdh">Germany</td>
+            <td className="tdh">20</td>
+            <td className="tdh">2</td>
           </tr>
           <tr className="trn">
             <td className="tdh">Plagiarism</td>
-            <td className="tdh">Francisco Chang</td>
-            <td className="tdh">Mexico</td>
+            <td className="tdh">20</td>
+            <td className="tdh">2</td>
           </tr>
           <tr className="trn">
             <td className="tdh">Trust issues</td>
-            <td className="tdh">Roland Mendel</td>
-            <td className="tdh">Austria</td>
+            <td className="tdh">30</td>
+            <td className="tdh">2</td>
           </tr>
           <tr className="trn">
             <td className="tdh">Fake information</td>
-            <td className="tdh">Helen Bennett</td>
-            <td className="tdh">UK</td>
+            <td className="tdh">30</td>
+            <td className="tdh">2</td>
           </tr>
         </table>
       </Grid>

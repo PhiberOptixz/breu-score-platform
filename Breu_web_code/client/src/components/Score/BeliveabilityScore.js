@@ -10,34 +10,34 @@ const BelievabilityScore = () => {
           <tr className="trn">
             <th className="tdh">Qualification</th>
             <th className="tdh">Percentile</th>
-            <th className="tdh">Score</th>
+            <th className="tdh">3</th>
           </tr>
           <tr className="trn">
             <td className="tdh">Professional Experience</td>
-            <td className="tdh">Maria Anders</td>
-            <td className="tdh">Germany</td>
+            <td className="tdh">20</td>
+            <td className="tdh">3</td>
           </tr>
           <tr className="trn">
             <td className="tdh">
               Social score (Git hub, Stack over flow, Kaggle, Linked in )
             </td>
-            <td className="tdh">Francisco Chang</td>
-            <td className="tdh">Mexico</td>
+            <td className="tdh">15</td>
+            <td className="tdh">3</td>
           </tr>
           <tr className="trn">
             <td className="tdh">Patents </td>
-            <td className="tdh">Roland Mendel</td>
-            <td className="tdh">Austria</td>
+            <td className="tdh">15</td>
+            <td className="tdh">4</td>
           </tr>
           <tr className="trn">
             <td className="tdh">Whitepaper/Conference presentation</td>
-            <td className="tdh">Helen Bennett</td>
-            <td className="tdh">UK</td>
+            <td className="tdh">15</td>
+            <td className="tdh">3</td>
           </tr>
           <tr className="trn">
             <td className="tdh">Blog</td>
-            <td className="tdh">Yoshi Tannamuri</td>
-            <td className="tdh">Canada</td>
+            <td className="tdh">35</td>
+            <td className="tdh">4</td>
           </tr>
         </table>
       </Grid>

@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 // Create User Schema
-let corporateSchema = new mongoose.Schema({
+let recruiterSchema = new mongoose.Schema({
   firstName: {
     type: String,
     required: true,
@@ -14,7 +14,7 @@ let corporateSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  corporateName: {
+  recruiterName: {
     type: String,
     required: true,
   },
@@ -36,7 +36,7 @@ let corporateSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model(
-  "corporateDetails",
-  corporateSchema,
-  "corporateDetails"
+  "recruiterDetails",
+  recruiterSchema,
+  "recruiterDetails"
 );

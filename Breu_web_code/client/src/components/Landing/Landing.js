@@ -17,12 +17,24 @@ import RadioGroup from "@mui/material/RadioGroup";
 import { Link } from "react-router-dom";
 import Header from "../../common/header";
 import Footer from "../../common/Footer";
+import { useNavigate } from "react-router-dom";
 
 const Landing = () => {
   const [selectedValue, setSelectedValue] = React.useState("a");
-  const[slectedUser,setSlectedUser]=React.useState("Candidate")
+  const [slectedUser, setSlectedUser] = React.useState("Candidate");
+  const navigate = useNavigate();
 
   const theme = createTheme();
+
+  const handleContinue = () => {
+    if (slectedUser === "Candidate") {
+      navigate("/sign-in");
+    } else if (slectedUser === "Recruiter") {
+      navigate("/recruiter-sign-in");
+    } else {
+      navigate("/corporate-sign-in");
+    }
+  };
 
   return (
     <div>
@@ -35,7 +47,7 @@ const Landing = () => {
             </video> */}
             <ReactPlayer
               className="react-player"
-              url="https://www.youtube.com/watch?v=ysz5S6PUM-U"
+              url="https://www.youtube.com/embed/y7k1QzcoXYI?rel=0&autoplay=1&mute=1"
               // controls
               // url={video}
               width="100%"
@@ -68,9 +80,9 @@ const Landing = () => {
                         },
                       }}
                       className="candidateCardParagraph"
-                      value="Candidate" 
-                      checked={slectedUser === "Candidate" ? true :false  }
-                      onClick={()=>setSlectedUser("Candidate")}
+                      value="Candidate"
+                      checked={slectedUser === "Candidate" ? true : false}
+                      onClick={() => setSlectedUser("Candidate")}
                     />
                   </Grid>
                 </Grid>
@@ -90,9 +102,9 @@ const Landing = () => {
                         },
                       }}
                       className="candidateCardParagraph"
-                      value="Corporate" 
-                      checked={slectedUser === "Corporate" ? true :false  }
-                      onClick={()=>setSlectedUser("Corporate")}
+                      value="Corporate"
+                      checked={slectedUser === "Corporate" ? true : false}
+                      onClick={() => setSlectedUser("Corporate")}
                     />
                   </Grid>
                 </Grid>
@@ -112,9 +124,9 @@ const Landing = () => {
                         },
                       }}
                       className="candidateCardParagraph"
-                      value="Recruiter" 
-                      checked={slectedUser === "Recruiter" ? true :false  }
-                      onClick={()=>setSlectedUser("Recruiter")}
+                      value="Recruiter"
+                      checked={slectedUser === "Recruiter" ? true : false}
+                      onClick={() => setSlectedUser("Recruiter")}
                     />
                   </Grid>
                 </Grid>
@@ -127,13 +139,14 @@ const Landing = () => {
                   fullWidth
                   variant="contained"
                   sx={{ mt: 2, mb: 1, width: "70%", height: "50px" }}
+                  onClick={() => handleContinue()}
                 >
-                  <Link
+                  {/* <Link
                     to="/sign-in"
                     style={{ textDecoration: "none", color: "#FFFFFF" }}
-                  >
-                    Continue
-                  </Link>
+                  > */}
+                  Continue
+                  {/* </Link> */}
                 </Button>
               </CardContent>
             </CardContent>

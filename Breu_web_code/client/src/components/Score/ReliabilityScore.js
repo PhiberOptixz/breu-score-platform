@@ -14,33 +14,33 @@ const ReliabilityScore = () => {
           </tr>
           <tr className="trn">
             <td className="tdh">Design</td>
-            <td className="tdh">Maria Anders</td>
-            <td className="tdh">Germany</td>
+            <td className="tdh">10</td>
+            <td className="tdh">4</td>
           </tr>
           <tr className="trn">
             <td className="tdh">Framework</td>
-            <td className="tdh">Francisco Chang</td>
-            <td className="tdh">Mexico</td>
+            <td className="tdh">10</td>
+            <td className="tdh">3</td>
           </tr>
           <tr className="trn">
             <td className="tdh">Coding</td>
-            <td className="tdh">Roland Mendel</td>
-            <td className="tdh">Austria</td>
+            <td className="tdh">10</td>
+            <td className="tdh">2</td>
           </tr>
           <tr className="trn">
             <td className="tdh">Debugging</td>
-            <td className="tdh">Helen Bennett</td>
-            <td className="tdh">UK</td>
+            <td className="tdh">30</td>
+            <td className="tdh">4</td>
           </tr>
           <tr className="trn">
             <td className="tdh">Architecture </td>
-            <td className="tdh">Yoshi Tannamuri</td>
-            <td className="tdh">Canada</td>
+            <td className="tdh">10</td>
+            <td className="tdh">3</td>
           </tr>
           <tr className="trn">
             <td className="tdh">Implementation</td>
-            <td className="tdh">Giovanni Rovelli</td>
-            <td className="tdh">Italy</td>
+            <td className="tdh">10</td>
+            <td className="tdh">2</td>
           </tr>
         </table>
       </Grid>

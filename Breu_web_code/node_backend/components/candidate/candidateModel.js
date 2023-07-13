@@ -1,4 +1,3 @@
-const { number } = require("joi");
 const mongoose = require("mongoose");
 
 // Create User Schema
@@ -86,6 +85,12 @@ let candidateSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  linkedRecruiters: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "recruiterDetails",
+    },
+  ],
   createdAt: {
     type: Date,
     default: new Date(),

@@ -3,16 +3,16 @@ import axios from "axios";
 import { SnackBar } from "../common/Snackbar";
 import setAuthToken from "../common/setAuthToken";
 
-//register candidate action
-export const registerCandidate = createAsyncThunk(
-  "registerCandidate",
+//register recruiter action
+export const registerRecruiter = createAsyncThunk(
+  "registerRecruiter",
   async (data, { rejectWithValue }) => {
     axios
-      .post("/api/auth/registerCandidate", data.values)
+      .post("/api/auth/registerRecruiter", data.values)
       .then((response) => {
         const result = response.data;
         SnackBar.success(response?.data?.message);
-        data.navigate("/sign-in");
+        data.navigate("/recruiter-sign-in");
         return result;
       })
       .catch((error) => {
@@ -22,13 +22,13 @@ export const registerCandidate = createAsyncThunk(
   }
 );
 
-//candidate sign-in
-export const candidateSignIn = createAsyncThunk(
-  "candidateSignIn",
+//recruiter sign-in
+export const recruiterSignIn = createAsyncThunk(
+  "recruiterSignIn",
   async (data, { rejectWithValue, dispatch }) => {
     try {
       axios
-        .post("/api/auth/candidateSignIn", data)
+        .post("/api/auth/recruiterSignIn", data)
         .then(async (response) => {
           const result = response.data;
           // Set token to localstorage
@@ -36,7 +36,7 @@ export const candidateSignIn = createAsyncThunk(
           // Set token to Auth Header
           setAuthToken(result.token);
           SnackBar.success(response?.data?.message);
-          return await dispatch(candidateDetails());
+          return await dispatch(recruiterDetails());
         })
         .catch((error) => {
           SnackBar.error(error?.response?.data?.message);
@@ -49,12 +49,12 @@ export const candidateSignIn = createAsyncThunk(
   }
 );
 
-//candidate details
-export const candidateDetails = createAsyncThunk(
-  "candidateDetails",
+//recruiter details
+export const recruiterDetails = createAsyncThunk(
+  "recruiterDetails",
   async (data, { rejectWithValue }) => {
     try {
-      const response = await axios.get("/api/auth/getCandidateDetails");
+      const response = await axios.get("/api/auth/getRecruiterDetails");
       const result = response.data;
       return result;
     } catch (error) {
@@ -64,9 +64,9 @@ export const candidateDetails = createAsyncThunk(
   }
 );
 
-//clear candidate info
-export const removeCandidateDetails = createAsyncThunk(
-  "removeCandidateDetails",
+//remove recruiter details
+export const removeRecruiterDetails = createAsyncThunk(
+  "removeRecruiterDetails",
   async (data, { rejectWithValue }) => {
     try {
       return {};
@@ -78,7 +78,7 @@ export const removeCandidateDetails = createAsyncThunk(
 );
 
 export const auth = createSlice({
-  name: "auth",
+  name: "recruiterAuth",
   initialState: {
     loading: false,
     error: null,
@@ -86,47 +86,47 @@ export const auth = createSlice({
     user: {},
   },
   extraReducers: (builder) => {
-    builder.addCase(registerCandidate.pending, (state) => {
+    builder.addCase(registerRecruiter.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(registerCandidate.fulfilled, (state, action) => {
+    builder.addCase(registerRecruiter.fulfilled, (state, action) => {
       state.loading = false;
     });
-    builder.addCase(registerCandidate.rejected, (state, action) => {
+    builder.addCase(registerRecruiter.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload;
     });
-    builder.addCase(candidateSignIn.pending, (state) => {
+    builder.addCase(recruiterSignIn.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(candidateSignIn.fulfilled, (state, action) => {
+    builder.addCase(recruiterSignIn.fulfilled, (state, action) => {
       state.loading = false;
     });
-    builder.addCase(candidateSignIn.rejected, (state, action) => {
+    builder.addCase(recruiterSignIn.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload;
     });
-    builder.addCase(candidateDetails.pending, (state) => {
+    builder.addCase(recruiterDetails.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(candidateDetails.fulfilled, (state, action) => {
+    builder.addCase(recruiterDetails.fulfilled, (state, action) => {
       state.loading = false;
       state.isAuthenticated = true;
       state.user = action.payload;
     });
-    builder.addCase(candidateDetails.rejected, (state, action) => {
+    builder.addCase(recruiterDetails.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload;
     });
-    builder.addCase(removeCandidateDetails.pending, (state) => {
+    builder.addCase(removeRecruiterDetails.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(removeCandidateDetails.fulfilled, (state, action) => {
+    builder.addCase(removeRecruiterDetails.fulfilled, (state, action) => {
       state.loading = false;
       state.isAuthenticated = false;
       state.user = {};
     });
-    builder.addCase(removeCandidateDetails.rejected, (state, action) => {
+    builder.addCase(removeRecruiterDetails.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload;
     });

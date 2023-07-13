@@ -60,7 +60,7 @@ const ResultScreen = () => {
           <p className="scoresText" align="left">
             Scores
           </p>
-          <ProgressBar value={1} />
+          <ProgressBar value={3} />
         </Grid>
         {/* <Grid item xs={12} md={6}></Grid> */}
         <Grid item xs={12} md={6} style={{ padding: "2%", paddingTop: "0%" }}>
