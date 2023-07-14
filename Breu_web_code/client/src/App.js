@@ -19,6 +19,7 @@ import SignInCorporate from "./components/SignIn/SignInCorporate";
 import ResultScreen from "./components/Results/ResultScreen";
 import Admin from "./components/Admin/Admin";
 import BelievabilityScore from "./components/Score/BeliveabilityScore";
+import AdminBelievability from "./components/Admin/adminBelievability";
 
 function App() {
   return (
@@ -40,6 +41,15 @@ function App() {
           element={
             <ProtectedRoute>
               <Intro />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/adminBelievability"
+          element={
+            <ProtectedRoute>
+              <AdminBelievability />
             </ProtectedRoute>
           }
         />
