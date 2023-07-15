@@ -52,15 +52,21 @@ const Undesirability = () => {
                     </List>
                 </Grid>
                 <Grid item xs={10} md={10} style={{marginTop:"4%"}} >
+                    <Grid container>
+                    <Grid item xs={1} md={1} align="center" >
                     <Checkbox
                         // label="I agree to the terms and conditions"
                         checked={checked}
                         onChange={handleChange}
                         inputProps={{ 'aria-label': 'controlled' }}
                     />
-                    <span>"I understand the above conditions and certify that the provided information is true to the best of my knowledge"</span>
+                    </Grid>
+                    <Grid item xs={11} md={11} >
+                    <span>I hereby declare that the information given by me in the Believability, Reliability and Emotional intelligibility sections is true, complete and correct to the best of my knowledge and belief and that nothing has been concealed or distorted.</span>
+                    </Grid>
                 </Grid>
-                <Grid item xs={2} md={2} sx={{ marginTop: "4%" }}>
+                </Grid>
+                <Grid item xs={2} md={2} sx={{ marginTop: "4%" }} align="center">
                { checked ?   
                     <ButtonField
                         buttonStyle="submit"
