@@ -20,6 +20,8 @@ import ResultScreen from "./components/Results/ResultScreen";
 import Admin from "./components/Admin/Admin";
 import BelievabilityScore from "./components/Score/BeliveabilityScore";
 import AdminBelievability from "./components/Admin/adminBelievability";
+import Score from "./common/Score"
+
 
 function App() {
   return (
@@ -36,6 +38,8 @@ function App() {
         <Route path="/corporate-sign-in" element={<SignInCorporate />} />
         <Route path="/b-score" element={<BelievabilityScore />} />
         <Route path="/admin" element={<Admin />} />
+        <Route path="/scoring" element={<Score/>} />
+      
         <Route
           path="/intro"
           element={
