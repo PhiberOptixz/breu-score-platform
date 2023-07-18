@@ -13,17 +13,17 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import TextFieldGroup from "../../common/TextFieldGroup";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { candidateSignIn } from "../../features/authSlice";
+import { corporateSignIn } from "../../features/corporateAuthSlice";
 import logo from "../../assets/logo.png"
 
 const theme = createTheme();
 
-const SignIn = () => {
+const SignInAdmin = () => {
   const dispatch = useDispatch();
-  const { auth } = useSelector((state) => state);
+  const { corporateAuth } = useSelector((state) => state);
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
-  const { isAuthenticated, user } = auth;
+  const { isAuthenticated, user } = corporateAuth;
 
   const formik = useFormik({
     initialValues: {
@@ -35,17 +35,17 @@ const SignIn = () => {
       password: Yup.string().required("Password is required field"),
     }),
     onSubmit: async (values) => {
-      dispatch(candidateSignIn(values));
+      dispatch(corporateSignIn(values));
     },
   });
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      // if (!auth?.user?.completedBelievability) {
-      navigate("/intro");
-      // }
-    }
-  }, [auth]);
+//   useEffect(() => {
+//     if (isAuthenticated) {
+//       // if (!corporateAuth?.user?.completedBelievability) {
+//       navigate("/scoring");
+//       // }
+//     }
+//   }, [corporateAuth]);
 
   return (
     <Grid container className="signInContainer">
@@ -126,12 +126,13 @@ const SignIn = () => {
               }}
             >
               {/* <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-                
-              </Avatar> */}
+                {/* <LockOutlinedIcon /> */}
+              {/* </Avatar> */} 
+
               <img src={logo} alt="Breu"/>
 
               <Typography component="h1" variant="h5">
-                Sign in
+                Sign in-Admin
               </Typography>
               <Box sx={{ mt: 1 }}>
                 <form
@@ -184,14 +185,6 @@ const SignIn = () => {
                       </Button>
                     </Grid>
                   </Grid>
-                  <Grid container>
-                    <Grid item xs></Grid>
-                    <Grid item>
-                      <Link to="/sign-up">
-                        {"Don't have an account? Sign Up"}
-                      </Link>
-                    </Grid>
-                  </Grid>
                 </form>
               </Box>
             </Box>
@@ -202,4 +195,4 @@ const SignIn = () => {
     </Grid>
   );
 };
-export default SignIn;
+export default SignInAdmin;

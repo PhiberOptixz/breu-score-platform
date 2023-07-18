@@ -21,6 +21,7 @@ import Admin from "./components/Admin/Admin";
 import BelievabilityScore from "./components/Score/BeliveabilityScore";
 import AdminBelievability from "./components/Admin/adminBelievability";
 import Score from "./common/Score"
+import SignInAdmin from "./components/SignIn/SignInAdmin"
 
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
         <Route path="/b-score" element={<BelievabilityScore />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/scoring" element={<Score/>} />
+        <Route path="/admin-sign-in" element={<SignInAdmin/>} />
       
         <Route
           path="/intro"
