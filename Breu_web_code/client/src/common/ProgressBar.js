@@ -64,37 +64,57 @@ const ProgressBar = ({ value }) => {
         <Grid item xs={1} md={1}></Grid>
         <Grid item xs={2} md={2}>
           {value === 1 ? (
-            <div className="triContainer">
-              <div className="revTriangle"></div>
-            </div>
+            <>
+              {" "}
+              <p>Weak</p>
+              <div className="triContainer">
+                <div className="revTriangle"></div>
+              </div>
+            </>
           ) : null}
         </Grid>
         <Grid item xs={2} md={2}>
           {value === 2 ? (
-            <div className="triContainer">
-              <div className="revTriangle"></div>
-            </div>
+            <>
+              {" "}
+              <p style={{ fontWeight: "600" }}>Fair</p>
+              <div className="triContainer">
+                <div className="revTriangle"></div>
+              </div>
+            </>
           ) : null}
         </Grid>
         <Grid item xs={2} md={2}>
           {value === 3 ? (
-            <div className="triContainer">
-              <div className="revTriangle"></div>
-            </div>
+            <>
+              {" "}
+              <p style={{ fontWeight: "600" }}>Good</p>
+              <div className="triContainer">
+                <div className="revTriangle"></div>
+              </div>
+            </>
           ) : null}
         </Grid>
         <Grid item xs={2} md={2}>
           {value === 4 ? (
-            <div className="triContainer">
-              <div className="revTriangle"></div>
-            </div>
+            <>
+              {" "}
+              <p style={{ fontWeight: "600" }}>Great</p>
+              <div className="triContainer">
+                <div className="revTriangle"></div>
+              </div>
+            </>
           ) : null}
         </Grid>
         <Grid item xs={2} md={2}>
           {value === 5 ? (
-            <div className="triContainer">
-              <div className="revTriangle"></div>
-            </div>
+            <>
+              {" "}
+              <p style={{ fontWeight: "600" }}>Excellent</p>
+              <div className="triContainer">
+                <div className="revTriangle"></div>
+              </div>
+            </>
           ) : null}
         </Grid>
         <Grid item xs={1} md={1}></Grid>
