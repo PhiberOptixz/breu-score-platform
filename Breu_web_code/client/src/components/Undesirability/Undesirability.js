@@ -88,41 +88,45 @@ const Undesirability = () => {
                 </ListItem>
               </List>
             </Grid>
-            <Grid item xs={10} md={10} style={{ marginTop: "4%" }}>
-              <Grid container>
-                <Grid item xs={1} md={1} align="center">
-                  <Checkbox
-                    // label="I agree to the terms and conditions"
-                    checked={checked}
-                    onChange={handleChange}
-                    inputProps={{ "aria-label": "controlled" }}
-                  />
-                </Grid>
-                <Grid item xs={11} md={11}>
-                  <span>
-                    I hereby declare that the information given by me in the
-                    Believability, Reliability and Emotional intelligibility
-                    sections is true, complete and correct to the best of my
-                    knowledge and belief and that nothing has been concealed or
-                    distorted.
-                  </span>
-                </Grid>
+            <Grid container>
+              <Grid
+                item
+                xs={2}
+                md={1}
+                style={{ marginTop: "7px" }}
+                align="center"
+              >
+                <Checkbox
+                  // label="I agree to the terms and conditions"
+                  checked={checked}
+                  onChange={handleChange}
+                  inputProps={{ "aria-label": "controlled" }}
+                />
               </Grid>
-            </Grid>
-            <Grid item xs={2} md={2} sx={{ marginTop: "4%" }} align="center">
-              <ButtonField
-                disabled={checked ? false : true}
-                buttonStyle="submit"
-                type="submit"
-                name="Submit"
-                color="primary"
-                variant="contained"
-                sx={{
-                  width: "30%",
-                  backgroundColor: "#5a5a5c",
-                }}
-                onClick={() => handleSubmit()}
-              />
+              <Grid item xs={10} md={9}>
+                <p>
+                  I hereby declare that the information given by me in the
+                  Believability, Reliability and Emotional intelligibility
+                  sections is true, complete and correct to the best of my
+                  knowledge and belief and that nothing has been concealed or
+                  distorted.
+                </p>
+              </Grid>
+              <Grid item xs={12} md={2} sx={{ marginTop: "4%" }} align="center">
+                <ButtonField
+                  disabled={checked ? false : true}
+                  buttonStyle="submit"
+                  type="submit"
+                  name="Submit"
+                  color="primary"
+                  variant="contained"
+                  sx={{
+                    width: "30%",
+                    backgroundColor: "#5a5a5c",
+                  }}
+                  onClick={() => handleSubmit()}
+                />
+              </Grid>
             </Grid>
           </>
         )}

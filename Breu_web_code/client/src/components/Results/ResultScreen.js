@@ -9,6 +9,7 @@ import { fetchCandidateScores } from "../../features/candidateSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import Header from "../../common/header";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
 const ResultScreen = () => {
   const { candidateSlice } = useSelector((state) => state);
@@ -40,6 +41,106 @@ const ResultScreen = () => {
     }
   }, [candidateSlice?.candidateScore]);
 
+  const believeabilityAvg = (
+    (parseInt(
+      candidateSlice?.candidateScore?.believabilityScores?.qualification?.score
+    ) +
+      parseInt(
+        candidateSlice?.candidateScore?.believabilityScores
+          ?.professionalExperience?.score
+      ) +
+      parseInt(
+        candidateSlice?.candidateScore?.believabilityScores?.socialScore
+          ?.score || 1
+      ) +
+      parseInt(
+        candidateSlice?.candidateScore?.believabilityScores?.patents?.score
+      ) +
+      parseInt(
+        candidateSlice?.candidateScore?.believabilityScores
+          ?.whitepaperConferencePresentation?.score
+      ) +
+      parseInt(
+        candidateSlice?.candidateScore?.believabilityScores?.blog?.score
+      )) /
+    6
+  ).toFixed(1);
+
+  const reliabilityAvg = (
+    (parseInt(
+      candidateSlice?.candidateScore?.reliabilityScores?.design?.score
+    ) +
+      parseInt(
+        candidateSlice?.candidateScore?.reliabilityScores?.framework?.score
+      ) +
+      parseInt(
+        candidateSlice?.candidateScore?.reliabilityScores?.coding?.score
+      ) +
+      parseInt(
+        candidateSlice?.candidateScore?.reliabilityScores?.debugging?.score
+      ) +
+      parseInt(
+        candidateSlice?.candidateScore?.reliabilityScores?.architecture?.score
+      ) +
+      parseInt(
+        candidateSlice?.candidateScore?.reliabilityScores?.implementation?.score
+      )) /
+    6
+  ).toFixed(1);
+
+  const EIAvg = (
+    (parseInt(
+      candidateSlice?.candidateScore?.emotionalIntelligencyScores?.teamWork
+        ?.score
+    ) +
+      parseInt(
+        candidateSlice?.candidateScore?.emotionalIntelligencyScores
+          ?.complexityHandling?.score
+      ) +
+      parseInt(
+        candidateSlice?.candidateScore?.emotionalIntelligencyScores
+          ?.conflictResolution?.score || 1
+      ) +
+      parseInt(
+        candidateSlice?.candidateScore?.emotionalIntelligencyScores?.initiative
+          ?.score
+      ) +
+      parseInt(
+        candidateSlice?.candidateScore?.emotionalIntelligencyScores
+          ?.culturalFitPresentation?.score
+      ) +
+      parseInt(
+        candidateSlice?.candidateScore?.emotionalIntelligencyScores
+          ?.communication?.score
+      ) +
+      parseInt(
+        candidateSlice?.candidateScore?.emotionalIntelligencyScores?.ownership
+          ?.score
+      ) +
+      parseInt(
+        candidateSlice?.candidateScore?.emotionalIntelligencyScores?.empathy
+          ?.score
+      ) +
+      parseInt(
+        candidateSlice?.candidateScore?.emotionalIntelligencyScores?.openness
+          ?.score
+      )) /
+    9
+  ).toFixed(1);
+
+  const undesirabilityAvg = (
+    (parseInt(
+      candidateSlice?.candidateScore?.undesirableScores?.fakeInformation?.score
+    ) +
+      parseInt(
+        candidateSlice?.candidateScore?.undesirableScores?.plagiarism?.score
+      ) +
+      parseInt(
+        candidateSlice?.candidateScore?.undesirableScores?.trustIssues?.score
+      )) /
+    3
+  ).toFixed(1);
+
   return (
     <>
       {" "}
@@ -52,17 +153,18 @@ const ResultScreen = () => {
       <Grid container style={{ marginTop: "2%" }}>
         {candidateSlice?.candidateScore ? (
           <>
-            <Grid
-              item
-              xs={12}
-              md={6}
-              align="left"
-              style={{ paddingLeft: "10%" }}
-            >
-              <p className="scoresText" align="left">
+            <Grid item xs={12} md={6} align="left">
+              <p
+                className="scoresText"
+                align="left"
+                style={{ paddingLeft: "5%" }}
+              >
                 Scores
               </p>
-              <ProgressBar value={candidateSlice?.candidateScore?.mainScore} />
+              <ProgressBar
+                value={candidateSlice?.candidateScore?.mainScore}
+                style={{ paddingLeft: "10%" }}
+              />
             </Grid>
             {/* <Grid item xs={12} md={6}></Grid> */}
             <Grid
@@ -93,7 +195,40 @@ const ResultScreen = () => {
                 <Grid item xs={4} md={3}>
                   <Card
                     className="scoreBreakdownCard"
-                    style={{ borderColor: "red" }}
+                    style={
+                      tableName === "Believability Score"
+                        ? {
+                            borderColor:
+                              believeabilityAvg < 1.5
+                                ? "red"
+                                : believeabilityAvg > 1.6 &&
+                                  believeabilityAvg <= 2.5
+                                ? "orange"
+                                : believeabilityAvg > 2.6 &&
+                                  believeabilityAvg <= 3.5
+                                ? "yellow"
+                                : believeabilityAvg > 3.6 &&
+                                  believeabilityAvg <= 4.5
+                                ? "#4CBB17"
+                                : "green",
+                            backgroundColor: "#ebe0be",
+                          }
+                        : {
+                            borderColor:
+                              believeabilityAvg < 1.5
+                                ? "red"
+                                : believeabilityAvg > 1.6 &&
+                                  believeabilityAvg <= 2.5
+                                ? "orange"
+                                : believeabilityAvg > 2.6 &&
+                                  believeabilityAvg <= 3.5
+                                ? "yellow"
+                                : believeabilityAvg > 3.6 &&
+                                  believeabilityAvg <= 4.5
+                                ? "#4CBB17"
+                                : "green",
+                          }
+                    }
                     onClick={() => {
                       // setColumns(believeabilityColumns);
                       // setRows(believeabilityRows);
@@ -107,38 +242,21 @@ const ResultScreen = () => {
                       setTableName("Believability Score");
                     }}
                   >
-                    <p
-                      className="scoreBreakdownCardP1"
-                      style={{ color: "red" }}
-                    >
-                      {(
-                        (parseInt(
-                          candidateSlice?.candidateScore?.believabilityScores
-                            ?.qualification?.score
-                        ) +
-                          parseInt(
-                            candidateSlice?.candidateScore?.believabilityScores
-                              ?.professionalExperience?.score
-                          ) +
-                          parseInt(
-                            candidateSlice?.candidateScore?.believabilityScores
-                              ?.socialScore?.score || 1
-                          ) +
-                          parseInt(
-                            candidateSlice?.candidateScore?.believabilityScores
-                              ?.patents?.score
-                          ) +
-                          parseInt(
-                            candidateSlice?.candidateScore?.believabilityScores
-                              ?.whitepaperConferencePresentation?.score
-                          ) +
-                          parseInt(
-                            candidateSlice?.candidateScore?.believabilityScores
-                              ?.blog?.score
-                          )) /
-                        6
-                      ).toFixed(1)}
-                    </p>
+                    <Grid container>
+                      <Grid item xs={6} md={6}>
+                        <p
+                          className="scoreBreakdownCardP1"
+                          style={{ paddingLeft: "15%" }}
+                        >
+                          {believeabilityAvg}
+                        </p>
+                      </Grid>
+                      <Grid item xs={6} md={6} align="right">
+                        {tableName === "Believability Score" ? (
+                          <CheckCircleIcon sx={{ pt: "20%", pr: "5%" }} />
+                        ) : null}
+                      </Grid>
+                    </Grid>
                     <p className="scoreBreakdownCardP2">Believeability</p>
                   </Card>
                 </Grid>
@@ -146,7 +264,34 @@ const ResultScreen = () => {
                 <Grid item xs={4} md={3}>
                   <Card
                     className="scoreBreakdownCard"
-                    style={{ borderColor: "orange" }}
+                    style={
+                      tableName === "Reliability Score"
+                        ? {
+                            borderColor:
+                              reliabilityAvg < 1.5
+                                ? "red"
+                                : reliabilityAvg > 1.6 && reliabilityAvg <= 2.5
+                                ? "orange"
+                                : reliabilityAvg > 2.6 && reliabilityAvg <= 3.5
+                                ? "yellow"
+                                : reliabilityAvg > 3.6 && reliabilityAvg <= 4.5
+                                ? "#4CBB17"
+                                : "green",
+                            backgroundColor: "#ebe0be",
+                          }
+                        : {
+                            borderColor:
+                              reliabilityAvg < 1.5
+                                ? "red"
+                                : reliabilityAvg > 1.6 && reliabilityAvg <= 2.5
+                                ? "orange"
+                                : reliabilityAvg > 2.6 && reliabilityAvg <= 3.5
+                                ? "yellow"
+                                : reliabilityAvg > 3.6 && reliabilityAvg <= 4.5
+                                ? "#4CBB17"
+                                : "green",
+                          }
+                    }
                     onClick={() => {
                       // setColumns(believeabilityColumns);
                       // setRows(believeabilityRows);
@@ -160,38 +305,21 @@ const ResultScreen = () => {
                       setTableName("Reliability Score");
                     }}
                   >
-                    <p
-                      className="scoreBreakdownCardP1"
-                      style={{ color: "orange" }}
-                    >
-                      {(
-                        (parseInt(
-                          candidateSlice?.candidateScore?.reliabilityScores
-                            ?.design?.score
-                        ) +
-                          parseInt(
-                            candidateSlice?.candidateScore?.reliabilityScores
-                              ?.framework?.score
-                          ) +
-                          parseInt(
-                            candidateSlice?.candidateScore?.reliabilityScores
-                              ?.coding?.score
-                          ) +
-                          parseInt(
-                            candidateSlice?.candidateScore?.reliabilityScores
-                              ?.debugging?.score
-                          ) +
-                          parseInt(
-                            candidateSlice?.candidateScore?.reliabilityScores
-                              ?.architecture?.score
-                          ) +
-                          parseInt(
-                            candidateSlice?.candidateScore?.reliabilityScores
-                              ?.implementation?.score
-                          )) /
-                        6
-                      ).toFixed(1)}
-                    </p>
+                    <Grid container>
+                      <Grid item xs={6} md={6}>
+                        <p
+                          className="scoreBreakdownCardP1"
+                          style={{ paddingLeft: "15%" }}
+                        >
+                          {reliabilityAvg}
+                        </p>
+                      </Grid>
+                      <Grid item xs={6} md={6} align="right">
+                        {tableName === "Reliability Score" ? (
+                          <CheckCircleIcon sx={{ pt: "20%", pr: "5%" }} />
+                        ) : null}
+                      </Grid>
+                    </Grid>
                     <p className="scoreBreakdownCardP2">Reliability</p>
                   </Card>
                 </Grid>
@@ -199,7 +327,34 @@ const ResultScreen = () => {
                 <Grid item xs={4} md={3}>
                   <Card
                     className="scoreBreakdownCard"
-                    style={{ borderColor: "yellow" }}
+                    style={
+                      tableName === "EI Score"
+                        ? {
+                            borderColor:
+                              EIAvg < 1.5
+                                ? "red"
+                                : EIAvg > 1.5 && EIAvg <= 2.5
+                                ? "orange"
+                                : EIAvg > 2.5 && EIAvg <= 3.5
+                                ? "yellow"
+                                : EIAvg > 2.5 && EIAvg <= 4.5
+                                ? "#4CBB17"
+                                : "green",
+                            backgroundColor: "#ebe0be",
+                          }
+                        : {
+                            borderColor:
+                              EIAvg < 1.5
+                                ? "red"
+                                : EIAvg > 1.5 && EIAvg <= 2.5
+                                ? "orange"
+                                : EIAvg > 2.5 && EIAvg <= 3.5
+                                ? "yellow"
+                                : EIAvg > 2.5 && EIAvg <= 4.5
+                                ? "#4CBB17"
+                                : "green",
+                          }
+                    }
                     onClick={() => {
                       // setColumns(believeabilityColumns);
                       // setRows(believeabilityRows);
@@ -214,54 +369,21 @@ const ResultScreen = () => {
                       setTableName("EI Score");
                     }}
                   >
-                    <p
-                      className="scoreBreakdownCardP1"
-                      style={{ color: "yellow" }}
-                    >
-                      {(
-                        (parseInt(
-                          candidateSlice?.candidateScore
-                            ?.emotionalIntelligencyScores?.teamWork?.score
-                        ) +
-                          parseInt(
-                            candidateSlice?.candidateScore
-                              ?.emotionalIntelligencyScores?.complexityHandling
-                              ?.score
-                          ) +
-                          parseInt(
-                            candidateSlice?.candidateScore
-                              ?.emotionalIntelligencyScores?.conflictResolution
-                              ?.score || 1
-                          ) +
-                          parseInt(
-                            candidateSlice?.candidateScore
-                              ?.emotionalIntelligencyScores?.initiative?.score
-                          ) +
-                          parseInt(
-                            candidateSlice?.candidateScore
-                              ?.emotionalIntelligencyScores
-                              ?.culturalFitPresentation?.score
-                          ) +
-                          parseInt(
-                            candidateSlice?.candidateScore
-                              ?.emotionalIntelligencyScores?.communication
-                              ?.score
-                          ) +
-                          parseInt(
-                            candidateSlice?.candidateScore
-                              ?.emotionalIntelligencyScores?.ownership?.score
-                          ) +
-                          parseInt(
-                            candidateSlice?.candidateScore
-                              ?.emotionalIntelligencyScores?.empathy?.score
-                          ) +
-                          parseInt(
-                            candidateSlice?.candidateScore
-                              ?.emotionalIntelligencyScores?.openness?.score
-                          )) /
-                        9
-                      ).toFixed(1)}
-                    </p>
+                    <Grid container>
+                      <Grid item xs={6} md={6}>
+                        <p
+                          className="scoreBreakdownCardP1"
+                          style={{ paddingLeft: "15%" }}
+                        >
+                          {EIAvg}
+                        </p>
+                      </Grid>
+                      <Grid item xs={6} md={6} align="right">
+                        {tableName === "EI Score" ? (
+                          <CheckCircleIcon sx={{ pt: "20%", pr: "5%" }} />
+                        ) : null}
+                      </Grid>
+                    </Grid>
                     <p className="scoreBreakdownCardP2">EI</p>
                   </Card>
                 </Grid>
@@ -269,7 +391,41 @@ const ResultScreen = () => {
                 <Grid item xs={4} md={3}>
                   <Card
                     className="scoreBreakdownCard"
-                    style={{ borderColor: "#4CBB17" }}
+                    // style={{ borderColor: "#4CBB17" }}
+                    style={
+                      tableName === "Undesireability Score"
+                        ? {
+                            borderColor:
+                              undesirabilityAvg < 1.5
+                                ? "red"
+                                : undesirabilityAvg > 1.6 &&
+                                  undesirabilityAvg <= 2.5
+                                ? "orange"
+                                : undesirabilityAvg > 2.6 &&
+                                  undesirabilityAvg <= 3.5
+                                ? "yellow"
+                                : undesirabilityAvg > 3.6 &&
+                                  undesirabilityAvg <= 4.5
+                                ? "#4CBB17"
+                                : "green",
+                            backgroundColor: "#ebe0be",
+                          }
+                        : {
+                            borderColor:
+                              undesirabilityAvg < 1.5
+                                ? "red"
+                                : undesirabilityAvg > 1.6 &&
+                                  undesirabilityAvg <= 2.5
+                                ? "orange"
+                                : undesirabilityAvg > 2.6 &&
+                                  undesirabilityAvg <= 3.5
+                                ? "yellow"
+                                : undesirabilityAvg > 3.6 &&
+                                  undesirabilityAvg <= 4.5
+                                ? "#4CBB17"
+                                : "green",
+                          }
+                    }
                     onClick={() => {
                       // setColumns(believeabilityColumns);
                       // setRows(believeabilityRows);
@@ -283,26 +439,21 @@ const ResultScreen = () => {
                       setTableName("Undesireability Score");
                     }}
                   >
-                    <p
-                      className="scoreBreakdownCardP1"
-                      style={{ color: "#4CBB17" }}
-                    >
-                      {(
-                        (parseInt(
-                          candidateSlice?.candidateScore?.undesirableScores
-                            ?.fakeInformation?.score
-                        ) +
-                          parseInt(
-                            candidateSlice?.candidateScore?.undesirableScores
-                              ?.plagiarism?.score
-                          ) +
-                          parseInt(
-                            candidateSlice?.candidateScore?.undesirableScores
-                              ?.trustIssues?.score
-                          )) /
-                        3
-                      ).toFixed(1)}
-                    </p>
+                    <Grid container>
+                      <Grid item xs={6} md={6}>
+                        <p
+                          className="scoreBreakdownCardP1"
+                          style={{ paddingLeft: "15%" }}
+                        >
+                          {undesirabilityAvg}
+                        </p>
+                      </Grid>
+                      <Grid item xs={6} md={6} align="right">
+                        {tableName === "Undesireability Score" ? (
+                          <CheckCircleIcon sx={{ pt: "20%", pr: "5%" }} />
+                        ) : null}
+                      </Grid>
+                    </Grid>
                     <p className="scoreBreakdownCardP2">Undesirable</p>
                   </Card>
                 </Grid>
