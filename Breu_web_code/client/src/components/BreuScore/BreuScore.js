@@ -1,13 +1,22 @@
 import { useEffect } from "react";
 import Header from "../../common/header";
-import { Grid } from "@mui/material";
-import { TextField } from "@mui/material";
 import ResultScreen from "../Results/ResultScreen";
+import { fetchCandidateScores } from "../../features/candidateSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const BreuScore = () => {
+  const { auth, candidateSlice } = useSelector((state) => state);
+  const dispatch = useDispatch();
+
   useEffect(() => {
     document.title = "Breu.ai - Breu Score";
   }, []);
+
+  useEffect(() => {
+    if (auth?.isAuthenticated) {
+      dispatch(fetchCandidateScores(auth?.user?._id));
+    }
+  }, [auth?.isAuthenticated]);
 
   return (
     <>
@@ -15,18 +24,14 @@ const BreuScore = () => {
         name="Breu Score"
         caption={"Exploring your Emotional dimension"}
       />
-      {/* <Grid container>
+      {candidateSlice?.candidateScore ? (
+        <ResultScreen />
+      ) : (
         <h3 style={{ margin: "auto" }}>
           {" "}
           You did it !! Your breu score will be available in 24 hours
         </h3>
-      </Grid> */}
-      <ResultScreen />
-      {/* <Grid container sx={{ marginLeft: "2%" }}>
-        <TextField variant="h3" color="success">
-          You did it !! Your breu score will be available in 24 hours
-        </TextField>
-      </Grid> */}
+      )}
     </>
   );
 };

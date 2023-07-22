@@ -21,8 +21,8 @@ const EmotionalUndesirability = () => {
   const recordButton = document.querySelector("button#record");
   const { auth } = useSelector((state) => state);
   const dispatch = useDispatch();
-  const playButton = document.querySelector("button#play");
-  const downloadButton = document.querySelector("button#download");
+  const [time, setTime] = useState("");
+  const [seconds, setSeconds] = useState(0);
   const [disableRecord, setDisableRecord] = useState(true);
   const [disablePlay, setDisablePlay] = useState(true);
   const [disableDownload, setDisableDownload] = useState(true);
@@ -44,18 +44,16 @@ const EmotionalUndesirability = () => {
   const [webStream, setWebStream] = useState(null);
   const [recorder, setRecorder] = useState(null);
   const videoRef = useRef(null);
-  const [noOfVideos, setNoOfVideos] = useState(
-    parseInt(localStorage.getItem("video"))
-  );
+  const [noOfVideos, setNoOfVideos] = useState(0);
+  const [noOfTries, setNoOfTries] = useState(0);
 
   useEffect(() => {
-    document.title = "Breu.ai - Undesirability";
+    document.title = "Breu.ai - Emotional Intelligibility";
     if (
       auth.user.completedInterestingVideo &&
       !auth.user.completedConflictVideo
     ) {
       setNoOfVideos(1);
-      localStorage.setItem("video", 1);
       setDemo("Demo-2");
       setTitle(
         "Demo – What is expected (conflicts if any with team members/manager, on what ground & how did you do ?"
@@ -63,14 +61,22 @@ const EmotionalUndesirability = () => {
       setQuestionTitle("Conflict Resolution – 1 mins");
     } else if (auth.user.completedConflictVideo) {
       setNoOfVideos(2);
-      localStorage.setItem("video", 2);
-      localStorage.setItem("tries", 0);
     } else {
       setNoOfVideos(0);
-      localStorage.removeItem("tries");
-      localStorage.removeItem("video");
     }
-  }, []);
+  }, [auth?.user]);
+
+  setTimeout(() => {
+    if (record === "Stop Recording") {
+      setSeconds(seconds + 1);
+      let date = new Date(null);
+      date.setSeconds(seconds);
+      setTime(date?.toISOString()?.substr(11, 8));
+    } else {
+      setSeconds(0);
+      setTime("");
+    }
+  }, 1000);
 
   const startCamera = async (e) => {
     const constraints = {
@@ -131,19 +137,12 @@ const EmotionalUndesirability = () => {
 
   const recordVideo = () => {
     if (record === "Start Recording") {
-      if (localStorage.getItem("tries")) {
-        const noOfTries = parseInt(localStorage.getItem("tries"));
-        if (noOfTries >= 2) {
-          SnackBar.error(
-            "You have exceeded the recording limit please submit the last recorded video"
-          );
-        } else {
-          localStorage.setItem("tries", noOfTries + 1);
-          setRecord("Stop Recording");
-          startRecording();
-        }
+      if (noOfTries >= 2) {
+        SnackBar.error(
+          "You have exceeded the recording limit please submit the last recorded video"
+        );
       } else {
-        localStorage.setItem("tries", 1);
+        setNoOfTries(noOfTries + 1);
         setRecord("Stop Recording");
         startRecording();
       }
@@ -203,40 +202,9 @@ const EmotionalUndesirability = () => {
   };
 
   const handleSubmit = () => {
-    if (localStorage.getItem("video")) {
-      if (noOfVideos > 0) {
-        setDemo("Demo-2");
-        setTitle(
-          "Demo – What is expected (conflicts if any with team members/manager, on what ground & how did you do ?"
-        );
-        setQuestionTitle("Conflict Resolution – 1 mins");
-        setDemoVideoURL(
-          "https://www.youtube.com/embed/vsRRs_362-M?rel=0&autoplay=1&mute=1"
-        );
-        localStorage.removeItem("tries");
-        localStorage.setItem("video", noOfVideos + 1);
-        const blob = new Blob(recordedBlobs, { type: "video/mp4" });
-        const formData = new FormData();
-        formData.append("video", blob);
-        formData.append("type", demo);
-        formData.append("candidateId", auth?.user?._id);
-        dispatch(uploadCandidateVideo(formData));
-        setWebcam("Start Camera");
-        setShowRecorded(false);
-        handleStop(webStream);
-        navigate("/undesirability");
-      }
-    } else {
-      setDemo("Demo-2");
-      setTitle(
-        "Demo – What is expected (conflicts if any with team members/manager, on what ground & how did you do ?"
-      );
-      setQuestionTitle("Conflict Resolution – 1 mins");
-      localStorage.removeItem("tries");
-      localStorage.setItem("video", 1);
-      setDemoVideoURL(
-        "https://www.youtube.com/embed/vsRRs_362-M?rel=0&autoplay=1&mute=1"
-      );
+    if (noOfVideos === 0) {
+      setNoOfTries(0);
+      setNoOfVideos(noOfVideos + 1);
       const blob = new Blob(recordedBlobs, { type: "video/mp4" });
       setWebcam("Start Camera");
       handleStop(webStream);
@@ -246,6 +214,25 @@ const EmotionalUndesirability = () => {
       formData.append("type", demo);
       formData.append("candidateId", auth?.user?._id);
       dispatch(uploadCandidateVideo(formData));
+      setDemo("Demo-2");
+      setTitle(
+        "Demo – What is expected (conflicts if any with team members/manager, on what ground & how did you do ?"
+      );
+      setQuestionTitle("Conflict Resolution – 1 mins");
+      setDemoVideoURL(
+        "https://www.youtube.com/embed/vsRRs_362-M?rel=0&autoplay=1&mute=1"
+      );
+    } else if (noOfVideos >= 1) {
+      const blob = new Blob(recordedBlobs, { type: "video/mp4" });
+      const formData = new FormData();
+      formData.append("video", blob);
+      formData.append("type", demo);
+      formData.append("candidateId", auth?.user?._id);
+      formData.append("navigate", navigate);
+      dispatch(uploadCandidateVideo(formData));
+      setWebcam("Start Camera");
+      setShowRecorded(false);
+      handleStop(webStream);
     }
   };
 
@@ -330,7 +317,7 @@ const EmotionalUndesirability = () => {
           </Grid>
 
           <Grid item xs={12} md={5} sx={{ marginLeft: "2%" }}>
-            <h1>Capture</h1>
+            <h1>Record your Response</h1>
             <p style={{ fontSize: "20px", marginRight: "5%" }}>
               {questionTitle}
             </p>
@@ -355,8 +342,9 @@ const EmotionalUndesirability = () => {
               sx={{
                 background: "#0a71b9",
                 color: "white",
-                width: "100%",
+                width: "98%",
                 marginTop: "8%",
+                border: seconds > 90 ? "2px solid red" : "none",
                 // borderRadius: "2% 0% 0% 0%",
               }}
             >
@@ -365,6 +353,7 @@ const EmotionalUndesirability = () => {
                 ref={videoRef}
                 style={{
                   display: showRecorded ? "none" : "block",
+
                   width: "100%",
                   // height: "10%",
                   borderRadius: "0% 0% 2% 2%",
@@ -387,7 +376,7 @@ const EmotionalUndesirability = () => {
                 loop
               ></video>
               <Grid container sx={{ paddingTop: "2%", paddingBottom: "2%" }}>
-                <Grid item xs={4} md={4} align="right">
+                <Grid item xs={3} md={3} align="right">
                   {/* <Replay10OutlinedIcon sx={{ fontSize: "30px" }} /> */}
                   {/* <ButtonField
                   id="start"
@@ -434,7 +423,7 @@ const EmotionalUndesirability = () => {
                   />
                   {/* </Button> */}
                 </Grid>
-                <Grid item xs={4} md={4} align="center">
+                <Grid item xs={3} md={3} align="center">
                   {/* <ButtonField
                   id="record"
                   disabled={disableRecord}
@@ -497,27 +486,7 @@ const EmotionalUndesirability = () => {
                   />
                 )} */}
                 </Grid>
-                <Grid item xs={4} md={4} align="left">
-                  {/* <ButtonField
-                  id="play"
-                  disabled={disablePlay}
-                  onClick={playRecorded}
-                  buttonStyle="submit"
-                  type="submit"
-                  endIcon={
-                    <PlayCircleFilledWhiteOutlinedIcon
-                      sx={{ fontSize: "30px" }}
-                    />
-                  }
-                  name="Play"
-                  sx={{
-                    width: "80%",
-                    backgroundColor: "white",
-                    color: "#0a71b9",
-                    marginBottom: "2%",
-                  }}
-                /> */}
-
+                <Grid item xs={3} md={3} align="left">
                   <ButtonField
                     disabled={disablePlay}
                     sx={{
@@ -540,10 +509,17 @@ const EmotionalUndesirability = () => {
                   />
                 } */}
                 </Grid>
+                <Grid item xs={3} md={3} align="left">
+                  <Typography
+                    color={seconds > 90 ? "red" : "white"}
+                    sx={{ marginTop: "2%", textAlign: "left" }}
+                  >
+                    {time}
+                  </Typography>
+                </Grid>
               </Grid>
             </Paper>
           </Grid>
-
           <Grid item xs={12} md={12} align="center">
             <ButtonField
               disabled={disablePlay}

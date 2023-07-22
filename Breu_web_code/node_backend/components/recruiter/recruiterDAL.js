@@ -1,4 +1,5 @@
 const recruiterModel = require("./recruiterModel");
+const candidateModel = require("../candidate/candidateModel");
 
 async function getRecruiterById(data) {
   try {
@@ -19,6 +20,56 @@ async function getRecruiterByEmail(data) {
     let result = await recruiterModel
       .findOne({ email: data.email.toLowerCase() })
       .lean();
+    return result;
+  } catch (err) {
+    console.log(err);
+    if (err.message) {
+      throw err.message;
+    } else {
+      throw err;
+    }
+  }
+}
+
+async function getCandidatebyRecruiterId(data) {
+  try {
+    let result = await recruiterModel
+      .findOne({ linkedRecruiters: { $in: [data] } })
+      .lean();
+    return result;
+  } catch (err) {
+    console.log(err);
+    if (err.message) {
+      throw err.message;
+    } else {
+      throw err;
+    }
+  }
+}
+
+async function getCandidateRecruiters(data) {
+  try {
+    let result = await candidateModel.aggregate([
+      {
+        $match: { linkedRecruiters: { $in: [data] } },
+      },
+      {
+        $lookup: {
+          from: "reliability",
+          localField: "_id",
+          foreignField: "candidateId",
+          as: "videos",
+        },
+      },
+      {
+        $lookup: {
+          from: "believabilityScores",
+          localField: "_id",
+          foreignField: "candidateId",
+          as: "scores",
+        },
+      },
+    ]);
     return result;
   } catch (err) {
     console.log(err);
@@ -66,4 +117,6 @@ module.exports = {
   getRecruiterByPhoneNumber,
   getRecruiterById,
   updateRecruiterDetails,
+  getCandidatebyRecruiterId,
+  getCandidateRecruiters,
 };

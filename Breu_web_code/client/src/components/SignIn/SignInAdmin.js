@@ -13,17 +13,17 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import TextFieldGroup from "../../common/TextFieldGroup";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { corporateSignIn } from "../../features/corporateAuthSlice";
-import logo from "../../assets/logo.png"
+import { adminSignIn } from "../../features/adminAuthSlice";
+import logo from "../../assets/logo.png";
 
 const theme = createTheme();
 
 const SignInAdmin = () => {
   const dispatch = useDispatch();
-  const { corporateAuth } = useSelector((state) => state);
+  const { adminAuthSlice } = useSelector((state) => state);
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
-  const { isAuthenticated, user } = corporateAuth;
+  const { isAuthenticated, user } = adminAuthSlice;
 
   const formik = useFormik({
     initialValues: {
@@ -35,17 +35,15 @@ const SignInAdmin = () => {
       password: Yup.string().required("Password is required field"),
     }),
     onSubmit: async (values) => {
-      dispatch(corporateSignIn(values));
+      dispatch(adminSignIn(values));
     },
   });
 
-//   useEffect(() => {
-//     if (isAuthenticated) {
-//       // if (!corporateAuth?.user?.completedBelievability) {
-//       navigate("/scoring");
-//       // }
-//     }
-//   }, [corporateAuth]);
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/adminDashboard");
+    }
+  }, [adminAuthSlice]);
 
   return (
     <Grid container className="signInContainer">
@@ -127,9 +125,9 @@ const SignInAdmin = () => {
             >
               {/* <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
                 {/* <LockOutlinedIcon /> */}
-              {/* </Avatar> */} 
+              {/* </Avatar> */}
 
-              <img src={logo} alt="Breu"/>
+              <img src={logo} alt="Breu" />
 
               <Typography component="h1" variant="h5">
                 Sign in-Admin

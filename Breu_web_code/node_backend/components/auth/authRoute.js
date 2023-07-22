@@ -3,6 +3,7 @@ const router = express.Router();
 const authController = require("./authController");
 const corporateAuthController = require("./corporateAuthController");
 const recruiterAuthController = require("./recruiterAuthController");
+const adminAuthController = require("./adminAuthController");
 const authJWT = require("../../middlewares/authJWT");
 
 router.post("/registerCandidate", authController.candidateRegister);
@@ -13,6 +14,15 @@ router.get(
   "/getCandidateDetails",
   authJWT.verifyJWTToken,
   authController.getCandidateDetails
+);
+router.post("/registerAdmin", adminAuthController.adminRegister);
+
+router.post("/adminSignIn", adminAuthController.adminSignIn);
+
+router.get(
+  "/getAdminDetails",
+  authJWT.verifyJWTToken,
+  adminAuthController.getAdminDetails
 );
 
 router.post("/registerRecruiter", recruiterAuthController.recruiterRegister);
