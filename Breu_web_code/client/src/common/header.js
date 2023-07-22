@@ -6,19 +6,24 @@ import { useSelector, useDispatch } from "react-redux";
 import { removeCandidateDetails } from "../features/authSlice";
 import { removeCorporateDetails } from "../features/corporateAuthSlice";
 import { removeRecruiterDetails } from "../features/recruiterAuthSlice";
+import { removeAdminDetails } from "../features/adminAuthSlice";
 
 const Header = ({ name, caption, page }) => {
   const navigate = useNavigate();
-  const { auth, corporateAuth, recruiterAuth } = useSelector((state) => state);
+  const { auth, corporateAuth, recruiterAuth, adminAuthSlice } = useSelector(
+    (state) => state
+  );
   const dispatch = useDispatch();
 
   const handleClick = () => {
-    if (auth?.user) {
+    if (auth?.isAuthenticated) {
       dispatch(removeCandidateDetails());
-    } else if (corporateAuth?.user) {
-      dispatch(removeCorporateDetails);
-    } else if (recruiterAuth > auth) {
-      dispatch(removeRecruiterDetails);
+    } else if (corporateAuth?.isAuthenticated) {
+      dispatch(removeCorporateDetails());
+    } else if (recruiterAuth?.isAuthenticated) {
+      dispatch(removeRecruiterDetails());
+    } else if (adminAuthSlice?.isAuthenticated) {
+      dispatch(removeAdminDetails());
     }
     localStorage.removeItem("breuai");
     navigate("/");

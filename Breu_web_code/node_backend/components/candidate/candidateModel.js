@@ -85,10 +85,20 @@ let candidateSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  completedUndesirability: {
+    type: Boolean,
+    default: false,
+  },
   linkedRecruiters: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "recruiterDetails",
+    },
+  ],
+  linkedCorporates: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "corporateDetails",
     },
   ],
   createdAt: {

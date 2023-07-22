@@ -31,8 +31,12 @@ export const candidateSignIn = createAsyncThunk(
         .post("/api/auth/candidateSignIn", data)
         .then(async (response) => {
           const result = response.data;
+          const data = {
+            token: result.token,
+            role: "candidate",
+          };
           // Set token to localstorage
-          localStorage.setItem("breuai", JSON.stringify(result.token));
+          localStorage.setItem("breuai", JSON.stringify(data));
           // Set token to Auth Header
           setAuthToken(result.token);
           SnackBar.success(response?.data?.message);

@@ -13,6 +13,10 @@ export const uploadCandidateVideo = createAsyncThunk(
         const result = response.data;
         SnackBar.success(response?.data?.message);
         dispatch(candidateDetails());
+        if (data.get("navigate")) {
+          const navigate = data.get("navigate");
+          navigate("/undesirability");
+        }
         return result;
       })
       .catch((error) => {

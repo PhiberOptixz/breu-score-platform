@@ -1,75 +1,62 @@
-import React, { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import Radio from "@mui/material/Radio";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
+import PlayCircleFilledWhiteRoundedIcon from "@mui/icons-material/PlayCircleFilledWhiteRounded";
 import ListItemText from "@mui/material/ListItemText";
 import Header from "../../common/header";
-import { Grid } from "@mui/material";
+import { Grid, Link, Typography } from "@mui/material";
 import ButtonField from "../../common/button";
 import { Button } from "@mui/material";
-import { useNavigate, Link } from "react-router-dom";
-import PlayCircleFilledWhiteRoundedIcon from "@mui/icons-material/PlayCircleFilledWhiteRounded";
+import { NavLink, useNavigate } from "react-router-dom";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 import CustomizedDialogs from "../../common/customDailougeBox";
-import HorizontalGauge from "react-horizontal-gauge";
-import { fetchCorporateCandidates } from "../../features/corporateSlice";
 import { useSelector, useDispatch } from "react-redux";
+import { fetchAllCandidates } from "../../features/adminSlice";
+import ReactPlayer from "react-player";
 
-const CorporateDashboard = () => {
+const AdminDashboard = () => {
+  const [age, setAge] = useState("");
   const [video, setVideo] = useState("");
   const [open, setOpen] = useState(false);
-  const { corporateAuth, corporateSlice } = useSelector((state) => state);
+  const { adminSlice, adminAuthSlice } = useSelector((state) => state);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (corporateAuth?.isAuthenticated) {
-      dispatch(fetchCorporateCandidates());
+    if (adminAuthSlice?.isAuthenticated) {
+      dispatch(fetchAllCandidates());
     }
-  }, [corporateAuth?.isAuthenticated]);
+  }, [adminAuthSlice?.isAuthenticated]);
+
+  const handleChange = (event) => {
+    setAge(event.target.value);
+  };
 
   const handleConflictClick = (data) => {
+    console.log(data?.row?.videos[0]?.conflictResolutionVideo?.link);
     setVideo(data?.row?.videos[0]?.conflictResolutionVideo?.link);
     setOpen(true);
   };
 
   const handleInterestingClick = (data) => {
+    console.log(data?.row?.videos[0]?.interestingProjectVideo?.link);
     setVideo(data?.row?.videos[0]?.interestingProjectVideo?.link);
     setOpen(true);
   };
 
-  const handleClick = () => {
-    setVideo("https://dz1fjbrbuvu21.cloudfront.net/video1.mp4");
-    setOpen(true);
-  };
-
-  // const getRowSpacing = React.useCallback((params) => {
-  //     return {
-  //       top: params.isFirstVisible ? 0 : 5,
-  //       bottom: params.isLastVisible ? 0 : 5,
-  //     };
-  //   }, []);
-
   const columns = [
-    {
-      headerAlign: "center",
-    },
     {
       field: "firstName",
       headerName: "First Name",
       width: 150,
       headerAlign: "center",
       align: "center",
-      renderCell: (params) => {
-        if (params?.row?.firstName) {
-          return (
-            <Link to={`/resultScreen/${params.row._id}`}>
-              {params.row.firstName}
-            </Link>
-          );
-        }
-      },
     },
     {
       field: "email",
@@ -77,48 +64,23 @@ const CorporateDashboard = () => {
       width: 150,
       headerAlign: "center",
       align: "center",
-      renderCell: (params) => {
-        if (params?.row?.email) {
-          return (
-            <Link to={`/resultScreen/${params.row._id}`}>
-              {params.row.email}
-            </Link>
-          );
-        }
-      },
     },
     {
-      field: "scale",
-      headerName: "Scale",
-      width: 250,
+      field: "believability",
+      headerName: "Believability",
+      width: 100,
       headerAlign: "center",
       align: "center",
-      renderCell: (params) => {
-        if (params?.row?.scores[0]) {
-          return (
-            <HorizontalGauge
-              ticks={[
-                { label: "0", value: 0 },
-                { label: "1", value: 1 },
-                { label: "2", value: 2 },
-                { label: "3", value: 3 },
-                { label: "4", value: 4 },
-                { label: "5", value: 5 },
-              ]}
-              height={45}
-              width={250}
-              min={0}
-              max={5}
-              value={params?.row?.scores[0].mainScore || ""}
-            />
-          );
-        }
-      },
+      renderCell: (params) => (
+        <NavLink to={`/adminBelievability/${params.row._id}`}>
+          View Data
+        </NavLink>
+      ),
     },
     {
       field: "firstvideo",
-      headerName: "Conflict Resolution Video",
-      width: 200,
+      headerName: "Video 1",
+      // width: 100,
       headerAlign: "center",
       align: "center",
       renderCell: (params) => {
@@ -130,13 +92,15 @@ const CorporateDashboard = () => {
               onClick={() => handleConflictClick(params)}
             />
           );
+        } else {
+          <Typography>No Video Found</Typography>;
         }
       },
     },
     {
       field: "secondvideo",
-      headerName: "Interesting Project Video",
-      width: 200,
+      headerName: "Video 2",
+      // width: 100,
       headerAlign: "center",
       align: "center",
       renderCell: (params) => {
@@ -148,28 +112,45 @@ const CorporateDashboard = () => {
               onClick={() => handleInterestingClick(params)}
             />
           );
+        } else {
+          <Typography>No Video Found</Typography>;
         }
       },
+    },
+
+    {
+      field: "score",
+      headerName: "Score",
+      headerAlign: "center",
+      width: 200,
+      sortable: false,
+      align: "center",
+      renderCell: (params) => (
+        <Button
+          onClick={() => navigate(`/scoring/${params?.row?._id}`)}
+          variant="contained"
+        >
+          Enter Score
+        </Button>
+      ),
     },
   ];
 
   const navigate = useNavigate();
   return (
     <>
-      <Header name="Corporate" caption={"Your Choice Matters"} />
+      <Header name="Recruiter" caption={"Your Choice Matters"} />
 
       <Grid container>
         <Grid item xs={12} md={12}>
-          <div style={{ height: "100%", width: "100%" }}>
+          <div style={{ height: 350, width: "100%" }}>
             <DataGrid
               getRowId={(row) => row._id}
-              rows={corporateSlice?.candidateList || []}
+              rows={adminSlice?.candidateList || []}
               columns={columns}
-              rowHeight={75}
-              // autoHeight
+              autoHeight
               disableColumnMenu
               hideFooterSelectedRowCount
-              //  getRowSpacing={getRowSpacing}
               // rowsPerPageOptions={[100]}
               // autoPageSize
               disableRowSelectionOnClick
@@ -181,9 +162,23 @@ const CorporateDashboard = () => {
         <CustomizedDialogs
           title={"Video"}
           children={
-            <video width="500px" height="350px" autoplay>
-              <source src={video} type="video/mp4" />
-            </video>
+            <ReactPlayer
+              config={{
+                file: {
+                  attributes: {
+                    controlsList: "nodownload",
+                  },
+                },
+              }}
+              url={video}
+              width="700px"
+              height="400px"
+              // style={{ pointerEvents: 'none', display: 'block', margin: 'auto' }}
+              controls
+            />
+            // <video width="700px" height="400px" autoplay>
+            //   <source src={video} type="video/mp4" />
+            // </video>
           }
           openPopup={open}
           setOpenPopup={setOpen}
@@ -193,4 +188,4 @@ const CorporateDashboard = () => {
   );
 };
 
-export default CorporateDashboard;
+export default AdminDashboard;

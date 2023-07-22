@@ -185,9 +185,9 @@ const SignInCorporate = () => {
                   <Grid container>
                     <Grid item xs></Grid>
                     <Grid item>
-                      <Link to="/sign-up">
+                      {/* <Link to="/sign-up">
                         {"Don't have an account? Sign Up"}
-                      </Link>
+                      </Link> */}
                     </Grid>
                   </Grid>
                 </form>

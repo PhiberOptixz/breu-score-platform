@@ -31,8 +31,12 @@ export const corporateSignIn = createAsyncThunk(
         .post("/api/auth/corporateSignIn", data)
         .then(async (response) => {
           const result = response.data;
+          const data = {
+            token: result.token,
+            role: "corporate",
+          };
           // Set token to localstorage
-          localStorage.setItem("breuai", JSON.stringify(result.token));
+          localStorage.setItem("breuai", JSON.stringify(data));
           // Set token to Auth Header
           setAuthToken(result.token);
           SnackBar.success(response?.data?.message);

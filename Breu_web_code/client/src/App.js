@@ -17,12 +17,11 @@ import SignInRecruiter from "./components/SignIn/SignInRecruiter";
 import CorporateDashoard from "./components/CorporateDashboard/CorporateDashboard";
 import SignInCorporate from "./components/SignIn/SignInCorporate";
 import ResultScreen from "./components/Results/ResultScreen";
-import Admin from "./components/Admin/Admin";
+import Admin from "./components/Admin/AdminDashboard";
 import BelievabilityScore from "./components/Score/BeliveabilityScore";
 import AdminBelievability from "./components/Admin/adminBelievability";
-import Score from "./common/Score"
-import SignInAdmin from "./components/SignIn/SignInAdmin"
-
+import AddScore from "./components/Admin/AddScore";
+import SignInAdmin from "./components/SignIn/SignInAdmin";
 
 function App() {
   return (
@@ -38,10 +37,24 @@ function App() {
         <Route path="/recruiter-sign-in" element={<SignInRecruiter />} />
         <Route path="/corporate-sign-in" element={<SignInCorporate />} />
         <Route path="/b-score" element={<BelievabilityScore />} />
-        <Route path="/admin" element={<Admin />} />
-        <Route path="/scoring" element={<Score/>} />
-        <Route path="/admin-sign-in" element={<SignInAdmin/>} />
-      
+        <Route
+          path="/adminDashboard"
+          element={
+            <ProtectedRoute>
+              <Admin />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/scoring/:candidateId"
+          element={
+            <ProtectedRoute>
+              <AddScore />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/admin-sign-in" element={<SignInAdmin />} />
+
         <Route
           path="/intro"
           element={
@@ -52,7 +65,7 @@ function App() {
         />
 
         <Route
-          path="/adminBelievability"
+          path="/adminBelievability/:candidateId"
           element={
             <ProtectedRoute>
               <AdminBelievability />
@@ -77,7 +90,7 @@ function App() {
           }
         />
         <Route
-          path="/resultScreen"
+          path="/resultScreen/:candidateId"
           element={
             <ProtectedRoute>
               <ResultScreen />

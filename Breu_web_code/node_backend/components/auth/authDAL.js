@@ -1,6 +1,7 @@
 const candidateModel = require("../candidate/candidateModel");
 const corporateModel = require("../corporate/corporateModel");
 const recruiterModel = require("../recruiter/recruiterModel");
+const adminModel = require("../admin/adminModel");
 
 async function candidateRegister(data) {
   data.createdAt = new Date();
@@ -80,6 +81,32 @@ async function recruiterLogin(data) {
   }
 }
 
+async function adminRegister(data) {
+  data.createdAt = new Date();
+  data.updatedAt = new Date();
+  const adminDetails = new adminModel(data);
+  try {
+    let result = await adminDetails.save();
+    return result;
+  } catch (err) {
+    console.log(err);
+    if (err.message) {
+      throw err.message;
+    } else {
+      throw err;
+    }
+  }
+}
+
+async function adminLogin(data) {
+  try {
+    let result = await adminModel.findOne({ email: data.email }).lean();
+    return result;
+  } catch (err) {
+    throw err;
+  }
+}
+
 module.exports = {
   candidateRegister,
   candidateLogin,
@@ -87,4 +114,6 @@ module.exports = {
   corporateLogin,
   recruiterRegister,
   recruiterLogin,
+  adminRegister,
+  adminLogin,
 };
