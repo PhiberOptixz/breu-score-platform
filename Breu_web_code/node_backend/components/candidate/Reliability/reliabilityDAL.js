@@ -35,17 +35,144 @@ async function addQuestions(data) {
   }
 }
 
-async function fetchQuestions(data) {
+async function fetchDesignQuestions(data) {
   try {
     let result = await questionsModel.aggregate([
       {
         $match: {
           roles: { $in: [data] },
+          reliabilityType: "design",
         },
       },
       {
         $sample: {
-          size: 10,
+          size: 2,
+        },
+      },
+    ]);
+    return result;
+  } catch (err) {
+    throw err;
+  }
+}
+
+async function fetchArchitectureQuestions(data) {
+  try {
+    let result = await questionsModel.aggregate([
+      {
+        $match: {
+          roles: { $in: [data] },
+          reliabilityType: "architecture",
+        },
+      },
+      {
+        $sample: {
+          size: 2,
+        },
+      },
+    ]);
+    return result;
+  } catch (err) {
+    throw err;
+  }
+}
+
+async function fetchCodingQuestions(data) {
+  try {
+    let result = await questionsModel.aggregate([
+      {
+        $match: {
+          roles: { $in: [data] },
+          reliabilityType: "coding",
+        },
+      },
+      {
+        $sample: {
+          size: 2,
+        },
+      },
+    ]);
+    return result;
+  } catch (err) {
+    throw err;
+  }
+}
+
+async function fetchDebuggingQuestions(data) {
+  try {
+    let result = await questionsModel.aggregate([
+      {
+        $match: {
+          roles: { $in: [data] },
+          reliabilityType: "debugging",
+        },
+      },
+      {
+        $sample: {
+          size: 2,
+        },
+      },
+    ]);
+    return result;
+  } catch (err) {
+    throw err;
+  }
+}
+
+async function fetchFrameworkQuestions(data) {
+  try {
+    let result = await questionsModel.aggregate([
+      {
+        $match: {
+          roles: { $in: [data] },
+          reliabilityType: "framework",
+        },
+      },
+      {
+        $sample: {
+          size: 2,
+        },
+      },
+    ]);
+    return result;
+  } catch (err) {
+    throw err;
+  }
+}
+
+async function fetchImplementationQuestions(data) {
+  try {
+    let result = await questionsModel.aggregate([
+      {
+        $match: {
+          roles: { $in: [data] },
+          reliabilityType: "implementation",
+        },
+      },
+      {
+        $sample: {
+          size: 2,
+        },
+      },
+    ]);
+    return result;
+  } catch (err) {
+    throw err;
+  }
+}
+
+async function getReliabilityResults(data) {
+  try {
+    let result = await reliabilityModel.aggregate([
+      {
+        $match: { candidateId: data },
+      },
+      {
+        $lookup: {
+          from: "believabilityQuestions",
+          localField: "questionsAttended.questionId",
+          foreignField: "_id",
+          as: "questions",
         },
       },
     ]);
@@ -57,6 +184,12 @@ async function fetchQuestions(data) {
 
 module.exports = {
   addQuestions,
-  fetchQuestions,
+  fetchDesignQuestions,
+  fetchArchitectureQuestions,
+  fetchCodingQuestions,
+  fetchDebuggingQuestions,
+  fetchFrameworkQuestions,
+  fetchImplementationQuestions,
   postUserReliabiltyQuestions,
+  getReliabilityResults,
 };

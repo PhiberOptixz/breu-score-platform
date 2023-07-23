@@ -144,7 +144,7 @@ const RecruiterLanding = () => {
     },
     {
       field: "firstvideo",
-      headerName: "Conflict Resolution Video",
+      headerName: "EI Video 1",
       width: 200,
       headerAlign: "center",
       align: "center",
@@ -162,7 +162,7 @@ const RecruiterLanding = () => {
     },
     {
       field: "secondvideo",
-      headerName: "Interesting Project Video",
+      headerName: "EI Video 1",
       width: 200,
       headerAlign: "center",
       align: "center",
@@ -267,7 +267,7 @@ const RecruiterLanding = () => {
           setOpenPopup={setOpen}
         />
         <CustomizedDialogs
-          title={"Video"}
+          title={"Select Corporate"}
           children={
             <div style={{ width: "400px" }}>
               {" "}

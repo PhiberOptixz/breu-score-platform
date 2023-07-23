@@ -117,7 +117,7 @@ const CorporateDashboard = () => {
     },
     {
       field: "firstvideo",
-      headerName: "Conflict Resolution Video",
+      headerName: "EI Video 1",
       width: 200,
       headerAlign: "center",
       align: "center",
@@ -135,7 +135,7 @@ const CorporateDashboard = () => {
     },
     {
       field: "secondvideo",
-      headerName: "Interesting Project Video",
+      headerName: "EI Video 2",
       width: 200,
       headerAlign: "center",
       align: "center",

@@ -707,6 +707,10 @@ const AddScore = ({ setOpenPopup }) => {
     },
   });
 
+  useEffect(() => {
+    console.log(formik.errors);
+  }, [formik.errors]);
+
   const handleReset = () => {
     formik.resetForm();
   };

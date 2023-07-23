@@ -21,4 +21,10 @@ router.get(
   reliabilityController.fetchQuestionsData
 );
 
+router.get(
+  "/getReliabilityResults/:candidateId",
+  authJWT.verifyJWTToken,
+  reliabilityController.getReliabilityResults
+);
+
 module.exports = router;

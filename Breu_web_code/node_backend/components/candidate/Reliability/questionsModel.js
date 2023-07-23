@@ -11,6 +11,8 @@ let questionsSchema = new mongoose.Schema({
   },
   questionChoices: [{ type: String }],
   questionAnswer: { type: String },
+  reliabilityType: { type: String },
+  reliabilityValue: { type: Number },
   languages: [
     {
       type: mongoose.Schema.Types.ObjectId,

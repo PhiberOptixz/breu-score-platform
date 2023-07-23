@@ -21,7 +21,7 @@ const AdminBelievability = () => {
 
   return (
     <>
-      <Header name="Recruiter" caption={"Your Choice Matters"} />
+      <Header name="Admin" caption={"Your Choice Matters"} />
       <Grid container className="believabilityContainer">
         <Grid xs={12} md={3}>
           <Typography variant="h6">
