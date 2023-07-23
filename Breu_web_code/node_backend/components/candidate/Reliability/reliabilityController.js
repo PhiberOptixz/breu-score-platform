@@ -2,6 +2,7 @@ const colors = require("../../../helpers/colors");
 const AppError = require("../../../helpers/appError");
 const reliabilityDAL = require("./reliabilityDAL");
 const candidateDAL = require("../candidateDAL");
+const { default: mongoose } = require("mongoose");
 
 module.exports.addQuestions = async function (req, res, next) {
   try {
@@ -22,10 +23,37 @@ module.exports.fetchQuestionsData = async (req, res, next) => {
       req.decoded._id
     );
     if (candidateExists) {
-      const data = await reliabilityDAL.fetchQuestions(
+      const designQuestions = await reliabilityDAL.fetchDesignQuestions(
         candidateExists.jobRole?._id
       );
-      return res.send({ message: "SUCCESS", data: data });
+      const debuggingQuestions = await reliabilityDAL.fetchDebuggingQuestions(
+        candidateExists.jobRole?._id
+      );
+      const architectureQuestions =
+        await reliabilityDAL.fetchArchitectureQuestions(
+          candidateExists.jobRole?._id
+        );
+      const frameworkQuestions = await reliabilityDAL.fetchFrameworkQuestions(
+        candidateExists.jobRole?._id
+      );
+      const codingQuestions = await reliabilityDAL.fetchCodingQuestions(
+        candidateExists.jobRole?._id
+      );
+      const implementationQuestins =
+        await reliabilityDAL.fetchImplementationQuestions(
+          candidateExists.jobRole?._id
+        );
+      return res.send({
+        message: "SUCCESS",
+        data: [
+          ...designQuestions,
+          ...debuggingQuestions,
+          ...architectureQuestions,
+          ...frameworkQuestions,
+          ...codingQuestions,
+          ...implementationQuestins,
+        ],
+      });
     } else {
       return next(new AppError("Could not find candidate", 400));
     }
@@ -48,6 +76,63 @@ module.exports.postCandidateAnswers = async function (req, res, next) {
     return res.status(200).json({
       status: "SUCCESS",
       message: "Reliability answers added successfully",
+    });
+  } catch (err) {
+    console.error(colors.red, `Error while adding Reliability answers`, err);
+    return next(new AppError(err, 400));
+  }
+};
+
+module.exports.getReliabilityResults = async function (req, res, next) {
+  try {
+    const id = req.params.candidateId;
+    const getResults = await reliabilityDAL.getReliabilityResults(
+      new mongoose.Types.ObjectId(id)
+    );
+    let reliabilityScore = {
+      architecture: 0,
+      coding: 0,
+      design: 0,
+      debugging: 0,
+      framework: 0,
+      implementation: 0,
+    };
+
+    const resultData = await getResults[0]?.questionsAttended?.map((item) => {
+      const questionFound = getResults[0]?.questions?.find(
+        (question) => question?._id?.toString() === item?.questionId?.toString()
+      );
+      if (questionFound) {
+        // console.log(
+        //   item?.selectedChoice === questionFound?.questionAnswer,
+        //   questionFound?.reliabilityType
+        // );
+
+        if (item?.selectedChoice === questionFound?.questionAnswer) {
+          reliabilityScore = {
+            ...reliabilityScore,
+            [questionFound?.reliabilityType]:
+              reliabilityScore[questionFound?.reliabilityType] + 1,
+          };
+        }
+        return {
+          _id: questionFound?._id,
+          description: questionFound?.description,
+          codeSnippet: questionFound?.codeSnippet,
+          questionChoices: questionFound?.questionChoices,
+          questionAnswer: questionFound?.questionAnswer,
+          userAnswer: item?.selectedChoice,
+          result: item?.selectedChoice === questionFound?.questionAnswer,
+          reliabilityType: questionFound?.reliabilityType,
+          reliabilityValue: questionFound?.reliabilityValue,
+        };
+      }
+    });
+    return res.status(200).json({
+      status: "SUCCESS",
+      message: "Reliability answers added successfully",
+      data: resultData,
+      reliabilityScore,
     });
   } catch (err) {
     console.error(colors.red, `Error while adding Reliability answers`, err);

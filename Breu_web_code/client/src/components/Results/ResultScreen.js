@@ -147,7 +147,7 @@ const ResultScreen = () => {
       {location?.pathname === "/breuscore" ? null : (
         <Header
           name="BREU Score"
-          caption={"Exploring your Emotional dimension"}
+          // caption={"Exploring your Emotional dimension"}
         />
       )}
       <Grid container style={{ marginTop: "2%" }}>

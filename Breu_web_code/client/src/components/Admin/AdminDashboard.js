@@ -20,12 +20,16 @@ import CustomizedDialogs from "../../common/customDailougeBox";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchAllCandidates } from "../../features/adminSlice";
 import ReactPlayer from "react-player";
+import { fetchReliabilityResults } from "../../features/reliabilitySlice";
 
 const AdminDashboard = () => {
   const [age, setAge] = useState("");
   const [video, setVideo] = useState("");
   const [open, setOpen] = useState(false);
-  const { adminSlice, adminAuthSlice } = useSelector((state) => state);
+  const [resultOpen, setResultOpen] = useState(false);
+  const { adminSlice, adminAuthSlice, reliability } = useSelector(
+    (state) => state
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -48,6 +52,11 @@ const AdminDashboard = () => {
     console.log(data?.row?.videos[0]?.interestingProjectVideo?.link);
     setVideo(data?.row?.videos[0]?.interestingProjectVideo?.link);
     setOpen(true);
+  };
+
+  const handleResult = (data) => {
+    dispatch(fetchReliabilityResults(data?.row?._id));
+    setResultOpen(true);
   };
 
   const columns = [
@@ -78,29 +87,22 @@ const AdminDashboard = () => {
       ),
     },
     {
-      field: "firstvideo",
-      headerName: "Video 1",
-      // width: 100,
+      field: "reliabilityResults",
+      headerName: "ReliabilityResults",
+      width: 250,
       headerAlign: "center",
       align: "center",
-      renderCell: (params) => {
-        if (params?.row?.videos[0]?.conflictResolutionVideo?.link) {
-          return (
-            <PlayCircleFilledWhiteRoundedIcon
-              fontSize="large"
-              sx={{ color: "blue" }}
-              onClick={() => handleConflictClick(params)}
-            />
-          );
-        } else {
-          <Typography>No Video Found</Typography>;
-        }
-      },
+      renderCell: (params) => (
+        <Button variant="contained" onClick={() => handleResult(params)}>
+          View Reliability Results
+        </Button>
+      ),
     },
+
     {
       field: "secondvideo",
-      headerName: "Video 2",
-      // width: 100,
+      headerName: "EI Video 1",
+      width: 200,
       headerAlign: "center",
       align: "center",
       renderCell: (params) => {
@@ -112,8 +114,24 @@ const AdminDashboard = () => {
               onClick={() => handleInterestingClick(params)}
             />
           );
-        } else {
-          <Typography>No Video Found</Typography>;
+        }
+      },
+    },
+    {
+      field: "firstvideo",
+      headerName: "EI VIdeo 2",
+      width: 200,
+      headerAlign: "center",
+      align: "center",
+      renderCell: (params) => {
+        if (params?.row?.videos[0]?.conflictResolutionVideo?.link) {
+          return (
+            <PlayCircleFilledWhiteRoundedIcon
+              fontSize="large"
+              sx={{ color: "blue" }}
+              onClick={() => handleConflictClick(params)}
+            />
+          );
         }
       },
     },
@@ -139,7 +157,7 @@ const AdminDashboard = () => {
   const navigate = useNavigate();
   return (
     <>
-      <Header name="Recruiter" caption={"Your Choice Matters"} />
+      <Header name="Admin" caption={"Your Choice Matters"} />
 
       <Grid container>
         <Grid item xs={12} md={12}>
@@ -182,6 +200,56 @@ const AdminDashboard = () => {
           }
           openPopup={open}
           setOpenPopup={setOpen}
+        />
+
+        <CustomizedDialogs
+          title={"Relaibility Result"}
+          children={
+            <>
+              <Grid container>
+                <Grid item xs={12} md={12}>
+                  <Typography>
+                    {" "}
+                    Architecture:{" "}
+                    {reliability?.reliabilityResults?.architecture}
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} md={12}>
+                  <Typography>
+                    {" "}
+                    Coding: {reliability?.reliabilityResults?.coding}
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} md={12}>
+                  <Typography>
+                    {" "}
+                    Design: {reliability?.reliabilityResults?.design}
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} md={12}>
+                  <Typography>
+                    {" "}
+                    Debugging: {reliability?.reliabilityResults?.debugging}
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} md={12}>
+                  <Typography>
+                    {" "}
+                    Framework: {reliability?.reliabilityResults?.framework}
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} md={12}>
+                  <Typography>
+                    {" "}
+                    Implementation:{" "}
+                    {reliability?.reliabilityResults?.implementation}
+                  </Typography>
+                </Grid>
+              </Grid>
+            </>
+          }
+          openPopup={resultOpen}
+          setOpenPopup={setResultOpen}
         />
       </Grid>
     </>

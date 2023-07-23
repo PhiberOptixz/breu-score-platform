@@ -22,12 +22,12 @@ const BreuScore = () => {
     <>
       <Header
         name="Breu Score"
-        caption={"Exploring your Emotional dimension"}
+        // caption={"Exploring your Emotional dimension"}
       />
       {candidateSlice?.candidateScore ? (
         <ResultScreen />
       ) : (
-        <h3 style={{ margin: "auto" }}>
+        <h3 style={{ textAlign: "center" }}>
           {" "}
           You did it !! Your breu score will be available in 24 hours
         </h3>

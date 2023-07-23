@@ -44,19 +44,19 @@ const SignUp = () => {
         .required("Email is required field"),
       password: Yup.string()
         .min(8, "Password must be at least 8 characters")
-        .matches(
-          "(?=.*[a-z])",
-          "Password must contain at least 1 Lower Case character"
-        )
-        .matches(
-          "(?=.*[A-Z])",
-          "Password must contain at least 1 Upper Case character"
-        )
-        .matches("(?=.*[0-9])", "Password must contain at least 1 Number")
-        .matches(
-          "(?=.*[!@#$%^&*])",
-          "Password must contain at least 1 special character"
-        )
+        // .matches(
+        //   "(?=.*[a-z])",
+        //   "Password must contain at least 1 Lower Case character"
+        // )
+        // .matches(
+        //   "(?=.*[A-Z])",
+        //   "Password must contain at least 1 Upper Case character"
+        // )
+        // .matches("(?=.*[0-9])", "Password must contain at least 1 Number")
+        // .matches(
+        //   "(?=.*[!@#$%^&*])",
+        //   "Password must contain at least 1 special character"
+        // )
         .required("Password is required field"),
       phoneNumber: Yup.string()
         // .min(10, 'Name must be at least 6 characters')
