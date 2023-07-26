@@ -317,7 +317,10 @@ const EmotionalUndesirability = () => {
           </Grid>
 
           <Grid item xs={12} md={5} sx={{ marginLeft: "2%" }}>
-            <h1>Record your Response</h1>
+            <h1>
+              Record your Response{" "}
+              <span style={{ fontSize: "20px" }}>(2 Attempts only)</span>
+            </h1>
             <p style={{ fontSize: "20px", marginRight: "5%" }}>
               {questionTitle}
             </p>
