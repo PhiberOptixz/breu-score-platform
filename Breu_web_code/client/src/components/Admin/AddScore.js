@@ -16,6 +16,7 @@ const AddScore = ({ setOpenPopup }) => {
   const { adminAuthSlice, candidateSlice } = useSelector((state) => state);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [disabled, setDisabled] = useState();
 
   useEffect(() => {
     if (adminAuthSlice?.isAuthenticated) {
@@ -249,6 +250,7 @@ const AddScore = ({ setOpenPopup }) => {
         "mainScore",
         candidateSlice.candidateScore?.mainScore
       );
+      setDisabled(true);
     }
   }, [candidateSlice.candidateScore]);
 
@@ -266,12 +268,13 @@ const AddScore = ({ setOpenPopup }) => {
       debugging: "",
       architecture: "",
       implementation: "",
+
       teamwork: "",
       complexityhandling: "",
       conflictresolution: "",
       initiative: "",
       culturalFit: "",
-      epresentation: "",
+      // epresentation: "",
       communication: "",
       ownership: "",
       empathy: "",
@@ -297,7 +300,7 @@ const AddScore = ({ setOpenPopup }) => {
       conflictresolutionpercent: "",
       initiativepercent: "",
       culturalFitpercent: "",
-      epresentationpercent: "",
+      // epresentationpercent: "",
       communicationpercent: "",
       ownershippercent: "",
       empathypercent: "",
@@ -313,31 +316,37 @@ const AddScore = ({ setOpenPopup }) => {
       //   .required("Schedule Description is required field"),
       qualification: Yup.number()
         .min(1)
+        .max(5)
         .required("Please enter the value")
         .typeError("Qualification value should be a number"),
 
       professionalExperience: Yup.number()
         .min(1)
+        .max(5)
         .required("Please enter the value")
         .typeError("ProfessionalExperience value should be a number"),
 
       socialscore: Yup.number()
         .min(1)
+        .max(5)
         .required("Please enter the value")
         .typeError("Socialscore value should be a number"),
 
       patents: Yup.number()
         .min(1)
+        .max(5)
         .required("Please enter the value")
         .typeError("Patents value should be a number"),
 
       blog: Yup.number()
         .min(1)
+        .max(5)
         .required("Please enter the value")
         .typeError("Blog value should be a number"),
 
       presentation: Yup.number()
         .min(1)
+        .max(5)
         .required("Please enter the value")
         .typeError("Presentation value should be a number"),
 
@@ -345,11 +354,13 @@ const AddScore = ({ setOpenPopup }) => {
 
       design: Yup.number()
         .min(1)
+        .max(5)
         .required("Please enter the value")
         .typeError("design value should be a number"),
 
       framework: Yup.number()
         .min(1)
+        .max(5)
         .required("Please enter the value")
         .typeError("framework value should be a number"),
 
@@ -360,16 +371,19 @@ const AddScore = ({ setOpenPopup }) => {
 
       debugging: Yup.number()
         .min(1)
+        .max(5)
         .required("Please enter the value")
         .typeError("debugging value should be a number"),
 
       architecture: Yup.number()
         .min(1)
+        .max(5)
         .required("Please enter the value")
         .typeError("architecture  value should be a number"),
 
       implementation: Yup.number()
         .min(1)
+        .max(5)
         .required("Please enter the value")
         .typeError("implementation value should be a number"),
 
@@ -377,46 +391,54 @@ const AddScore = ({ setOpenPopup }) => {
 
       teamwork: Yup.number()
         .min(1)
+        .max(5)
         .required("Please enter the value")
         .typeError("teamwork value should be a number"),
 
       complexityhandling: Yup.number()
         .min(1)
+        .max(5)
         .required("Please enter the value")
         .typeError("complexityhandling value should be a number"),
 
       conflictresolution: Yup.number()
         .min(1)
+        .max(5)
         .required("Please enter the value")
         .typeError("conflictresolution value should be a number"),
 
       initiative: Yup.number()
         .min(1)
+        .max(5)
         .required("Please enter the value")
         .typeError("initiative value should be a number"),
 
       ownership: Yup.number()
         .min(1)
+        .max(5)
         .required("Please enter the value")
         .typeError("Ownership value should be a number"),
 
-      epresentation: Yup.number()
-        .min(1)
-        .required("Please enter the value")
-        .typeError("Presentation value should be a number"),
+      // epresentation: Yup.number()
+      //   .min(1)
+      //   .required("Please enter the value")
+      //   .typeError("Presentation value should be a number"),
 
       communication: Yup.number()
         .min(1)
+        .max(5)
         .required("Please enter the value")
         .typeError("communication value should be a number"),
 
       empathy: Yup.number()
         .min(1)
+        .max(5)
         .required("Please enter the value")
         .typeError("Empathy value should be a number"),
 
       openness: Yup.number()
         .min(1)
+        .max(5)
         .required("Please enter the value")
         .typeError("Openness value should be a number"),
 
@@ -424,46 +446,55 @@ const AddScore = ({ setOpenPopup }) => {
 
       plagiarism: Yup.number()
         .min(1)
+        .max(5)
         .required("Please enter the value")
         .typeError("plagiarism value should be a number"),
 
       trustissues: Yup.number()
         .min(1)
+        .max(5)
         .required("Please enter the value")
         .typeError("Trustissues value should be a number"),
 
       fakeinformation: Yup.number()
         .min(1)
+        .max(5)
         .required("Please enter the value")
         .typeError("Fakeinformation value should be a number"),
 
       qualificationpercent: Yup.number()
         .min(1)
+        .max(100)
         .required("Please enter the value")
         .typeError("Qualificationpercent value should be a number"),
 
       professionalExperiencepercent: Yup.number()
         .min(1)
+        .max(100)
         .required("Please enter the value")
         .typeError("ProfessionalExperiencepercent value should be a number"),
 
       socialscorepercent: Yup.number()
         .min(1)
+        .max(100)
         .required("Please enter the value")
         .typeError("Socialscorepercent value should be a number"),
 
       patentspercent: Yup.number()
         .min(1)
+        .max(100)
         .required("Please enter the value")
         .typeError("Patentspercent value should be a number"),
 
       blogpercent: Yup.number()
         .min(1)
+        .max(100)
         .required("Please enter the value")
         .typeError("Blogpercent value should be a number"),
 
       presentationpercent: Yup.number()
         .min(1)
+        .max(100)
         .required("Please enter the value")
         .typeError("Presentationpercent value should be a number"),
 
@@ -471,31 +502,37 @@ const AddScore = ({ setOpenPopup }) => {
 
       designpercent: Yup.number()
         .min(1)
+        .max(100)
         .required("Please enter the value")
         .typeError("designpercent value should be a number"),
 
       frameworkpercent: Yup.number()
         .min(1)
+        .max(100)
         .required("Please enter the value")
         .typeError("frameworkpercent value should be a number"),
 
       codingpercent: Yup.number()
         .min(1)
+        .max(100)
         .required("Please enter the value")
         .typeError("codingpercent value should be a number"),
 
       debuggingpercent: Yup.number()
         .min(1)
+        .max(100)
         .required("Please enter the value")
         .typeError("debuggingpercent value should be a number"),
 
       architecturepercent: Yup.number()
         .min(1)
+        .max(100)
         .required("Please enter the value")
         .typeError("architecturepercent  value should be a number"),
 
       implementationpercent: Yup.number()
         .min(1)
+        .max(100)
         .required("Please enter the value")
         .typeError("implementationpercent value should be a number"),
 
@@ -503,46 +540,54 @@ const AddScore = ({ setOpenPopup }) => {
 
       teamworkpercent: Yup.number()
         .min(1)
+        .max(100)
         .required("Please enter the value")
         .typeError("teamworkpercent value should be a number"),
 
       complexityhandlingpercent: Yup.number()
         .min(1)
+        .max(100)
         .required("Please enter the value")
         .typeError("complexityhandlingpercent value should be a number"),
 
       conflictresolutionpercent: Yup.number()
         .min(1)
+        .max(100)
         .required("Please enter the value")
         .typeError("conflictresolutionpercent value should be a number"),
 
       initiativepercent: Yup.number()
         .min(1)
+        .max(100)
         .required("Please enter the value")
         .typeError("initiativepercent value should be a number"),
 
       ownershippercent: Yup.number()
         .min(1)
+        .max(100)
         .required("Please enter the value")
         .typeError("Ownershippercent value should be a number"),
 
-      epresentationpercent: Yup.number()
-        .min(1)
-        .required("Please enter the value")
-        .typeError("Presentationpercent value should be a number"),
+      // epresentationpercent: Yup.number()
+      //   .min(1)
+      //   .required("Please enter the value")
+      //   .typeError("Presentationpercent value should be a number"),
 
       communicationpercent: Yup.number()
         .min(1)
+        .max(100)
         .required("Please enter the value")
         .typeError("communicationpercent value should be a number"),
 
       empathypercent: Yup.number()
         .min(1)
+        .max(100)
         .required("Please enter the value")
         .typeError("Empathypercent value should be a number"),
 
       opennesspercent: Yup.number()
         .min(1)
+        .max(100)
         .required("Please enter the value")
         .typeError("Opennesspercent value should be a number"),
 
@@ -550,22 +595,25 @@ const AddScore = ({ setOpenPopup }) => {
 
       plagiarismpercent: Yup.number()
         .min(1)
+        .max(100)
         .required("Please enter the value")
         .typeError("plagiarismpercent value should be a number"),
 
       trustissuespercent: Yup.number()
         .min(1)
+        .max(100)
         .required("Please enter the value")
         .typeError("Trustissuespercent value should be a number"),
 
       fakeinformationpercent: Yup.number()
         .min(1)
+        .max(100)
         .required("Please enter the value")
         .typeError("Fakeinformationpercent value should be a number"),
     }),
 
     onSubmit: async (values) => {
-      // console.log("submit value", values);
+      console.log("submit value", values);
       const apidata = {
         candidateId: params.candidateId,
         believabilityScores: {
@@ -703,6 +751,7 @@ const AddScore = ({ setOpenPopup }) => {
         data: apidata,
         navigate,
       };
+      console.log(data);
       dispatch(addScore(data));
     },
   });
@@ -735,7 +784,7 @@ const AddScore = ({ setOpenPopup }) => {
             name="qualification"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            disabled={candidateSlice?.candidateScore ? true : false}
+            disabled={disabled}
             value={formik.values.qualification}
             errors={
               formik.touched.qualification && formik.errors.qualification
@@ -753,7 +802,7 @@ const AddScore = ({ setOpenPopup }) => {
             name="qualificationpercent"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            disabled={candidateSlice?.candidateScore ? true : false}
+            disabled={disabled}
             value={formik.values.qualificationpercent}
             errors={
               formik.touched.qualificationpercent &&
@@ -772,7 +821,7 @@ const AddScore = ({ setOpenPopup }) => {
             name="professionalExperience"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            disabled={candidateSlice?.candidateScore ? true : false}
+            disabled={disabled}
             value={formik.values.professionalExperience}
             errors={
               formik.touched.professionalExperience &&
@@ -791,7 +840,7 @@ const AddScore = ({ setOpenPopup }) => {
             name="professionalExperiencepercent"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            disabled={candidateSlice?.candidateScore ? true : false}
+            disabled={disabled}
             value={formik.values.professionalExperiencepercent}
             errors={
               formik.touched.professionalExperiencepercent &&
@@ -810,7 +859,7 @@ const AddScore = ({ setOpenPopup }) => {
             name="socialscore"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            disabled={candidateSlice?.candidateScore ? true : false}
+            disabled={disabled}
             value={formik.values.socialscore}
             errors={
               formik.touched.socialscore && formik.errors.socialscore
@@ -828,7 +877,7 @@ const AddScore = ({ setOpenPopup }) => {
             name="socialscorepercent"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            disabled={candidateSlice?.candidateScore ? true : false}
+            disabled={disabled}
             value={formik.values.socialscorepercent}
             errors={
               formik.touched.socialscorepercent &&
@@ -847,7 +896,7 @@ const AddScore = ({ setOpenPopup }) => {
             name="patents"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            disabled={candidateSlice?.candidateScore ? true : false}
+            disabled={disabled}
             value={formik.values.patents}
             errors={
               formik.touched.patents && formik.errors.patents
@@ -865,7 +914,7 @@ const AddScore = ({ setOpenPopup }) => {
             name="patentspercent"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            disabled={candidateSlice?.candidateScore ? true : false}
+            disabled={disabled}
             value={formik.values.patentspercent}
             errors={
               formik.touched.patentspercent && formik.errors.patentspercent
@@ -883,7 +932,7 @@ const AddScore = ({ setOpenPopup }) => {
             name="blog"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            disabled={candidateSlice?.candidateScore ? true : false}
+            disabled={disabled}
             value={formik.values.blog}
             errors={
               formik.touched.blog && formik.errors.blog
@@ -901,7 +950,7 @@ const AddScore = ({ setOpenPopup }) => {
             name="blogpercent"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            disabled={candidateSlice?.candidateScore ? true : false}
+            disabled={disabled}
             value={formik.values.blogpercent}
             errors={
               formik.touched.blogpercent && formik.errors.blogpercent
@@ -919,7 +968,7 @@ const AddScore = ({ setOpenPopup }) => {
             name="presentation"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            disabled={candidateSlice?.candidateScore ? true : false}
+            disabled={disabled}
             value={formik.values.presentation}
             errors={
               formik.touched.presentation && formik.errors.presentation
@@ -937,7 +986,7 @@ const AddScore = ({ setOpenPopup }) => {
             name="presentationpercent"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            disabled={candidateSlice?.candidateScore ? true : false}
+            disabled={disabled}
             value={formik.values.presentationpercent}
             errors={
               formik.touched.presentationpercent &&
@@ -959,7 +1008,7 @@ const AddScore = ({ setOpenPopup }) => {
             name="design"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            disabled={candidateSlice?.candidateScore ? true : false}
+            disabled={disabled}
             value={formik.values.design}
             errors={
               formik.touched.design && formik.errors.design
@@ -977,7 +1026,7 @@ const AddScore = ({ setOpenPopup }) => {
             name="designpercent"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            disabled={candidateSlice?.candidateScore ? true : false}
+            disabled={disabled}
             value={formik.values.designpercent}
             errors={
               formik.touched.designpercent && formik.errors.designpercent
@@ -995,7 +1044,7 @@ const AddScore = ({ setOpenPopup }) => {
             name="framework"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            disabled={candidateSlice?.candidateScore ? true : false}
+            disabled={disabled}
             value={formik.values.framework}
             errors={
               formik.touched.framework && formik.errors.framework
@@ -1013,7 +1062,7 @@ const AddScore = ({ setOpenPopup }) => {
             name="frameworkpercent"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            disabled={candidateSlice?.candidateScore ? true : false}
+            disabled={disabled}
             value={formik.values.frameworkpercent}
             errors={
               formik.touched.frameworkpercent && formik.errors.frameworkpercent
@@ -1031,7 +1080,7 @@ const AddScore = ({ setOpenPopup }) => {
             name="coding"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            disabled={candidateSlice?.candidateScore ? true : false}
+            disabled={disabled}
             value={formik.values.coding}
             errors={
               formik.touched.coding && formik.errors.coding
@@ -1049,7 +1098,7 @@ const AddScore = ({ setOpenPopup }) => {
             name="codingpercent"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            disabled={candidateSlice?.candidateScore ? true : false}
+            disabled={disabled}
             value={formik.values.codingpercent}
             errors={
               formik.touched.codingpercent && formik.errors.codingpercent
@@ -1067,7 +1116,7 @@ const AddScore = ({ setOpenPopup }) => {
             name="debugging"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            disabled={candidateSlice?.candidateScore ? true : false}
+            disabled={disabled}
             value={formik.values.debugging}
             errors={
               formik.touched.debugging && formik.errors.debugging
@@ -1085,7 +1134,7 @@ const AddScore = ({ setOpenPopup }) => {
             name="debuggingpercent"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            disabled={candidateSlice?.candidateScore ? true : false}
+            disabled={disabled}
             value={formik.values.debuggingpercent}
             errors={
               formik.touched.debuggingpercent && formik.errors.debuggingpercent
@@ -1103,7 +1152,7 @@ const AddScore = ({ setOpenPopup }) => {
             name="architecture"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            disabled={candidateSlice?.candidateScore ? true : false}
+            disabled={disabled}
             value={formik.values.architecture}
             errors={
               formik.touched.architecture && formik.errors.architecture
@@ -1121,7 +1170,7 @@ const AddScore = ({ setOpenPopup }) => {
             name="architecturepercent"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            disabled={candidateSlice?.candidateScore ? true : false}
+            disabled={disabled}
             value={formik.values.architecturepercent}
             errors={
               formik.touched.architecturepercent &&
@@ -1140,7 +1189,7 @@ const AddScore = ({ setOpenPopup }) => {
             name="implementation"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            disabled={candidateSlice?.candidateScore ? true : false}
+            disabled={disabled}
             value={formik.values.implementation}
             errors={
               formik.touched.implementation && formik.errors.implementation
@@ -1158,7 +1207,7 @@ const AddScore = ({ setOpenPopup }) => {
             name="implementationpercent"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            disabled={candidateSlice?.candidateScore ? true : false}
+            disabled={disabled}
             value={formik.values.implementationpercent}
             errors={
               formik.touched.implementationpercent &&
@@ -1180,7 +1229,7 @@ const AddScore = ({ setOpenPopup }) => {
             name="teamwork"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            disabled={candidateSlice?.candidateScore ? true : false}
+            disabled={disabled}
             value={formik.values.teamwork}
             errors={
               formik.touched.teamwork && formik.errors.teamwork
@@ -1198,7 +1247,7 @@ const AddScore = ({ setOpenPopup }) => {
             name="teamworkpercent"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            disabled={candidateSlice?.candidateScore ? true : false}
+            disabled={disabled}
             value={formik.values.teamworkpercent}
             errors={
               formik.touched.teamworkpercent && formik.errors.teamworkpercent
@@ -1216,7 +1265,7 @@ const AddScore = ({ setOpenPopup }) => {
             name="complexityhandling"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            disabled={candidateSlice?.candidateScore ? true : false}
+            disabled={disabled}
             value={formik.values.complexityhandling}
             errors={
               formik.touched.complexityhandling &&
@@ -1235,7 +1284,7 @@ const AddScore = ({ setOpenPopup }) => {
             name="complexityhandlingpercent"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            disabled={candidateSlice?.candidateScore ? true : false}
+            disabled={disabled}
             value={formik.values.complexityhandlingpercent}
             errors={
               formik.touched.complexityhandlingpercent &&
@@ -1254,7 +1303,7 @@ const AddScore = ({ setOpenPopup }) => {
             name="conflictresolution"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            disabled={candidateSlice?.candidateScore ? true : false}
+            disabled={disabled}
             value={formik.values.conflictresolution}
             errors={
               formik.touched.conflictresolution &&
@@ -1272,7 +1321,7 @@ const AddScore = ({ setOpenPopup }) => {
             name="conflictresolutionpercent"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            disabled={candidateSlice?.candidateScore ? true : false}
+            disabled={disabled}
             value={formik.values.conflictresolutionpercent}
             errors={
               formik.touched.conflictresolutionpercent &&
@@ -1291,7 +1340,7 @@ const AddScore = ({ setOpenPopup }) => {
             name="initiative"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            disabled={candidateSlice?.candidateScore ? true : false}
+            disabled={disabled}
             value={formik.values.initiative}
             errors={
               formik.touched.initiative && formik.errors.initiative
@@ -1308,7 +1357,7 @@ const AddScore = ({ setOpenPopup }) => {
             name="initiativepercent"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            disabled={candidateSlice?.candidateScore ? true : false}
+            disabled={disabled}
             value={formik.values.initiativepercent}
             errors={
               formik.touched.initiativepercent &&
@@ -1327,7 +1376,7 @@ const AddScore = ({ setOpenPopup }) => {
             name="culturalFit"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            disabled={candidateSlice?.candidateScore ? true : false}
+            disabled={disabled}
             value={formik.values.culturalFit}
             errors={
               formik.touched.culturalFit && formik.errors.culturalFit
@@ -1344,7 +1393,7 @@ const AddScore = ({ setOpenPopup }) => {
             name="culturalFitpercent"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            disabled={candidateSlice?.candidateScore ? true : false}
+            disabled={disabled}
             value={formik.values.culturalFitpercent}
             errors={
               formik.touched.culturalFitpercent &&
@@ -1362,7 +1411,7 @@ const AddScore = ({ setOpenPopup }) => {
             label="Presentation"
             name="epresentation"
             onChange={formik.handleChange}
-            onBlur={formik.handleBlur}disabled={candidateSlice?.candidateScore ? true : false}
+            onBlur={formik.handleBlur}disabled={disabled}
             value={formik.values.epresentation}
             errors={
               formik.touched.epresentation && formik.errors.epresentation
@@ -1379,7 +1428,7 @@ const AddScore = ({ setOpenPopup }) => {
             label="Presentation percent"
             name="epresentationpercent"
             onChange={formik.handleChange}
-            onBlur={formik.handleBlur}disabled={candidateSlice?.candidateScore ? true : false}
+            onBlur={formik.handleBlur}disabled={disabled}
             value={formik.values.epresentationpercent}
             errors={
               formik.touched.epresentationpercent &&
@@ -1398,7 +1447,7 @@ const AddScore = ({ setOpenPopup }) => {
             name="communication"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            disabled={candidateSlice?.candidateScore ? true : false}
+            disabled={disabled}
             value={formik.values.communication}
             errors={
               formik.touched.communication && formik.errors.communication
@@ -1415,7 +1464,7 @@ const AddScore = ({ setOpenPopup }) => {
             name="communicationpercent"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            disabled={candidateSlice?.candidateScore ? true : false}
+            disabled={disabled}
             value={formik.values.communicationpercent}
             errors={
               formik.touched.communicationpercent &&
@@ -1434,7 +1483,7 @@ const AddScore = ({ setOpenPopup }) => {
             name="ownership"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            disabled={candidateSlice?.candidateScore ? true : false}
+            disabled={disabled}
             value={formik.values.ownership}
             errors={
               formik.touched.ownership && formik.errors.ownership
@@ -1452,7 +1501,7 @@ const AddScore = ({ setOpenPopup }) => {
             name="ownershippercent"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            disabled={candidateSlice?.candidateScore ? true : false}
+            disabled={disabled}
             value={formik.values.ownershippercent}
             errors={
               formik.touched.ownershippercent && formik.errors.ownershippercent
@@ -1470,7 +1519,7 @@ const AddScore = ({ setOpenPopup }) => {
             name="empathy"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            disabled={candidateSlice?.candidateScore ? true : false}
+            disabled={disabled}
             value={formik.values.empathy}
             errors={
               formik.touched.empathy && formik.errors.empathy
@@ -1488,7 +1537,7 @@ const AddScore = ({ setOpenPopup }) => {
             name="empathypercent"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            disabled={candidateSlice?.candidateScore ? true : false}
+            disabled={disabled}
             value={formik.values.empathypercent}
             errors={
               formik.touched.empathypercent && formik.errors.empathypercent
@@ -1506,7 +1555,7 @@ const AddScore = ({ setOpenPopup }) => {
             name="openness"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            disabled={candidateSlice?.candidateScore ? true : false}
+            disabled={disabled}
             value={formik.values.openness}
             errors={
               formik.touched.openness && formik.errors.openness
@@ -1523,7 +1572,7 @@ const AddScore = ({ setOpenPopup }) => {
             name="opennesspercent"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            disabled={candidateSlice?.candidateScore ? true : false}
+            disabled={disabled}
             value={formik.values.opennesspercent}
             errors={
               formik.touched.opennesspercent && formik.errors.opennesspercent
@@ -1544,7 +1593,7 @@ const AddScore = ({ setOpenPopup }) => {
             name="plagiarism"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            disabled={candidateSlice?.candidateScore ? true : false}
+            disabled={disabled}
             value={formik.values.plagiarism}
             errors={
               formik.touched.plagiarism && formik.errors.plagiarism
@@ -1561,7 +1610,7 @@ const AddScore = ({ setOpenPopup }) => {
             name="plagiarismpercent"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            disabled={candidateSlice?.candidateScore ? true : false}
+            disabled={disabled}
             value={formik.values.plagiarismpercent}
             errors={
               formik.touched.plagiarismpercent &&
@@ -1580,7 +1629,7 @@ const AddScore = ({ setOpenPopup }) => {
             name="trustissues"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            disabled={candidateSlice?.candidateScore ? true : false}
+            disabled={disabled}
             value={formik.values.trustissues}
             errors={
               formik.touched.trustissues && formik.errors.trustissues
@@ -1597,7 +1646,7 @@ const AddScore = ({ setOpenPopup }) => {
             name="trustissuespercent"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            disabled={candidateSlice?.candidateScore ? true : false}
+            disabled={disabled}
             value={formik.values.trustissuespercent}
             errors={
               formik.touched.trustissuespercent &&
@@ -1616,7 +1665,7 @@ const AddScore = ({ setOpenPopup }) => {
             name="fakeinformation"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            disabled={candidateSlice?.candidateScore ? true : false}
+            disabled={disabled}
             value={formik.values.fakeinformation}
             errors={
               formik.touched.fakeinformation && formik.errors.fakeinformation
@@ -1633,7 +1682,7 @@ const AddScore = ({ setOpenPopup }) => {
             name="fakeinformationpercent"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            disabled={candidateSlice?.candidateScore ? true : false}
+            disabled={disabled}
             value={formik.values.fakeinformationpercent}
             errors={
               formik.touched.fakeinformationpercent &&
@@ -1654,7 +1703,7 @@ const AddScore = ({ setOpenPopup }) => {
             name="mainScore"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            disabled={candidateSlice?.candidateScore ? true : false}
+            disabled={disabled}
             value={formik.values.mainScore}
             errors={
               formik.touched.mainScore && formik.errors.mainScore
@@ -1672,7 +1721,7 @@ const AddScore = ({ setOpenPopup }) => {
               type="submit"
               name="save"
               color="primary"
-              disabled={candidateSlice?.candidateScore ? true : false}
+              disabled={disabled}
               //   className={classes.inputButtonFields}
               variant="contained"
               // onClick={submitForm}
@@ -1691,7 +1740,10 @@ const AddScore = ({ setOpenPopup }) => {
               color="primary"
               //   className={classes.inputButtonFields}
               variant="contained"
-              onClick={handleReset}
+              onClick={() => {
+                setDisabled(false);
+                handleReset();
+              }}
             >
               Reset
             </Button>

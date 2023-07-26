@@ -25,6 +25,7 @@ import {
 } from "../../features/recruiterSlice";
 import { useDispatch, useSelector } from "react-redux";
 import BreuSelect from "../../common/selectSingleValue";
+import SelectMultipleValues from "../../common/SelectMultipleValues";
 
 const RecruiterLanding = () => {
   const [selectedCorporate, setSelectedCorporate] = useState({});
@@ -271,6 +272,15 @@ const RecruiterLanding = () => {
           children={
             <div style={{ width: "400px" }}>
               {" "}
+              <SelectMultipleValues
+                align="center"
+                label="Select Courses"
+                name="selectCourses"
+                dataList={corporateList || []} //?iLearnCourses:[]
+                value="Select Courses"
+                onSelectData={(list) => setSelectedCorporate(list)}
+                selectedData={selectedCorporate}
+              />
               <BreuSelect
                 align="center"
                 placeholder="Select Corporate"

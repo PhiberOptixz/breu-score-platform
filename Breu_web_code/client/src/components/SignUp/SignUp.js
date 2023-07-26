@@ -75,7 +75,59 @@ const SignUp = () => {
 
   return (
     <Grid container className="signInContainer">
-      <Grid item xs={12} md={6}></Grid>
+      <Grid item xs={12} md={6} className="sig">
+        <ThemeProvider theme={theme}>
+          <Container component="main" maxWidth="xs">
+            <CssBaseline />
+            <Box
+              sx={{
+                marginTop: 15,
+                padding: 2,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                background: "white",
+                // marginLeft: 20,
+                border: "1px solid #0a71b9",
+                borderRadius: "25px",
+              }}
+            >
+              <Typography
+                sx={{ fontSize: "22px", color: "#0a71b9", fontWeight: "600" }}
+              >
+                WHY BREU?
+              </Typography>
+
+              {/* <ul style={{ fontSize: "18px", color: "#0a71b9" }}>
+                <li> */}
+              <Typography
+                sx={{ paddingTop: "4%", color: "#0a71b9", fontSize: "16px" }}
+                align="center"
+              >
+                Most of the companies in this space are trying to solve a
+                discrete problem resulting in very high cycle time from the
+                moment of searching the right candidate till the point he / she
+                is onboarded post the interviews. There is no single integrated
+                platform which solves the problem in a holistic manner.We at
+                BREU are building industry's first candidate recommendation
+                engine to solve the problems of identifying quality of
+                candidates, speed of assessment, reduced involvement of
+                technical teams and bring transparency through common
+                understanding. BREU aims at building Pre-assessed candidate pool
+                connecting corporates to candidates thereby recommending best
+                candidates to best jobs.
+              </Typography>
+              {/* </li>
+              </ul> */}
+
+              {/* <Typography>
+                * Patent Link – Click here to understand BREU better
+              </Typography> */}
+            </Box>
+            {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}
+          </Container>
+        </ThemeProvider>
+      </Grid>
       <Grid item xs={12} md={6}>
         <ThemeProvider theme={theme}>
           <Container component="main" maxWidth="xs">

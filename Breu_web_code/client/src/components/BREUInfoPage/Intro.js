@@ -18,7 +18,7 @@ import { useSelector } from "react-redux";
 const Intro = () => {
   const { auth } = useSelector((state) => state);
   const [video, setVideo] = useState(
-    "https://www.youtube.com/embed/3pmC0SRynFY"
+    "https://breu.s3.ap-south-1.amazonaws.com/breuinformationvideos/believe.mp4"
   );
   const navigate = useNavigate();
   const [nodeNumber, setNodeNumber] = useState();
@@ -29,7 +29,7 @@ const Intro = () => {
     if (auth?.isAuthenticated) {
       if (auth?.user?.completedBelievability) {
         setRepeat(1);
-        setNodeNumber(5);
+        setNodeNumber(4);
       }
     }
   }, [auth]);
@@ -86,75 +86,82 @@ const Intro = () => {
     const { active, completed, className } = props;
 
     const icons = {
+      // 1: (
+      //   <h2
+      //     onClick={() => {
+      //       setVideo("https://www.youtube.com/embed/3pmC0SRynFY");
+      //       setNodeNumber(0);
+      //     }}
+      //   >
+      //     P
+      //   </h2>
+      // ),
       1: (
         <h2
           onClick={() => {
-            setVideo("https://www.youtube.com/embed/3pmC0SRynFY");
+            setVideo(
+              "https://breu.s3.ap-south-1.amazonaws.com/breuinformationvideos/believe.mp4"
+            );
             setNodeNumber(0);
           }}
         >
-          P
+          B
         </h2>
       ),
       2: (
         <h2
           onClick={() => {
             if (preNodeNumber === -1 || repeat === 1) {
-              setVideo("https://youtu.be/brrQ9L88OFo");
+              setVideo(
+                "https://breu.s3.ap-south-1.amazonaws.com/breuinformationvideos/reliability.mp4"
+              );
               setPreNodeNumber(0);
               setNodeNumber(1);
-            }
-          }}
-        >
-          B
-        </h2>
-      ),
-      3: (
-        <h2
-          onClick={() => {
-            if (preNodeNumber === 0 || repeat === 1) {
-              setVideo("https://youtu.be/jWRdd7FFGgY");
-              setPreNodeNumber(1);
-              setNodeNumber(2);
             }
           }}
         >
           R
         </h2>
       ),
-      4: (
+      3: (
         <h2
           onClick={() => {
-            if (preNodeNumber === 1 || repeat === 1) {
-              setVideo("https://www.youtube.com/embed/kMUcwWWmWug");
-              setPreNodeNumber(2);
-              setNodeNumber(3);
+            if (preNodeNumber === 0 || repeat === 1) {
+              setVideo(
+                "https://breu.s3.ap-south-1.amazonaws.com/breuinformationvideos/ei+demo.mp4"
+              );
+              setPreNodeNumber(1);
+              setNodeNumber(2);
             }
           }}
         >
           E
         </h2>
       ),
-      5: (
+      4: (
         <h2
           onClick={() => {
-            if (preNodeNumber === 2 || repeat === 1) {
-              setVideo("https://www.youtube.com/embed/3pmC0SRynFY");
-              setPreNodeNumber(3);
-              setNodeNumber(4);
+            if (preNodeNumber === 1 || repeat === 1) {
+              setVideo(
+                "https://breu.s3.ap-south-1.amazonaws.com/breuinformationvideos/undesirable.mp4"
+              );
+              setPreNodeNumber(2);
+              setNodeNumber(3);
             }
           }}
         >
           U
         </h2>
       ),
-      6: (
+      5: (
         <h2
           onClick={() => {
-            if (preNodeNumber === 3 || repeat === 1) {
-              setVideo("https://www.youtube.com/embed/kMUcwWWmWug");
-              setPreNodeNumber(4);
-              setNodeNumber(5);
+            if (preNodeNumber === 2 || repeat === 1) {
+              setVideo(
+                "https://breu.s3.ap-south-1.amazonaws.com/breuinformationvideos/BREU+SCORE+TRAILER.mp4"
+              );
+              setPreNodeNumber(3);
+              setNodeNumber(4);
               setRepeat(1);
             }
           }}
@@ -193,7 +200,6 @@ const Intro = () => {
   };
 
   const steps = [
-    "Prologue",
     "Believablility",
     "Reliability",
     "Emotional Intelligibility",
@@ -224,6 +230,8 @@ const Intro = () => {
           </div>
         </Grid>
         <Grid item xs={0} md={3}></Grid>
+
+        {/* stepper */}
         <Grid item xs={12} md={11} sx={{ marginTop: "4%" }}>
           <Stepper
             alternativeLabel
@@ -233,14 +241,14 @@ const Intro = () => {
             {steps.map((label) => (
               <Step key={label} sx={{ cursor: "pointer" }}>
                 <StepLabel StepIconComponent={ColorlibStepIcon}>
-                  {label}
+                  {/* {label} */}
                 </StepLabel>
               </Step>
             ))}
           </Stepper>
         </Grid>
 
-        <Grid item xs={12} md={1} sx={{ marginTop: "4.2%" }}>
+        <Grid item xs={12} md={1} sx={{ marginTop: "4.2%" }} align="center">
           {repeat === 1 ? (
             <ButtonField
               buttonStyle="submit"
