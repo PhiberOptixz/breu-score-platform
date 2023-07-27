@@ -15,4 +15,10 @@ router.post(
   recruiterController.sendCandidateToCorporate
 );
 
+router.get(
+  "/getRecruiterSpecificCorporates",
+  authJWT.verifyJWTToken,
+  recruiterController.getRecruiterSpecificCorporates
+);
+
 module.exports = router;

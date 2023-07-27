@@ -18,11 +18,13 @@ export const fetchRecruiterCandidates = createAsyncThunk(
 );
 
 //fetch corporate details
-export const fetchAllCorporates = createAsyncThunk(
-  "fetchAllCorporates",
+export const fetchRecruiterCorporates = createAsyncThunk(
+  "fetchRecruiterCorporates",
   async (data, { rejectWithValue }) => {
     try {
-      const response = await axios.get("/api/corporate/getAllCorporates");
+      const response = await axios.get(
+        "/api/recruiter/getRecruiterSpecificCorporates"
+      );
       const result = response.data;
       return result;
     } catch (error) {
@@ -32,7 +34,7 @@ export const fetchAllCorporates = createAsyncThunk(
   }
 );
 
-//fetch corporate details
+//send to corporate
 export const sendCandidateToCorporate = createAsyncThunk(
   "sendCandidateToCorporate",
   async (data, { rejectWithValue, dispatch }) => {
@@ -70,14 +72,14 @@ export const recruiter = createSlice({
       state.loading = false;
       state.error = action.payload;
     });
-    builder.addCase(fetchAllCorporates.pending, (state) => {
+    builder.addCase(fetchRecruiterCorporates.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(fetchAllCorporates.fulfilled, (state, action) => {
+    builder.addCase(fetchRecruiterCorporates.fulfilled, (state, action) => {
       state.loading = false;
       state.corporateList = action?.payload?.data;
     });
-    builder.addCase(fetchAllCorporates.rejected, (state, action) => {
+    builder.addCase(fetchRecruiterCorporates.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload;
     });

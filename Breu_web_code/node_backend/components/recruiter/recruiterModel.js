@@ -25,6 +25,12 @@ let recruiterSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  linkedCorporates: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "corporateDetails",
+    },
+  ],
   createdAt: {
     type: Date,
     default: new Date(),

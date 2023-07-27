@@ -1,5 +1,6 @@
 const recruiterModel = require("./recruiterModel");
 const candidateModel = require("../candidate/candidateModel");
+const corporateModel = require("../corporate/corporateModel");
 
 async function getRecruiterById(data) {
   try {
@@ -112,6 +113,20 @@ async function updateRecruiterDetails(data) {
   }
 }
 
+async function getCorporateByRecruiterId(data) {
+  try {
+    let result = await corporateModel.find({ _id: { $in: data } }).lean();
+    return result;
+  } catch (err) {
+    console.log(err);
+    if (err.message) {
+      throw err.message;
+    } else {
+      throw err;
+    }
+  }
+}
+
 module.exports = {
   getRecruiterByEmail,
   getRecruiterByPhoneNumber,
@@ -119,4 +134,5 @@ module.exports = {
   updateRecruiterDetails,
   getCandidatebyRecruiterId,
   getCandidateRecruiters,
+  getCorporateByRecruiterId,
 };

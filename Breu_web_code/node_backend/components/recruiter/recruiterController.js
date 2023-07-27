@@ -39,3 +39,18 @@ module.exports.sendCandidateToCorporate = async (req, res) => {
       .send({ message: "Believability error", error: error });
   }
 };
+
+module.exports.getRecruiterSpecificCorporates = async (req, res, next) => {
+  try {
+    const recruiterExists = await recruiterDAL.getRecruiterById(
+      req.decoded._id
+    );
+    const data = await recruiterDAL.getCorporateByRecruiterId(
+      recruiterExists?.linkedCorporates
+    );
+    return res.send({ message: "SUCCESS", data: data });
+  } catch (error) {
+    console.error(colors.red, `Error fetching Corporate list`, error);
+    return next(new AppError(error, 400));
+  }
+};

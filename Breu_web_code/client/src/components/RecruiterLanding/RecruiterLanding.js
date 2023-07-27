@@ -1,74 +1,85 @@
 import { useEffect, useState, useRef } from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import Radio from "@mui/material/Radio";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 import PlayCircleFilledWhiteRoundedIcon from "@mui/icons-material/PlayCircleFilledWhiteRounded";
-import ListItemText from "@mui/material/ListItemText";
+
 import Header from "../../common/header";
 import { Grid } from "@mui/material";
-import ButtonField from "../../common/button";
 import { Button } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
 import CustomizedDialogs from "../../common/customDailougeBox";
 import HorizontalGauge from "react-horizontal-gauge";
 import {
   fetchRecruiterCandidates,
-  fetchAllCorporates,
+  fetchRecruiterCorporates,
   sendCandidateToCorporate,
 } from "../../features/recruiterSlice";
 import { useDispatch, useSelector } from "react-redux";
-import BreuSelect from "../../common/selectSingleValue";
 import SelectMultipleValues from "../../common/SelectMultipleValues";
 
 const RecruiterLanding = () => {
-  const [selectedCorporate, setSelectedCorporate] = useState({});
+  const [selectedCorporate, setSelectedCorporate] = useState([]);
   const [selectedCandidate, setSelectedCandidate] = useState({});
   const [video, setVideo] = useState("");
   const [open, setOpen] = useState(false);
   const [openCorporate, setOpenCorporate] = useState(false);
   const { recruiterSlice, recruiterAuth } = useSelector((state) => state);
+  const [corpList, setCorpList] = useState([]);
+  const [corpListOriginal, setCorpListOriginal] = useState([]);
+  const [prevSelectedCorps, setPrevSelectedCorps] = useState([]);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log(recruiterAuth?.isAuthenticated);
     if (recruiterAuth?.isAuthenticated) {
       dispatch(fetchRecruiterCandidates());
-      dispatch(fetchAllCorporates());
+      dispatch(fetchRecruiterCorporates());
     }
   }, [recruiterAuth?.isAuthenticated]);
 
-  const corporateList = recruiterSlice?.corporateList?.map((item) => {
-    return {
-      _id: item?._id,
-      name: item?.corporateName,
-    };
-  });
+  useEffect(() => {
+    if (recruiterSlice?.corporateList) {
+      const corporateList = recruiterSlice?.corporateList?.map((item) => {
+        return {
+          _id: item?._id,
+          name: item?.corporateName,
+        };
+      });
+      setCorpListOriginal(corporateList);
+    }
+  }, [recruiterSlice?.corporateList]);
 
-  const handleChange = (event) => {
-    console.log(event.target.value);
-    setSelectedCorporate(event?.target?.value);
-  };
+  // const corporateList = recruiterSlice?.corporateList?.map((item) => {
+  //   return {
+  //     _id: item?._id,
+  //     name: item?.corporateName,
+  //   };
+  // });
 
   const handleSelect = (data) => {
+    console.log(data);
+    setCorpList([]);
+    const filteredCorps = corpListOriginal?.filter((item) => {
+      return !data?.row?.linkedCorporates?.includes(item?._id);
+    });
+    console.log(filteredCorps);
+    setSelectedCorporate([]);
+    setPrevSelectedCorps(data?.row?.linkedCorporates);
+    setCorpList(filteredCorps);
     setSelectedCandidate(data.row);
     setOpenCorporate(true);
   };
 
   const handleSend = () => {
-    console.log(selectedCandidate, selectedCorporate);
+    let corpIds = selectedCorporate?.map((item) => item?._id);
+    corpIds =
+      prevSelectedCorps?.length > 0
+        ? [...prevSelectedCorps, ...corpIds]
+        : corpIds;
     const data = {
       _id: selectedCandidate?._id,
-      linkedCorporates: [selectedCorporate?._id],
+      linkedCorporates: corpIds,
     };
-    console.log(data);
     dispatch(sendCandidateToCorporate(data));
+    setOpenCorporate(false);
   };
 
   const handleConflictClick = (data) => {
@@ -179,34 +190,6 @@ const RecruiterLanding = () => {
         }
       },
     },
-    // {
-    //   field: "dropdown",
-    //   headerName: "Company",
-    //   headerAlign: "center",
-    //   width: 200,
-    //   sortable: false,
-    //   align: "center",
-    //   renderCell: (params) => (
-    //     <FormControl sx={{ m: 1, minWidth: 150 }} size="small">
-    //       <BreuSelect
-    //         align="center"
-    //         placeholder="Choose your current role"
-    //         name="selectRole"
-    //         sx={{
-    //           marginLeft: "8%",
-    //           width: "80%",
-    //           marginTop: "1%",
-    //           backgroundColor: "#FFF",
-    //         }}
-    //         // className="believabilityBreuSelect"
-    //         values={corporateList || []}
-    //         onSelect={(list) => setSelectedCorporate(list)}
-    //         // disabled={auth?.user?.completedBelievability}
-    //         selected={selectedCorporate}
-    //       />
-    //     </FormControl>
-    //   ),
-    // },
     {
       field: "button",
       headerName: "Send to Corporate",
@@ -215,7 +198,10 @@ const RecruiterLanding = () => {
       sortable: false,
       align: "center",
       renderCell: (params) => {
-        if (params?.row?.linkedCorporates?.length > 0) {
+        const filteredCorps = corpListOriginal?.filter(
+          (item) => !params?.row?.linkedCorporates?.includes(item?._id)
+        );
+        if (filteredCorps.length === 0) {
           return (
             <Button variant="contained" disabled>
               Sent to Corporate
@@ -274,14 +260,14 @@ const RecruiterLanding = () => {
               {" "}
               <SelectMultipleValues
                 align="center"
-                label="Select Courses"
-                name="selectCourses"
-                dataList={corporateList || []} //?iLearnCourses:[]
-                value="Select Courses"
+                label="Select Corporate"
+                name="selectCorporate"
+                dataList={corpList || []} //?iLearnCourses:[]
+                value="Select Corporate"
                 onSelectData={(list) => setSelectedCorporate(list)}
                 selectedData={selectedCorporate}
               />
-              <BreuSelect
+              {/* <BreuSelect
                 align="center"
                 placeholder="Select Corporate"
                 name="selectRole"
@@ -296,7 +282,7 @@ const RecruiterLanding = () => {
                 onSelect={(list) => setSelectedCorporate(list)}
                 // disabled={auth?.user?.completedBelievability}
                 selected={selectedCorporate}
-              />
+              /> */}
               <Button
                 sx={{ marginTop: "20px" }}
                 variant="contained"
