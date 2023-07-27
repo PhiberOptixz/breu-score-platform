@@ -29,7 +29,6 @@ app.all("/api/*", (req, res, next) => {
   next(new AppError(`Cannot find ${req.originalUrl} on the server`, 404));
 });
 
-const env = process.env.NODE_ENV || 6060;
 const appRoot = fs.realpathSync(process.cwd());
 
 const clientPath = path.resolve(appRoot, "../client/build");
