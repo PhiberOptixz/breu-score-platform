@@ -360,7 +360,7 @@ const EmotionalUndesirability = () => {
                   width: "100%",
                   // height: "10%",
                   borderRadius: "0% 0% 2% 2%",
-                  height: "44vh",
+                  height: "48vh",
                 }}
                 playsInline
                 autoPlay
@@ -373,7 +373,7 @@ const EmotionalUndesirability = () => {
                   width: "100%",
                   height: "30%",
                   borderRadius: "0% 0% 2% 2%",
-                  height: "44vh",
+                  height: "48vh",
                 }}
                 playsinliplaysInlinene
                 loop
