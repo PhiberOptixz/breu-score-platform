@@ -14,7 +14,7 @@ const app = express();
 app.use(cors());
 
 // Request Body Parser Middleware
-app.use(express.json({ limit: "50mb" }));
+app.use(express.json({ limit: "500mb" }));
 app.use(express.urlencoded({ extended: false }));
 
 //Image Uploads
