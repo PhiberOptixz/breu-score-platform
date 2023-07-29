@@ -34,7 +34,7 @@ const Header = ({ name, caption, page }) => {
       {page ? (
         <Grid item className="headerGridItem" xs={12} md={12} align="center">
           <p className="headerPara">
-            {name || "Believability"} {caption || " "}
+            {name || "Believability"} {`- ${caption}` || " "}
           </p>
           {/* <p  className="headerCaption"></p > */}
         </Grid>
@@ -42,7 +42,7 @@ const Header = ({ name, caption, page }) => {
         <>
           <Grid item className="headerGridItem" xs={11} md={11} align="center">
             <p className="headerPara">
-              {name || "Believability"} {caption || " "}
+              {name || "Believability"} {`- ${caption}` || " "}
             </p>
             {/* <p  className="headerCaption"></p > */}
           </Grid>

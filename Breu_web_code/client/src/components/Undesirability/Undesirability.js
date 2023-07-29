@@ -43,7 +43,7 @@ const Undesirability = () => {
 
       <Grid container>
         {auth?.user?.completedUndesirability ? (
-          <>
+          <div style={{ marginLeft: "22%" }}>
             <Typography variant="h5" color={"red"} align="center">
               You have already declared the information. Please click next to
               see BREU score
@@ -63,7 +63,7 @@ const Undesirability = () => {
                 }}
               />
             </Typography>
-          </>
+          </div>
         ) : (
           <>
             <Grid item xs={12} md={12}>

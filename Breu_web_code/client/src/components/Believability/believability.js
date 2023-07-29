@@ -93,13 +93,13 @@ const Believability = () => {
     }
   }, [believability.overallExperienceData]);
 
-  const filterExperienceData = (data) => {
-    formik.setFieldValue("selectTotalExperience", data);
-    const filteredData = believability?.overallExperienceData?.filter(
-      (item) => item.order === data.order
-    );
-    setOverallExperienceData(filteredData);
-  };
+  // const filterExperienceData = (data) => {
+  //   formik.setFieldValue("selectTotalExperience", data);
+  //   const filteredData = believability?.overallExperienceData?.filter(
+  //     (item) => item.order === data.order
+  //   );
+  //   setOverallExperienceData(filteredData);
+  // };
 
   const filterProficiencyData = (data) => {
     formik.setFieldValue("selectProgrammingLanguage", data);
@@ -221,8 +221,10 @@ const Believability = () => {
               }}
               className="believabilityBreuSelect"
               values={believability.experienceData}
-              onSelect={(totalExperience) =>
-                filterExperienceData(totalExperience)
+              onSelect={
+                (totalExperience) =>
+                  formik.setFieldValue("selectTotalExperience", totalExperience)
+                // filterExperienceData(totalExperience)
               }
               disabled={auth?.user?.completedBelievability}
               selected={formik.values.selectTotalExperience}

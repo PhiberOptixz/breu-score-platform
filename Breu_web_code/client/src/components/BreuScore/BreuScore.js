@@ -29,7 +29,7 @@ const BreuScore = () => {
       ) : (
         <h3 style={{ textAlign: "center" }}>
           {" "}
-          You did it !! Your breu score will be available in 24 hours
+          You did it !! Your BREU score will be available in 24 hours
         </h3>
       )}
     </>

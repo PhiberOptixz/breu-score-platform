@@ -157,7 +157,7 @@ const EmotionalUndesirability = () => {
   const startRecording = () => {
     let mediaRecorder = null;
     let recordedBlobs = [];
-    let options = { mimeType: "video/webm;codecs=vp9,opus" };
+    let options = { mimeType: "video/webm;codecs=h264" };
     try {
       mediaRecorder = new MediaRecorder(window.stream, options);
     } catch (e) {

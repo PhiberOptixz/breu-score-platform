@@ -175,6 +175,7 @@ const Intro = () => {
       <ColorlibStepIconRoot
         ownerState={{ completed, active }}
         className={className}
+        onClick={(e) => console.log(e)}
       >
         {icons[String(props.icon)]}
       </ColorlibStepIconRoot>
@@ -209,7 +210,7 @@ const Intro = () => {
 
   return (
     <>
-      <Header name="BREU Journey" caption={"Exploring BREU"} />
+      <Header name="Sneak peak of " caption={"BREU journey"} />
 
       <Grid container>
         <Grid item xs={0} md={3}></Grid>
@@ -260,7 +261,7 @@ const Intro = () => {
                 width: "30%",
                 backgroundColor: "#5a5a5c",
               }}
-              onClick={() => navigate("/prologue")}
+              onClick={() => navigate("/believability")}
             />
           ) : null}
         </Grid>
