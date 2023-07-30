@@ -539,7 +539,7 @@ const EmotionalUndesirability = () => {
               loadingPosition="end"
               variant="contained"
             >
-              <span>Submit & Proceed</span>
+              <span>Submit</span>
             </LoadingButton>
             {/* <ButtonField
               disabled={disablePlay}
