@@ -7,7 +7,7 @@ import { candidateDetails } from "./authSlice";
 export const uploadCandidateVideo = createAsyncThunk(
   "uploadCandidateVideo",
   async (data, { rejectWithValue, dispatch }) => {
-    axios
+    await axios
       .post("/api/intelligibility/uploadCandidateVideo", data)
       .then((response) => {
         const result = response.data;
@@ -26,7 +26,7 @@ export const uploadCandidateVideo = createAsyncThunk(
   }
 );
 
-export const auth = createSlice({
+export const emotional = createSlice({
   name: "intelligibility",
   initialState: {
     loading: false,
@@ -47,4 +47,4 @@ export const auth = createSlice({
   },
 });
 
-export default auth.reducer;
+export default emotional.reducer;

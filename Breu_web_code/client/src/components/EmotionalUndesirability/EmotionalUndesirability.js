@@ -14,12 +14,15 @@ import VideocamOutlinedIcon from "@mui/icons-material/VideocamOutlined";
 import VideocamOffOutlinedIcon from "@mui/icons-material/VideocamOffOutlined";
 import RadioButtonCheckedOutlinedIcon from "@mui/icons-material/RadioButtonCheckedOutlined";
 import RadioButtonUncheckedOutlinedIcon from "@mui/icons-material/RadioButtonUncheckedOutlined";
+import LoadingButton from "@mui/lab/LoadingButton";
+import SendIcon from "@mui/icons-material/Send";
 
 const EmotionalUndesirability = () => {
+  const scollToRef = useRef();
   const errorMsgElement = document.querySelector("span#errorMsg");
   const recordedVideo = document.querySelector("video#recorded");
   const recordButton = document.querySelector("button#record");
-  const { auth } = useSelector((state) => state);
+  const { auth, intelligibilitySlice } = useSelector((state) => state);
   const dispatch = useDispatch();
   const [time, setTime] = useState("");
   const [seconds, setSeconds] = useState(0);
@@ -222,6 +225,7 @@ const EmotionalUndesirability = () => {
       setDemoVideoURL(
         "https://www.youtube.com/embed/vsRRs_362-M?rel=0&autoplay=1&mute=1"
       );
+      scollToRef.current.scrollIntoView();
     } else if (noOfVideos >= 1) {
       const blob = new Blob(recordedBlobs, { type: "video/mp4" });
       const formData = new FormData();
@@ -265,15 +269,15 @@ const EmotionalUndesirability = () => {
           </Typography>
         </>
       ) : (
-        <Grid container sx={{ marginLeft: "2%" }}>
+        <Grid container spacing={2}>
           <Grid
             item
             xs={12}
             md={5}
-            sx={{ marginLeft: "2%", marginRight: "2%" }}
+            sx={{ marginLeft: "2%", marginRight: "2%", marginTop: "-1%" }}
           >
-            <h1>{demo}</h1>
-            <p style={{ fontSize: "20px", marginRight: "5%" }}>{title}</p>
+            <h1 ref={scollToRef}>{demo}</h1>
+            <p style={{ fontSize: "20px" }}>{title}</p>
 
             <Paper
               elevation={0}
@@ -316,14 +320,12 @@ const EmotionalUndesirability = () => {
             </Paper>
           </Grid>
 
-          <Grid item xs={12} md={5} sx={{ marginLeft: "2%" }}>
+          <Grid item xs={12} md={5} sx={{ marginLeft: "2%", marginTop: "-1%" }}>
             <h1>
               Record your Response{" "}
               <span style={{ fontSize: "20px" }}>(2 Attempts only)</span>
             </h1>
-            <p style={{ fontSize: "20px", marginRight: "5%" }}>
-              {questionTitle}
-            </p>
+            <p style={{ fontSize: "20px" }}>{questionTitle}</p>
 
             {/* <ButtonField
             id="start"
@@ -345,7 +347,7 @@ const EmotionalUndesirability = () => {
               sx={{
                 background: "#0a71b9",
                 color: "white",
-                width: "98%",
+                width: "96%",
                 marginTop: "8%",
                 border: seconds > 90 ? "2px solid red" : "none",
                 // borderRadius: "2% 0% 0% 0%",
@@ -360,7 +362,7 @@ const EmotionalUndesirability = () => {
                   width: "100%",
                   // height: "10%",
                   borderRadius: "0% 0% 2% 2%",
-                  height: "48vh",
+                  height: "290px",
                 }}
                 playsInline
                 autoPlay
@@ -373,7 +375,7 @@ const EmotionalUndesirability = () => {
                   width: "100%",
                   height: "30%",
                   borderRadius: "0% 0% 2% 2%",
-                  height: "48vh",
+                  height: "290px",
                 }}
                 playsinliplaysInlinene
                 loop
@@ -524,7 +526,22 @@ const EmotionalUndesirability = () => {
             </Paper>
           </Grid>
           <Grid item xs={12} md={12} align="center">
-            <ButtonField
+            <LoadingButton
+              size="small"
+              sx={{
+                width: "25%",
+                height: "40px",
+              }}
+              onClick={() => handleSubmit()}
+              endIcon={<SendIcon />}
+              disabled={disablePlay}
+              loading={intelligibilitySlice?.loading}
+              loadingPosition="end"
+              variant="contained"
+            >
+              <span>Submit & Proceed</span>
+            </LoadingButton>
+            {/* <ButtonField
               disabled={disablePlay}
               onClick={() => handleSubmit()}
               buttonStyle="submit"
@@ -537,7 +554,7 @@ const EmotionalUndesirability = () => {
                 marginTop: "2%",
                 marginBottom: "2%",
               }}
-            />
+            /> */}
           </Grid>
         </Grid>
       )}

@@ -9,6 +9,7 @@ import corporateSlice from "./features/corporateSlice";
 import adminAuthSlice from "./features/adminAuthSlice";
 import adminSlice from "./features/adminSlice";
 import candidateSlice from "./features/candidateSlice";
+import intelligibilitySlice from "./features/intelligibilitySlice";
 
 export const store = configureStore({
   reducer: {
@@ -22,5 +23,6 @@ export const store = configureStore({
     adminAuthSlice,
     adminSlice,
     candidateSlice,
+    intelligibilitySlice,
   },
 });

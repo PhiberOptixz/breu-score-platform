@@ -43,47 +43,50 @@ const ResultScreen = () => {
 
   const believeabilityAvg = (
     (parseInt(
-      candidateSlice?.candidateScore?.believabilityScores?.qualification?.score
+      candidateSlice?.candidateScore?.believabilityScores?.qualification
+        ?.score || 1
     ) +
       parseInt(
         candidateSlice?.candidateScore?.believabilityScores
-          ?.professionalExperience?.score
+          ?.professionalExperience?.score || 1
       ) +
       parseInt(
         candidateSlice?.candidateScore?.believabilityScores?.socialScore
           ?.score || 1
       ) +
       parseInt(
-        candidateSlice?.candidateScore?.believabilityScores?.patents?.score
+        candidateSlice?.candidateScore?.believabilityScores?.patents?.score || 1
       ) +
       parseInt(
         candidateSlice?.candidateScore?.believabilityScores
-          ?.whitepaperConferencePresentation?.score
+          ?.whitepaperConferencePresentation?.score || 1
       ) +
       parseInt(
-        candidateSlice?.candidateScore?.believabilityScores?.blog?.score
+        candidateSlice?.candidateScore?.believabilityScores?.blog?.score || 1
       )) /
     6
   ).toFixed(1);
 
   const reliabilityAvg = (
     (parseInt(
-      candidateSlice?.candidateScore?.reliabilityScores?.design?.score
+      candidateSlice?.candidateScore?.reliabilityScores?.design?.score || 1
     ) +
       parseInt(
-        candidateSlice?.candidateScore?.reliabilityScores?.framework?.score
+        candidateSlice?.candidateScore?.reliabilityScores?.framework?.score || 1
       ) +
       parseInt(
-        candidateSlice?.candidateScore?.reliabilityScores?.coding?.score
+        candidateSlice?.candidateScore?.reliabilityScores?.coding?.score || 1
       ) +
       parseInt(
-        candidateSlice?.candidateScore?.reliabilityScores?.debugging?.score
+        candidateSlice?.candidateScore?.reliabilityScores?.debugging?.score || 1
       ) +
       parseInt(
-        candidateSlice?.candidateScore?.reliabilityScores?.architecture?.score
+        candidateSlice?.candidateScore?.reliabilityScores?.architecture
+          ?.score || 1
       ) +
       parseInt(
-        candidateSlice?.candidateScore?.reliabilityScores?.implementation?.score
+        candidateSlice?.candidateScore?.reliabilityScores?.implementation
+          ?.score || 1
       )) /
     6
   ).toFixed(1);
@@ -91,11 +94,11 @@ const ResultScreen = () => {
   const EIAvg = (
     (parseInt(
       candidateSlice?.candidateScore?.emotionalIntelligencyScores?.teamWork
-        ?.score
+        ?.score || 1
     ) +
       parseInt(
         candidateSlice?.candidateScore?.emotionalIntelligencyScores
-          ?.complexityHandling?.score
+          ?.complexityHandling?.score || 1
       ) +
       parseInt(
         candidateSlice?.candidateScore?.emotionalIntelligencyScores
@@ -103,40 +106,43 @@ const ResultScreen = () => {
       ) +
       parseInt(
         candidateSlice?.candidateScore?.emotionalIntelligencyScores?.initiative
-          ?.score
+          ?.score || 1
       ) +
       parseInt(
         candidateSlice?.candidateScore?.emotionalIntelligencyScores
-          ?.culturalFitPresentation?.score
+          ?.culturalFitPresentation?.score || 1
       ) +
       parseInt(
         candidateSlice?.candidateScore?.emotionalIntelligencyScores
-          ?.communication?.score
+          ?.communication?.score || 1
       ) +
       parseInt(
         candidateSlice?.candidateScore?.emotionalIntelligencyScores?.ownership
-          ?.score
+          ?.score || 1
       ) +
       parseInt(
         candidateSlice?.candidateScore?.emotionalIntelligencyScores?.empathy
-          ?.score
+          ?.score || 1
       ) +
       parseInt(
         candidateSlice?.candidateScore?.emotionalIntelligencyScores?.openness
-          ?.score
+          ?.score || 1
       )) /
     9
   ).toFixed(1);
 
   const undesirabilityAvg = (
     (parseInt(
-      candidateSlice?.candidateScore?.undesirableScores?.fakeInformation?.score
+      candidateSlice?.candidateScore?.undesirableScores?.fakeInformation
+        ?.score || 1
     ) +
       parseInt(
-        candidateSlice?.candidateScore?.undesirableScores?.plagiarism?.score
+        candidateSlice?.candidateScore?.undesirableScores?.plagiarism?.score ||
+          1
       ) +
       parseInt(
-        candidateSlice?.candidateScore?.undesirableScores?.trustIssues?.score
+        candidateSlice?.candidateScore?.undesirableScores?.trustIssues?.score ||
+          1
       )) /
     3
   ).toFixed(1);
