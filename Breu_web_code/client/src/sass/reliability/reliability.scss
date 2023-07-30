@@ -2,14 +2,14 @@
   margin-top: 1%;
   //   margin-left: 8%;
   //   margin-right: 8%;
-  height: 15px;
+  height: auto;
   background: #ffffff;
   border-radius: 10px;
   border: 1px solid #e6e8ec;
   max-width: 80ch;
   @media only screen and (max-width: 440px) {
     margin-top: 10%;
-    height: 40px;
+    height: auto;
   }
 }
 
