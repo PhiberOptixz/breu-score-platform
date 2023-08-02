@@ -210,7 +210,7 @@ const Intro = () => {
 
   return (
     <>
-      <Header name="Sneak peak of " caption={"BREU journey"} />
+      <Header name="Sneak peak of BREU journey" />
 
       <Grid container>
         <Grid item xs={0} md={3}></Grid>

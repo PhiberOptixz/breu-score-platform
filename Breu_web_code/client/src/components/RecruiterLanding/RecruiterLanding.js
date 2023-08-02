@@ -221,7 +221,7 @@ const RecruiterLanding = () => {
   const navigate = useNavigate();
   return (
     <>
-      <Header name="Recruiter" caption={"Your Choice Matters"} />
+      <Header name="Recruiter" caption={"Your choice matters"} />
 
       <Grid container>
         <Grid item xs={12} md={12}>

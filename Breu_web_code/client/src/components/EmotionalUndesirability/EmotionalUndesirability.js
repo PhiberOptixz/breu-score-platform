@@ -1,21 +1,80 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useMemo } from "react";
 import Header from "../../common/header";
-import { Grid, Paper, Button, Typography } from "@mui/material";
+import { Grid, Paper, Typography } from "@mui/material";
 import PlayCircleFilledWhiteOutlinedIcon from "@mui/icons-material/PlayCircleFilledWhiteOutlined";
-import ReactPlayer from "react-player";
+// import ReactPlayer from "react-player";
 import ButtonField from "../../common/button";
-import Replay10OutlinedIcon from "@mui/icons-material/Replay10Outlined";
-import Forward10OutlinedIcon from "@mui/icons-material/Forward10Outlined";
+// import Replay10OutlinedIcon from "@mui/icons-material/Replay10Outlined";
+// import Forward10OutlinedIcon from "@mui/icons-material/Forward10Outlined";
 import { useSelector, useDispatch } from "react-redux";
 import { uploadCandidateVideo } from "../../features/intelligibilitySlice";
 import { SnackBar } from "../../common/Snackbar";
 import { useNavigate } from "react-router-dom";
-import VideocamOutlinedIcon from "@mui/icons-material/VideocamOutlined";
-import VideocamOffOutlinedIcon from "@mui/icons-material/VideocamOffOutlined";
-import RadioButtonCheckedOutlinedIcon from "@mui/icons-material/RadioButtonCheckedOutlined";
-import RadioButtonUncheckedOutlinedIcon from "@mui/icons-material/RadioButtonUncheckedOutlined";
+// import VideocamOutlinedIcon from "@mui/icons-material/VideocamOutlined";
+// import VideocamOffOutlinedIcon from "@mui/icons-material/VideocamOffOutlined";
+// import RadioButtonCheckedOutlinedIcon from "@mui/icons-material/RadioButtonCheckedOutlined";
+// import RadioButtonUncheckedOutlinedIcon from "@mui/icons-material/RadioButtonUncheckedOutlined";
 import LoadingButton from "@mui/lab/LoadingButton";
 import SendIcon from "@mui/icons-material/Send";
+import { createTheme, ThemeProvider, useTheme } from "@mui/material/styles";
+import { toggleButtonClasses } from "@mui/material/ToggleButton";
+import deepmerge from "@mui/utils/deepmerge";
+
+const defaultTheme = createTheme();
+const theme = createTheme({
+  palette: {
+    action: {
+      disabledBackground: "",
+      disabled: "white",
+    },
+  },
+  components: {
+    MuiButtonBase: {
+      styleOverrides: {
+        root: {
+          [`&.${"Mui-disabled"}`]: {
+            opacity: 0.5,
+          },
+          [`&.${toggleButtonClasses.root}.${"Mui-disabled"}`]: {
+            color: defaultTheme.palette.action.disabled,
+            borderColor: defaultTheme.palette.action.disabledBackground,
+          },
+        },
+      },
+    },
+  },
+});
+
+const theme1 = createTheme({
+  palette: {
+    action: {
+      disabledBackground: "",
+      disabled: "white",
+    },
+  },
+});
+const theme2 = createTheme({
+  palette: {
+    action: {
+      disabledBackground: "",
+      disabled: "",
+    },
+  },
+});
+const MuiLoadingButton = (props) => {
+  const theme = useTheme();
+  const disabledTheme = props.variant === "contained" ? theme1 : theme2;
+  const mergedTheme = useMemo(
+    () => deepmerge(theme, disabledTheme),
+    [theme, disabledTheme]
+  );
+
+  return (
+    <ThemeProvider theme={mergedTheme}>
+      <LoadingButton {...props} />
+    </ThemeProvider>
+  );
+};
 
 const EmotionalUndesirability = () => {
   const scollToRef = useRef();
@@ -42,7 +101,7 @@ const EmotionalUndesirability = () => {
   const [webcam, setWebcam] = useState("Start Camera");
   const [recordedBlobs, setRecordedBlobs] = useState([]);
   const [demoVideoURL, setDemoVideoURL] = useState(
-    "https://www.youtube.com/embed/egkAQbWuw9c?rel=0&autoplay=1&mute=1"
+    "https://www.youtube.com/embed/egkAQbWuw9c?rel=0"
   );
   const [webStream, setWebStream] = useState(null);
   const [recorder, setRecorder] = useState(null);
@@ -62,8 +121,11 @@ const EmotionalUndesirability = () => {
         "Demo – What is expected (conflicts if any with team members/manager, on what ground & how did you do ?"
       );
       setQuestionTitle("Conflict Resolution – 1 mins");
+      setDemoVideoURL("https://www.youtube.com/embed/vsRRs_362-M?rel=0");
+      scollToRef.current.scrollIntoView();
     } else if (auth.user.completedConflictVideo) {
       setNoOfVideos(2);
+      window.scrollTo(0, 0);
     } else {
       setNoOfVideos(0);
     }
@@ -217,15 +279,6 @@ const EmotionalUndesirability = () => {
       formData.append("type", demo);
       formData.append("candidateId", auth?.user?._id);
       dispatch(uploadCandidateVideo(formData));
-      setDemo("Demo-2");
-      setTitle(
-        "Demo – What is expected (conflicts if any with team members/manager, on what ground & how did you do ?"
-      );
-      setQuestionTitle("Conflict Resolution – 1 mins");
-      setDemoVideoURL(
-        "https://www.youtube.com/embed/vsRRs_362-M?rel=0&autoplay=1&mute=1"
-      );
-      scollToRef.current.scrollIntoView();
     } else if (noOfVideos >= 1) {
       const blob = new Blob(recordedBlobs, { type: "video/mp4" });
       const formData = new FormData();
@@ -244,7 +297,7 @@ const EmotionalUndesirability = () => {
     <>
       <Header
         name="Emotional Intelligibility"
-        caption={"Exploring your Emotional dimension"}
+        caption={"Exploring your emotional dimension"}
       />
       {noOfVideos === 2 ? (
         <>
@@ -322,8 +375,20 @@ const EmotionalUndesirability = () => {
 
           <Grid item xs={12} md={5} sx={{ marginLeft: "2%", marginTop: "-1%" }}>
             <h1>
-              Record your Response{" "}
-              <span style={{ fontSize: "20px" }}>(2 Attempts only)</span>
+              Record your Response
+              {noOfTries === 1 ? (
+                <span style={{ fontSize: "20px", color: "red" }}>
+                  {" "}
+                  - First attempt
+                </span>
+              ) : noOfTries === 2 ? (
+                <span style={{ fontSize: "20px", color: "red" }}>
+                  {" "}
+                  - Second attempt
+                </span>
+              ) : (
+                <span style={{ fontSize: "20px" }}>( 2 Attempts only)</span>
+              )}
             </h1>
             <p style={{ fontSize: "20px" }}>{questionTitle}</p>
 
@@ -362,7 +427,7 @@ const EmotionalUndesirability = () => {
                   width: "100%",
                   // height: "10%",
                   borderRadius: "0% 0% 2% 2%",
-                  height: "290px",
+                  height: "285px",
                 }}
                 playsInline
                 autoPlay
@@ -375,108 +440,65 @@ const EmotionalUndesirability = () => {
                   width: "100%",
                   height: "30%",
                   borderRadius: "0% 0% 2% 2%",
-                  height: "290px",
+                  height: "285px",
                 }}
                 playsinliplaysInlinene
                 loop
               ></video>
               <Grid container sx={{ paddingTop: "2%", paddingBottom: "2%" }}>
                 <Grid item xs={3} md={3} align="right">
-                  {/* <Replay10OutlinedIcon sx={{ fontSize: "30px" }} /> */}
-                  {/* <ButtonField
-                  id="start"
-                  onClick={startCamera}
-                  buttonStyle="submit"
-                  type="submit"
-                  endIcon={
-                    webcam === "Start Camera" ? (
-                      <VideocamOutlinedIcon sx={{ fontSize: "30px" }} />
-                    ) : (
-                      <VideocamOffOutlinedIcon sx={{ fontSize: "30px" }} />
-                    )
-                  }
-                  name={webcam}
-                  variant="contained"
-                  sx={{
-                    width: "80%",
-                    backgroundColor: "white",
-                    color: "#0a71b9",
-                    marginBottom: "2%",
-                  }}
-                /> */}
                   <ButtonField
                     // disabled={true}
                     sx={{
-                      // width: "100%",
-                      // height: "100%",
+                      width: "100%",
+                      height: "100%",
                       backgroundColor: "#0a71b9",
+                      padding: "2px",
+                      marginRight: "5px",
                     }}
                     onClick={startCamera}
-                    name={
-                      webcam === "Start Camera" ? (
-                        <VideocamOutlinedIcon
-                          // disabled={true}
-                          sx={{ fontSize: "30px" }}
-                        />
-                      ) : (
-                        <VideocamOffOutlinedIcon
-                          // onClick={startCamera}
-                          sx={{ fontSize: "30px" }}
-                        />
-                      )
-                    }
+                    name={webcam}
+                    // name={
+                    //   webcam === "Start Camera" ? (
+                    //     <VideocamOutlinedIcon
+                    //       // disabled={true}
+                    //       sx={{ fontSize: "30px" }}
+                    //     />
+                    //   ) : (
+                    //     <VideocamOffOutlinedIcon
+                    //       // onClick={startCamera}
+                    //       sx={{ fontSize: "30px" }}
+                    //     />
+                    //   )
+                    // }
                   />
                   {/* </Button> */}
                 </Grid>
                 <Grid item xs={3} md={3} align="center">
-                  {/* <ButtonField
-                  id="record"
-                  disabled={disableRecord}
-                  onClick={() => recordVideo()}
-                  buttonStyle="submit"
-                  type="submit"
-                  endIcon={
-                    record === "Start Recording" ? (
-                      <RadioButtonCheckedOutlinedIcon
-                        sx={{ fontSize: "30px" }}
-                      />
-                    ) : (
-                      <RadioButtonUncheckedOutlinedIcon
-                        sx={{ fontSize: "30px" }}
-                      />
-                    )
-                  }
-                  name={record}
-                  variant="contained"
-                  sx={{
-                    width: "80%",
-                    backgroundColor: "white",
-                    color: "#0a71b9",
-                    marginBottom: "2%",
-                  }}
-                /> */}
-
                   <ButtonField
                     disabled={webcam === "Start Camera" ? true : false}
                     sx={{
                       // width: "100%",
                       // height: "100%",
                       backgroundColor: "#0a71b9",
+                      padding: "2px",
+                      marginRight: "5px",
                     }}
                     onClick={() => recordVideo()}
-                    name={
-                      record === "Start Recording" ? (
-                        <RadioButtonCheckedOutlinedIcon
-                          // onClick={() => recordVideo()}
-                          sx={{ fontSize: "30px" }}
-                        />
-                      ) : (
-                        <RadioButtonUncheckedOutlinedIcon
-                          // onClick={() => recordVideo()}
-                          sx={{ fontSize: "30px" }}
-                        />
-                      )
-                    }
+                    name={record}
+                    // name={
+                    //   record === "Start Recording" ? (
+                    //     <RadioButtonCheckedOutlinedIcon
+                    //       // onClick={() => recordVideo()}
+                    //       sx={{ fontSize: "30px" }}
+                    //     />
+                    //   ) : (
+                    //     <RadioButtonUncheckedOutlinedIcon
+                    //       // onClick={() => recordVideo()}
+                    //       sx={{ fontSize: "30px" }}
+                    //     />
+                    //   )
+                    // }
                   />
 
                   {/* {record === "Start Recording" ? (
@@ -495,17 +517,28 @@ const EmotionalUndesirability = () => {
                   <ButtonField
                     disabled={disablePlay}
                     sx={{
-                      // width: "100%",
-                      // height: "100%",
+                      width: "100%",
+                      height: "100%",
                       backgroundColor: "#0a71b9",
+                      padding: "2px",
+                      marginRight: "5px",
                     }}
                     onClick={playRecorded}
                     name={
-                      <PlayCircleFilledWhiteOutlinedIcon
-                        // onClick={playRecorded}
-                        sx={{ fontSize: "30px" }}
-                      />
+                      <>
+                        <PlayCircleFilledWhiteOutlinedIcon
+                          // onClick={playRecorded}
+                          sx={{ fontSize: "30px" }}
+                        />
+                        Play
+                      </>
                     }
+                    // name={
+                    //   <PlayCircleFilledWhiteOutlinedIcon
+                    //     // onClick={playRecorded}
+                    //     sx={{ fontSize: "30px" }}
+                    //   />
+                    // }
                   />
                   {/* {
                   <PlayCircleFilledWhiteOutlinedIcon
@@ -526,7 +559,22 @@ const EmotionalUndesirability = () => {
             </Paper>
           </Grid>
           <Grid item xs={12} md={12} align="center">
-            <LoadingButton
+            {" "}
+            <ThemeProvider theme={theme}>
+              <MuiLoadingButton
+                variant="contained"
+                onClick={() => handleSubmit()}
+                endIcon={<SendIcon />}
+                disabled={disablePlay}
+                loading={intelligibilitySlice?.loading}
+                loadingPosition="end"
+              >
+                <span>
+                  {intelligibilitySlice?.loading ? "Uploading Video" : "Submit"}
+                </span>
+              </MuiLoadingButton>
+            </ThemeProvider>
+            {/* <LoadingButton
               size="small"
               sx={{
                 width: "25%",
@@ -539,8 +587,10 @@ const EmotionalUndesirability = () => {
               loadingPosition="end"
               variant="contained"
             >
-              <span>Submit</span>
-            </LoadingButton>
+              <span>
+                {intelligibilitySlice?.loading ? "Uploading Video" : "Submit"}
+              </span>
+            </LoadingButton> */}
             {/* <ButtonField
               disabled={disablePlay}
               onClick={() => handleSubmit()}

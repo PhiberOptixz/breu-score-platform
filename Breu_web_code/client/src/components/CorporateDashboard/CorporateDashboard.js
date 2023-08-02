@@ -156,7 +156,7 @@ const CorporateDashboard = () => {
   const navigate = useNavigate();
   return (
     <>
-      <Header name="Corporate" caption={"Your Choice Matters"} />
+      <Header name="Corporate" caption={"Your choice matters"} />
 
       <Grid container>
         <Grid item xs={12} md={12}>

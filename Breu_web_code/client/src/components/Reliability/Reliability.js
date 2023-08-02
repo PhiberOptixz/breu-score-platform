@@ -90,7 +90,7 @@ const Reliability = () => {
     <>
       <Header
         name="Reliability"
-        caption="make the world Believe in your skills"
+        caption="Make the world believe in your skills"
       />
       <Grid container>
         {isOpen && (
