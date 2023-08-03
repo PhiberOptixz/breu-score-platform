@@ -38,6 +38,71 @@ const Believability = () => {
   const [overallExperienceData, setOverallExperienceData] = useState([]);
   const [proficiencyData, setProficiencyData] = useState([]);
 
+  const formik = useFormik({
+    initialValues: {
+      selectRole: {},
+      selectTotalExperience: {},
+      overallExperience: {},
+      selectProgrammingLanguage: {},
+      selectProficiency: {},
+      selectEducation: {},
+      selectDomain: {},
+      selectEmploymentMode: {},
+      linkedIn: "",
+      kaggle: "",
+      gitHub: "",
+      satckOverflow: "",
+    },
+    validationSchema: Yup.object({
+      selectRole: Yup.object().nullable().required("Role is reqired field"),
+      selectTotalExperience: Yup.object()
+        .nullable()
+        .required("Total Experience is reqired field"),
+      overallExperience: Yup.object()
+        .nullable()
+        .required("Overall Experience is reqired field"),
+      selectProgrammingLanguage: Yup.object()
+        .nullable()
+        .required("Programming Language is reqired field"),
+      selectEmploymentMode: Yup.object()
+        .nullable()
+        .required("Preferred employment mode is reqired field"),
+      selectProficiency: Yup.object()
+        .nullable()
+        .required("Proficiency is reqired field"),
+      selectEducation: Yup.object()
+        .nullable()
+        .required("Education is reqired field"),
+      selectDomain: Yup.object().nullable().required("Domain is reqired field"),
+      linkedIn: Yup.string().url("Please enter valid url"),
+      kaggle: Yup.string().url("Please enter valid url"),
+      gitHub: Yup.string().url("Please enter valid url"),
+      satckOverflow: Yup.string().url("Please enter valid url"),
+    }),
+    onSubmit: async (values) => {
+      const data = {
+        _id: auth?.user?._id,
+        jobRole: values?.selectRole?._id,
+        currentJobExperience: values?.selectTotalExperience?._id,
+        overallJobExperience: values?.overallExperience?._id,
+        preferredProgrammingLanguage: values?.selectProgrammingLanguage?._id,
+        proficiency: values?.selectProficiency?._id,
+        highestEducation: values?.selectEducation?._id,
+        domain: values?.selectDomain?._id,
+        employmentMode: values?.selectEmploymentMode?._id,
+        githubLink: values?.gitHub,
+        stackOverFlowLink: values?.satckOverflow,
+        kaggleLink: values?.kaggle,
+        linkedInLink: values?.linkedIn,
+      };
+      const apiData = {
+        data,
+        navigate,
+      };
+      dispatch(addBelievabilityData(apiData));
+    },
+  });
+
   useEffect(() => {
     dispatch(getDomainData());
     dispatch(getEducationData());
@@ -93,6 +158,10 @@ const Believability = () => {
     }
   }, [believability.overallExperienceData]);
 
+  useEffect(() => {
+    console.log(formik.errors, formik.touched);
+  }, [formik.errors]);
+
   // const filterExperienceData = (data) => {
   //   formik.setFieldValue("selectTotalExperience", data);
   //   const filteredData = believability?.overallExperienceData?.filter(
@@ -108,72 +177,6 @@ const Believability = () => {
     );
     setProficiencyData(filteredData);
   };
-
-  const formik = useFormik({
-    initialValues: {
-      selectRole: "",
-      selectTotalExperience: "",
-      overallExperience: "",
-      selectProgrammingLanguage: "",
-      selectProficiency: "",
-      selectEducation: "",
-      selectDomain: "",
-      selectEmploymentMode: "",
-      linkedIn: "",
-      kaggle: "",
-      gitHub: "",
-      satckOverflow: "",
-    },
-    validationSchema: Yup.object({
-      selectRole: Yup.object()
-        .nullable()
-        .required("Select Role is reqired field"),
-      selectTotalExperience: Yup.object()
-        .nullable()
-        .required("Select Total Experience is reqired field"),
-      overallExperience: Yup.object()
-        .nullable()
-        .required("Select Overall Experience is reqired field"),
-      selectProgrammingLanguage: Yup.object()
-        .nullable()
-        .required("Select Programming Language is reqired field"),
-      selectProficiency: Yup.object()
-        .nullable()
-        .required("Select Proficiency is reqired field"),
-      selectEducation: Yup.object()
-        .nullable()
-        .required("Select Education is reqired field"),
-      selectDomain: Yup.object()
-        .nullable()
-        .required("Select Domain is reqired field"),
-      linkedIn: Yup.string().url("Please enter valid url"),
-      kaggle: Yup.string().url("Please enter valid url"),
-      gitHub: Yup.string().url("Please enter valid url"),
-      satckOverflow: Yup.string().url("Please enter valid url"),
-    }),
-    onSubmit: async (values) => {
-      const data = {
-        _id: auth?.user?._id,
-        jobRole: values?.selectRole?._id,
-        currentJobExperience: values?.selectTotalExperience?._id,
-        overallJobExperience: values?.overallExperience?._id,
-        preferredProgrammingLanguage: values?.selectProgrammingLanguage?._id,
-        proficiency: values?.selectProficiency?._id,
-        highestEducation: values?.selectEducation?._id,
-        domain: values?.selectDomain?._id,
-        employmentMode: values?.selectEmploymentMode?._id,
-        githubLink: values?.gitHub,
-        stackOverFlowLink: values?.satckOverflow,
-        kaggleLink: values?.kaggle,
-        linkedInLink: values?.linkedIn,
-      };
-      const apiData = {
-        data,
-        navigate,
-      };
-      dispatch(addBelievabilityData(apiData));
-    },
-  });
 
   return (
     <>
@@ -200,9 +203,7 @@ const Believability = () => {
               disabled={auth?.user?.completedBelievability}
               selected={formik.values.selectRole}
               errors={
-                formik.touched.selectRole && formik.errors.selectRole
-                  ? formik.errors.selectRole
-                  : null
+                formik.errors.selectRole ? formik.errors.selectRole : null
               }
             />
 
@@ -229,7 +230,6 @@ const Believability = () => {
               disabled={auth?.user?.completedBelievability}
               selected={formik.values.selectTotalExperience}
               errors={
-                formik.touched.selectTotalExperience &&
                 formik.errors.selectTotalExperience
                   ? formik.errors.selectTotalExperience
                   : null
@@ -263,7 +263,6 @@ const Believability = () => {
               // onSelect={(programDuration) => console.log(programDuration)}
               selected={formik.values.overallExperience}
               errors={
-                formik.touched.overallExperience &&
                 formik.errors.overallExperience
                   ? formik.errors.overallExperience
                   : null
@@ -291,7 +290,6 @@ const Believability = () => {
               disabled={auth?.user?.completedBelievability}
               selected={formik.values.selectProgrammingLanguage}
               errors={
-                formik.touched.selectProgrammingLanguage &&
                 formik.errors.selectProgrammingLanguage
                   ? formik.errors.selectProgrammingLanguage
                   : null
@@ -319,7 +317,6 @@ const Believability = () => {
               disabled={auth?.user?.completedBelievability}
               selected={formik.values.selectProficiency}
               errors={
-                formik.touched.selectProficiency &&
                 formik.errors.selectProficiency
                   ? formik.errors.selectProficiency
                   : null
@@ -347,7 +344,7 @@ const Believability = () => {
               disabled={auth?.user?.completedBelievability}
               selected={formik.values.selectEducation}
               errors={
-                formik.touched.selectEducation && formik.errors.selectEducation
+                formik.errors.selectEducation
                   ? formik.errors.selectEducation
                   : null
               }
@@ -374,9 +371,7 @@ const Believability = () => {
               disabled={auth?.user?.completedBelievability}
               selected={formik.values.selectDomain}
               errors={
-                formik.touched.selectDomain && formik.errors.selectDomain
-                  ? formik.errors.selectDomain
-                  : null
+                formik.errors.selectDomain ? formik.errors.selectDomain : null
               }
             />
           </Grid>
@@ -406,7 +401,6 @@ const Believability = () => {
               disabled={auth?.user?.completedBelievability}
               selected={formik.values.selectEmploymentMode}
               errors={
-                formik.touched.selectEmploymentMode &&
                 formik.errors.selectEmploymentMode
                   ? formik.errors.selectEmploymentMode
                   : null

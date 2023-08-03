@@ -100,7 +100,9 @@ const Reliability = () => {
             title={"Submit"}
             content={{
               mainContent:
-                "Are you sure you want to submit the Reliability answers?",
+                selectedValues.length === 12
+                  ? "Are you sure you want to submit the Reliability answers?"
+                  : "Are you sure you want to submit the Reliability answers? You have not answered all the questions",
               subContent: "You can't undo this operation",
             }}
             handleSubmit={handleSubmit}

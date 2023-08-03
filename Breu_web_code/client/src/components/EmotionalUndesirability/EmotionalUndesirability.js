@@ -93,7 +93,7 @@ const EmotionalUndesirability = () => {
     "Demo – What is expected (tech stack selection, design choices tradeoffs, your contribution, learnings if any)"
   );
   const [questionTitle, setQuestionTitle] = useState(
-    "Explain Your last Interesting Project – 1 mins"
+    "Explain Your last Interesting Project – 1 min"
   );
   const navigate = useNavigate();
   const [showRecorded, setShowRecorded] = useState(false);
@@ -120,7 +120,7 @@ const EmotionalUndesirability = () => {
       setTitle(
         "Demo – What is expected (conflicts if any with team members/manager, on what ground & how did you do ?"
       );
-      setQuestionTitle("Conflict Resolution – 1 mins");
+      setQuestionTitle("Conflict Resolution – 1 min");
       setDemoVideoURL("https://www.youtube.com/embed/vsRRs_362-M?rel=0");
       scollToRef.current.scrollIntoView();
     } else if (auth.user.completedConflictVideo) {
