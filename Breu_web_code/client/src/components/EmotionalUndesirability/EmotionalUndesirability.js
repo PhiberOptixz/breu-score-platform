@@ -93,7 +93,7 @@ const EmotionalUndesirability = () => {
     "Demo – What is expected (tech stack selection, design choices tradeoffs, your contribution, learnings if any)"
   );
   const [questionTitle, setQuestionTitle] = useState(
-    "Explain Your last Interesting Project – 1 min"
+    "Describe your recent & most complex project in STAR format. – 2 mins"
   );
   const navigate = useNavigate();
   const [showRecorded, setShowRecorded] = useState(false);
@@ -120,7 +120,9 @@ const EmotionalUndesirability = () => {
       setTitle(
         "Demo – What is expected (conflicts if any with team members/manager, on what ground & how did you do ?"
       );
-      setQuestionTitle("Conflict Resolution – 1 min");
+      setQuestionTitle(
+        "Describe your recent project failure, how did u cope up with the situation & recover from it – 2 mins"
+      );
       setDemoVideoURL("https://www.youtube.com/embed/vsRRs_362-M?rel=0");
       scollToRef.current.scrollIntoView();
     } else if (auth.user.completedConflictVideo) {
@@ -330,9 +332,9 @@ const EmotionalUndesirability = () => {
             sx={{ marginLeft: "2%", marginRight: "2%", marginTop: "-1%" }}
           >
             <h1 ref={scollToRef}>{demo}</h1>
-            <p style={{ fontSize: "20px" }}>{title}</p>
+            <p style={{ fontSize: "22px" }}>{title}</p>
 
-            <Paper
+            {/* <Paper
               elevation={0}
               sx={{
                 background: "#0a71b9",
@@ -340,13 +342,14 @@ const EmotionalUndesirability = () => {
                 width: "100%",
                 // borderRadius: "2% 0% 0% 0%",
               }}
-            >
-              <iframe
-                width={"99%"}
-                height={"290px"}
-                src={demoVideoURL}
-              ></iframe>
-              {/* <video
+            > */}
+            <iframe
+              width={"99%"}
+              height={"332px"}
+              src={demoVideoURL}
+              style={{ marginTop: "0.5%" }}
+            ></iframe>
+            {/* <video
               width="100%"
               // controls
               style={{ borderRadius: "0% 0% 2% 2%" }}
@@ -356,9 +359,9 @@ const EmotionalUndesirability = () => {
                 type="video/mp4"
               />
             </video> */}
-              <Grid container sx={{ paddingTop: "2%", paddingBottom: "2%" }}>
+            {/* <Grid container sx={{ paddingTop: "2%", paddingBottom: "2%" }}>
                 <Grid item xs={4} md={4} align="right">
-                  {/* <Replay10OutlinedIcon sx={{ fontSize: "30px" }} /> */}
+                  {/* <Replay10OutlinedIcon sx={{ fontSize: "30px" }} /> 
                 </Grid>
                 <Grid item xs={4} md={4} align="center">
                   <PlayCircleFilledWhiteOutlinedIcon
@@ -367,10 +370,10 @@ const EmotionalUndesirability = () => {
                   />
                 </Grid>
                 <Grid item xs={4} md={4} align="left">
-                  {/* <Forward10OutlinedIcon sx={{ fontSize: "30px" }} /> */}
+                  {/* <Forward10OutlinedIcon sx={{ fontSize: "30px" }} /> 
                 </Grid>
-              </Grid>
-            </Paper>
+              </Grid> */}
+            {/* </Paper> */}
           </Grid>
 
           <Grid item xs={12} md={5} sx={{ marginLeft: "2%", marginTop: "-1%" }}>
@@ -390,7 +393,7 @@ const EmotionalUndesirability = () => {
                 <span style={{ fontSize: "20px" }}>( 2 Attempts only)</span>
               )}
             </h1>
-            <p style={{ fontSize: "20px" }}>{questionTitle}</p>
+            <p style={{ fontSize: "22px" }}>{questionTitle}</p>
 
             {/* <ButtonField
             id="start"
@@ -413,7 +416,7 @@ const EmotionalUndesirability = () => {
                 background: "#0a71b9",
                 color: "white",
                 width: "96%",
-                marginTop: "8%",
+                marginTop: "4%",
                 border: seconds > 90 ? "2px solid red" : "none",
                 // borderRadius: "2% 0% 0% 0%",
               }}
@@ -450,11 +453,12 @@ const EmotionalUndesirability = () => {
                   <ButtonField
                     // disabled={true}
                     sx={{
-                      width: "100%",
-                      height: "100%",
+                      width: "95%",
+                      height: "95%",
                       backgroundColor: "#0a71b9",
                       padding: "2px",
                       marginRight: "5px",
+                      fontSize: "68%",
                     }}
                     onClick={startCamera}
                     name={webcam}
@@ -478,11 +482,12 @@ const EmotionalUndesirability = () => {
                   <ButtonField
                     disabled={webcam === "Start Camera" ? true : false}
                     sx={{
-                      // width: "100%",
-                      // height: "100%",
+                      width: "95%",
+                      height: "95%",
                       backgroundColor: "#0a71b9",
                       padding: "2px",
                       marginRight: "5px",
+                      fontSize: "68%",
                     }}
                     onClick={() => recordVideo()}
                     name={record}
@@ -517,11 +522,12 @@ const EmotionalUndesirability = () => {
                   <ButtonField
                     disabled={disablePlay}
                     sx={{
-                      width: "100%",
-                      height: "100%",
+                      width: "95%",
+                      height: "95%",
                       backgroundColor: "#0a71b9",
                       padding: "2px",
                       marginRight: "5px",
+                      fontSize: "68%",
                     }}
                     onClick={playRecorded}
                     name={
