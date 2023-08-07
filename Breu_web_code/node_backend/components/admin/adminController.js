@@ -46,3 +46,16 @@ module.exports.addScore = async function (req, res, next) {
     return next(new AppError(err, 400));
   }
 };
+
+module.exports.updateCandidateScore = async function (req, res, next) {
+  try {
+    const data = req.body;
+    const updateScores = await adminDAL.updateCandidateScores(data);
+    return res
+      .status(200)
+      .json({ status: "SUCCESS", message: "Scores updated successfully" });
+  } catch (err) {
+    console.error(colors.red, `Error while updating questions`, err);
+    return next(new AppError(err, 400));
+  }
+};

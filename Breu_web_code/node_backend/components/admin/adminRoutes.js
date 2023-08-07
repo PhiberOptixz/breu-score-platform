@@ -21,4 +21,10 @@ router.post(
   adminController.addScore
 );
 
+router.put(
+  "/updateCandidateScore",
+  authJWT.verifyJWTToken,
+  adminController.updateCandidateScore
+);
+
 module.exports = router;

@@ -2,14 +2,6 @@ import { Grid } from "@mui/material";
 import TextFieldGroup from "../../common/TextFieldGroup";
 
 const EIScore = ({ formik, disabled, weightages }) => {
-  const baseScoreChange = (e) => {
-    const parameter = e.target.name?.replace("Basescore", "");
-    formik.setFieldValue(e.target.name, e.target.value);
-    const score =
-      (weightages?.[parameter] / 100) * parseInt(e.target.value / 5);
-    console.log(e.target.name, e.target.value, weightages?.[parameter], score);
-  };
-
   return (
     <>
       <Grid item xs={12} md={12}>
@@ -32,42 +24,6 @@ const EIScore = ({ formik, disabled, weightages }) => {
           }
         />
       </Grid>
-
-      {/* <Grid item xs={12} md={3}>
-        <TextFieldGroup
-          labelShink={true}
-          variant="outlined"
-          label="Team Work Basescore"
-          name="teamworkBasescore"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          disabled={disabled}
-          value={formik.values.teamworkBasescore}
-          errors={
-            formik.touched.teamworkBasescore && formik.errors.teamworkBasescore
-              ? formik.errors.teamworkBasescore
-              : null
-          }
-        />
-      </Grid>
-
-      <Grid item xs={12} md={3}>
-        <TextFieldGroup
-          labelShink={true}
-          variant="outlined"
-          label="Team Work percent"
-          name="teamworkpercent"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          disabled={disabled}
-          value={formik.values.teamworkpercent}
-          errors={
-            formik.touched.teamworkpercent && formik.errors.teamworkpercent
-              ? formik.errors.teamworkpercent
-              : null
-          }
-        />
-      </Grid> */}
 
       <Grid item xs={12} md={3}>
         <TextFieldGroup
@@ -105,44 +61,6 @@ const EIScore = ({ formik, disabled, weightages }) => {
           }
         />
       </Grid>
-
-      {/* <Grid item xs={12} md={3}>
-        <TextFieldGroup
-          labelShink={true}
-          variant="outlined"
-          label="Complexity Handling Basescore"
-          name="complexityhandlingBasescore"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          disabled={disabled}
-          value={formik.values.complexityhandlingBasescore}
-          errors={
-            formik.touched.complexityhandlingBasescore &&
-            formik.errors.complexityhandlingBasescore
-              ? formik.errors.complexityhandlingBasescore
-              : null
-          }
-        />
-      </Grid>
-
-      <Grid item xs={12} md={3}>
-        <TextFieldGroup
-          labelShink={true}
-          variant="outlined"
-          label="Complexity Handling percent"
-          name="complexityhandlingpercent"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          disabled={disabled}
-          value={formik.values.complexityhandlingpercent}
-          errors={
-            formik.touched.complexityhandlingpercent &&
-            formik.errors.complexityhandlingpercent
-              ? formik.errors.complexityhandlingpercent
-              : null
-          }
-        />
-      </Grid> */}
 
       <Grid item xs={12} md={3}>
         <TextFieldGroup
@@ -182,58 +100,20 @@ const EIScore = ({ formik, disabled, weightages }) => {
         />
       </Grid>
 
-      {/* <Grid item xs={12} md={3}>
-        <TextFieldGroup
-          labelShink={true}
-          variant="outlined"
-          label="Conflict Resolution Basescore"
-          name="conflictresolutionBasescore"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          disabled={disabled}
-          value={formik.values.conflictresolutionBasescore}
-          errors={
-            formik.touched.conflictresolutionBasescore &&
-            formik.errors.conflictresolutionBasescore
-              ? formik.errors.conflictresolutionBasescore
-              : null
-          }
-        />
-      </Grid>
-
-      <Grid item xs={12} md={3}>
-        <TextFieldGroup
-          labelShink={true}
-          variant="outlined"
-          label="Conflict Resolution percent"
-          name="conflictresolutionpercent"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          disabled={disabled}
-          value={formik.values.conflictresolutionpercent}
-          errors={
-            formik.touched.conflictresolutionpercent &&
-            formik.errors.conflictresolutionpercent
-              ? formik.errors.conflictresolutionpercent
-              : null
-          }
-        />
-      </Grid> */}
-
       <Grid item xs={12} md={3}>
         <TextFieldGroup
           labelShink={true}
           variant="outlined"
           label="Conflict Resolution Score"
-          name="conflictresolutionScore"
+          name="conflictResolutionScore"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           disabled={disabled}
-          value={formik.values.conflictresolutionScore}
+          value={formik.values.conflictResolutionScore}
           errors={
-            formik.touched.conflictresolutionScore &&
-            formik.errors.conflictresolutionScore
-              ? formik.errors.conflictresolutionScore
+            formik.touched.conflictResolutionScore &&
+            formik.errors.conflictResolutionScore
+              ? formik.errors.conflictResolutionScore
               : null
           }
         />
@@ -256,43 +136,6 @@ const EIScore = ({ formik, disabled, weightages }) => {
           }
         />
       </Grid>
-
-      {/* <Grid item xs={12} md={3}>
-        <TextFieldGroup
-          labelShink={true}
-          variant="outlined"
-          label="Initiative Basescore"
-          name="initiativeBasescore"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          disabled={disabled}
-          value={formik.values.initiativeBasescore}
-          errors={
-            formik.touched.initiativeBasescore &&
-            formik.errors.initiativeBasescore
-              ? formik.errors.initiativeBasescore
-              : null
-          }
-        />
-      </Grid>
-
-      <Grid item xs={12} md={3}>
-        <TextFieldGroup
-          labelShink={true}
-          variant="outlined"
-          label="Initiative percent"
-          name="initiativepercent"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          disabled={disabled}
-          value={formik.values.initiativepercent}
-          errors={
-            formik.touched.initiativepercent && formik.errors.initiativepercent
-              ? formik.errors.initiativepercent
-              : null
-          }
-        />
-      </Grid> */}
 
       <Grid item xs={12} md={3}>
         <TextFieldGroup
@@ -330,44 +173,6 @@ const EIScore = ({ formik, disabled, weightages }) => {
         />
       </Grid>
 
-      {/* <Grid item xs={12} md={3}>
-        <TextFieldGroup
-          labelShink={true}
-          variant="outlined"
-          label="Cultural Fit Basescore"
-          name="culturalFitBasescore"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          disabled={disabled}
-          value={formik.values.culturalFitBasescore}
-          errors={
-            formik.touched.culturalFitBasescore &&
-            formik.errors.culturalFitBasescore
-              ? formik.errors.culturalFitBasescore
-              : null
-          }
-        />
-      </Grid>
-
-      <Grid item xs={12} md={3}>
-        <TextFieldGroup
-          labelShink={true}
-          variant="outlined"
-          label="Cultural Fit percent"
-          name="culturalFitpercent"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          disabled={disabled}
-          value={formik.values.culturalFitpercent}
-          errors={
-            formik.touched.culturalFitpercent &&
-            formik.errors.culturalFitpercent
-              ? formik.errors.culturalFitpercent
-              : null
-          }
-        />
-      </Grid> */}
-
       <Grid item xs={12} md={3}>
         <TextFieldGroup
           labelShink={true}
@@ -386,40 +191,41 @@ const EIScore = ({ formik, disabled, weightages }) => {
         />
       </Grid>
 
-      {/* <Grid item xs={12} md={3}>
-  <TextFieldGroup
-    labelShink={true}
-    variant="outlined"
-    label="Presentation"
-    name="epresentation"
-    onChange={formik.handleChange}
-    onBlur={formik.handleBlur}disabled={disabled}
-    value={formik.values.epresentation}
-    errors={
-      formik.touched.epresentation && formik.errors.epresentation
-        ? formik.errors.debepresentationugging
-        : null
-    }
-  />
-</Grid> */}
+      <Grid item xs={12} md={3}>
+        <TextFieldGroup
+          labelShink={true}
+          variant="outlined"
+          label="Presentation Weightage"
+          name="presentation"
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          disabled={true}
+          value={weightages?.presentation}
+          errors={
+            formik.touched.epresentation && formik.errors.epresentation
+              ? formik.errors.presentation
+              : null
+          }
+        />
+      </Grid>
 
-      {/* <Grid item xs={12} md={3}>
-  <TextFieldGroup
-    labelShink={true}
-    variant="outlined"
-    label="Presentation percent"
-    name="epresentationpercent"
-    onChange={formik.handleChange}
-    onBlur={formik.handleBlur}disabled={disabled}
-    value={formik.values.epresentationpercent}
-    errors={
-      formik.touched.epresentationpercent &&
-      formik.errors.epresentationpercent
-        ? formik.errors.debepresentationuggingpercent
-        : null
-    }
-  />
-</Grid> */}
+      <Grid item xs={12} md={3}>
+        <TextFieldGroup
+          labelShink={true}
+          variant="outlined"
+          label="Presentation Score"
+          name="presentationScore"
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          disabled={disabled}
+          value={formik.values.presentationScore}
+          errors={
+            formik.touched.presentationScore && formik.errors.presentationScore
+              ? formik.errors.presentationScore
+              : null
+          }
+        />
+      </Grid>
 
       <Grid item xs={12} md={3}>
         <TextFieldGroup
@@ -438,44 +244,6 @@ const EIScore = ({ formik, disabled, weightages }) => {
           }
         />
       </Grid>
-
-      {/* <Grid item xs={12} md={3}>
-        <TextFieldGroup
-          variant="outlined"
-          labelShink={true}
-          label="Communication Basescore"
-          name="communicationBasescore"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          disabled={disabled}
-          value={formik.values.communicationBasescore}
-          errors={
-            formik.touched.communicationBasescore &&
-            formik.errors.communicationBasescore
-              ? formik.errors.communicationBasescore
-              : null
-          }
-        />
-      </Grid>
-
-      <Grid item xs={12} md={3}>
-        <TextFieldGroup
-          variant="outlined"
-          labelShink={true}
-          label="Communication percent"
-          name="communicationpercent"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          disabled={disabled}
-          value={formik.values.communicationpercent}
-          errors={
-            formik.touched.communicationpercent &&
-            formik.errors.communicationpercent
-              ? formik.errors.communicationpercent
-              : null
-          }
-        />
-      </Grid> */}
 
       <Grid item xs={12} md={3}>
         <TextFieldGroup
@@ -514,43 +282,6 @@ const EIScore = ({ formik, disabled, weightages }) => {
         />
       </Grid>
 
-      {/* <Grid item xs={12} md={3}>
-        <TextFieldGroup
-          labelShink={true}
-          variant="outlined"
-          label="Ownership Basescore"
-          name="ownershipBasescore"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          disabled={disabled}
-          value={formik.values.ownershipBasescore}
-          errors={
-            formik.touched.ownershipBasescore &&
-            formik.errors.ownershipBasescore
-              ? formik.errors.ownershipBasescore
-              : null
-          }
-        />
-      </Grid>
-
-      <Grid item xs={12} md={3}>
-        <TextFieldGroup
-          labelShink={true}
-          variant="outlined"
-          label="Ownership percent "
-          name="ownershippercent"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          disabled={disabled}
-          value={formik.values.ownershippercent}
-          errors={
-            formik.touched.ownershippercent && formik.errors.ownershippercent
-              ? formik.errors.ownershippercent
-              : null
-          }
-        />
-      </Grid> */}
-
       <Grid item xs={12} md={3}>
         <TextFieldGroup
           labelShink={true}
@@ -587,42 +318,6 @@ const EIScore = ({ formik, disabled, weightages }) => {
         />
       </Grid>
 
-      {/* <Grid item xs={12} md={3}>
-        <TextFieldGroup
-          variant="outlined"
-          labelShink={true}
-          label="Empathy Basescore"
-          name="empathyBasescore"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          disabled={disabled}
-          value={formik.values.empathyBasescore}
-          errors={
-            formik.touched.empathyBasescore && formik.errors.empathyBasescore
-              ? formik.errors.empathyBasescore
-              : null
-          }
-        />
-      </Grid>
-
-      <Grid item xs={12} md={3}>
-        <TextFieldGroup
-          variant="outlined"
-          labelShink={true}
-          label="Empathy percent"
-          name="empathypercent"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          disabled={disabled}
-          value={formik.values.empathypercent}
-          errors={
-            formik.touched.empathypercent && formik.errors.empathypercent
-              ? formik.errors.empathypercent
-              : null
-          }
-        />
-      </Grid> */}
-
       <Grid item xs={12} md={3}>
         <TextFieldGroup
           variant="outlined"
@@ -658,42 +353,6 @@ const EIScore = ({ formik, disabled, weightages }) => {
           }
         />
       </Grid>
-
-      {/* <Grid item xs={12} md={3}>
-        <TextFieldGroup
-          variant="outlined"
-          labelShink={true}
-          label="Openness Basescore"
-          name="opennessBasescore"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          disabled={disabled}
-          value={formik.values.opennessBasescore}
-          errors={
-            formik.touched.opennessBasescore && formik.errors.opennessBasescore
-              ? formik.errors.opennessBasescore
-              : null
-          }
-        />
-      </Grid>
-
-      <Grid item xs={12} md={3}>
-        <TextFieldGroup
-          variant="outlined"
-          labelShink={true}
-          label="Openness percent"
-          name="opennesspercent"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          disabled={disabled}
-          value={formik.values.opennesspercent}
-          errors={
-            formik.touched.opennesspercent && formik.errors.opennesspercent
-              ? formik.errors.opennesspercent
-              : null
-          }
-        />
-      </Grid> */}
 
       <Grid item xs={12} md={3}>
         <TextFieldGroup

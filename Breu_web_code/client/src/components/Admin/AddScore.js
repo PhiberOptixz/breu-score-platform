@@ -3,588 +3,222 @@ import { Grid, Button, Container } from "@mui/material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Header from "../../common/header";
-import TextFieldGroup from "../../common/TextFieldGroup";
 import {} from "../../features/adminSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
-import { addScore, fetchAllWeightages } from "../../features/adminSlice";
+import {
+  addScore,
+  fetchAllWeightages,
+  updateScore,
+} from "../../features/adminSlice";
 import { fetchCandidateScores } from "../../features/candidateSlice";
 import BelieveabilityScore from "./BelievabilityScore";
 import ReliabilityScore from "./ReliabilityScore";
 import EIScore from "./EIScore";
+import UndesirabilityScore from "./UndesirabilityScore";
+import { fetchReliabilityResults } from "../../features/reliabilitySlice";
+import ConfirmationDialog from "../../common/ConfirmationDialog";
 
-const AddScore = ({ setOpenPopup }) => {
+const AddScore = () => {
   const params = useParams();
-  const { adminAuthSlice, candidateSlice, adminSlice } = useSelector(
-    (state) => state
-  );
+  const { adminAuthSlice, candidateSlice, adminSlice, reliability } =
+    useSelector((state) => state);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [disabled, setDisabled] = useState();
+  const [isOpen, setIsOpen] = React.useState(false);
+  const [finalApiData, setFinalApiData] = React.useState({});
 
   useEffect(() => {
     if (adminAuthSlice?.isAuthenticated) {
       dispatch(fetchCandidateScores(params?.candidateId));
+      dispatch(fetchReliabilityResults(params?.candidateId));
       if (!adminSlice?.parameterWeightages) {
         dispatch(fetchAllWeightages());
       }
     }
   }, [adminAuthSlice?.isAuthenticated]);
 
-  // useEffect(() => {
-  //   if (candidateSlice.candidateScore) {
-  //     formik.setFieldValue(
-  //       "qualification",
-  //       candidateSlice.candidateScore?.believabilityScores?.qualification?.score
-  //     );
-  //     formik.setFieldValue(
-  //       "professionalExperience",
-  //       candidateSlice.candidateScore?.believabilityScores
-  //         ?.professionalExperience?.score
-  //     );
-  //     formik.setFieldValue(
-  //       "socialscore",
-  //       candidateSlice.candidateScore?.believabilityScores?.socialscore?.score
-  //     );
-  //     formik.setFieldValue(
-  //       "patents",
-  //       candidateSlice.candidateScore?.believabilityScores?.patents?.score
-  //     );
-  //     formik.setFieldValue(
-  //       "presentation",
-  //       candidateSlice.candidateScore?.believabilityScores
-  //         ?.whitepaperConferencePresentation?.score
-  //     );
-  //     formik.setFieldValue(
-  //       "blog",
-  //       candidateSlice.candidateScore?.believabilityScores?.blog?.score
-  //     );
-  //     formik.setFieldValue(
-  //       "design",
-  //       candidateSlice.candidateScore?.reliabilityScores?.design?.score
-  //     );
-  //     formik.setFieldValue(
-  //       "framework",
-  //       candidateSlice.candidateScore?.reliabilityScores?.framework?.score
-  //     );
-  //     formik.setFieldValue(
-  //       "coding",
-  //       candidateSlice.candidateScore?.reliabilityScores?.coding?.score
-  //     );
-  //     formik.setFieldValue(
-  //       "debugging",
-  //       candidateSlice.candidateScore?.reliabilityScores?.debugging?.score
-  //     );
-  //     formik.setFieldValue(
-  //       "architecture",
-  //       candidateSlice.candidateScore?.reliabilityScores?.architecture?.score
-  //     );
-  //     formik.setFieldValue(
-  //       "implementation",
-  //       candidateSlice.candidateScore?.reliabilityScores?.implementation?.score
-  //     );
-  //     formik.setFieldValue(
-  //       "teamwork",
-  //       candidateSlice.candidateScore?.emotionalIntelligencyScores?.teamWork
-  //         ?.score
-  //     );
-  //     formik.setFieldValue(
-  //       "complexityhandling",
-  //       candidateSlice.candidateScore?.emotionalIntelligencyScores
-  //         ?.complexityHandling?.score
-  //     );
-  //     formik.setFieldValue(
-  //       "conflictresolution",
-  //       candidateSlice.candidateScore?.emotionalIntelligencyScores
-  //         ?.conflictResolution?.score
-  //     );
-  //     formik.setFieldValue(
-  //       "initiative",
-  //       candidateSlice.candidateScore?.emotionalIntelligencyScores?.initiative
-  //         ?.score
-  //     );
-  //     formik.setFieldValue(
-  //       "culturalFit",
-  //       candidateSlice.candidateScore?.emotionalIntelligencyScores
-  //         ?.culturalFitPresentation?.score
-  //     );
-  //     formik.setFieldValue(
-  //       "communication",
-  //       candidateSlice.candidateScore?.emotionalIntelligencyScores
-  //         ?.communication?.score
-  //     );
-  //     formik.setFieldValue(
-  //       "ownership",
-  //       candidateSlice.candidateScore?.emotionalIntelligencyScores?.ownership
-  //         ?.score
-  //     );
-  //     formik.setFieldValue(
-  //       "empathy",
-  //       candidateSlice.candidateScore?.emotionalIntelligencyScores?.empathy
-  //         ?.score
-  //     );
-  //     formik.setFieldValue(
-  //       "openness",
-  //       candidateSlice.candidateScore?.emotionalIntelligencyScores?.openness
-  //         ?.score
-  //     );
-  //     formik.setFieldValue(
-  //       "plagiarism",
-  //       candidateSlice.candidateScore?.undesirableScores?.fakeInformation?.score
-  //     );
-  //     formik.setFieldValue(
-  //       "trustissues",
-  //       candidateSlice.candidateScore?.undesirableScores?.plagiarism?.score
-  //     );
-  //     formik.setFieldValue(
-  //       "fakeinformation",
-  //       candidateSlice.candidateScore?.undesirableScores?.trustIssues?.score
-  //     );
+  useEffect(() => {
+    if (reliability?.reliabilityResults) {
+      formik.setFieldValue(
+        "designScore",
+        reliability?.reliabilityResults?.design > 1
+          ? 5
+          : reliability?.reliabilityResults?.design === 1
+          ? 2.5
+          : 0
+      );
+      formik.setFieldValue(
+        "frameworkScore",
+        reliability?.reliabilityResults?.framework > 1
+          ? 5
+          : reliability?.reliabilityResults?.framework === 1
+          ? 2.5
+          : 0
+      );
+      formik.setFieldValue(
+        "codingScore",
+        reliability?.reliabilityResults?.coding > 1
+          ? 5
+          : reliability?.reliabilityResults?.coding === 1
+          ? 2.5
+          : 0
+      );
+      formik.setFieldValue(
+        "debuggingScore",
+        reliability?.reliabilityResults?.debugging > 1
+          ? 5
+          : reliability?.reliabilityResults?.debugging === 1
+          ? 2.5
+          : 0
+      );
+      formik.setFieldValue(
+        "architectureScore",
+        reliability?.reliabilityResults?.architecture > 1
+          ? 5
+          : reliability?.reliabilityResults?.architecture === 1
+          ? 2.5
+          : 0
+      );
+      formik.setFieldValue(
+        "implementationScore",
+        reliability?.reliabilityResults?.implementation > 1
+          ? 5
+          : reliability?.reliabilityResults?.implementation === 1
+          ? 2.5
+          : 0
+      );
+    }
+  }, [reliability?.reliabilityResults]);
 
-  //     // percentage
-
-  //     formik.setFieldValue(
-  //       "qualificationpercent",
-  //       candidateSlice.candidateScore?.believabilityScores?.qualification
-  //         ?.percentile
-  //     );
-  //     formik.setFieldValue(
-  //       "professionalExperiencepercent",
-  //       candidateSlice.candidateScore?.believabilityScores
-  //         ?.professionalExperience?.percentile
-  //     );
-  //     formik.setFieldValue(
-  //       "socialscorepercent",
-  //       candidateSlice.candidateScore?.believabilityScores?.socialScore
-  //         ?.percentile
-  //     );
-  //     formik.setFieldValue(
-  //       "patentspercent",
-  //       candidateSlice.candidateScore?.believabilityScores?.patents?.percentile
-  //     );
-  //     formik.setFieldValue(
-  //       "blogpercent",
-  //       candidateSlice.candidateScore?.believabilityScores?.blog?.percentile
-  //     );
-  //     formik.setFieldValue(
-  //       "presentationpercent",
-  //       candidateSlice.candidateScore?.believabilityScores
-  //         ?.whitepaperConferencePresentation?.percentile
-  //     );
-  //     formik.setFieldValue(
-  //       "designpercent",
-  //       candidateSlice.candidateScore?.reliabilityScores?.design?.percentile
-  //     );
-  //     formik.setFieldValue(
-  //       "frameworkpercent",
-  //       candidateSlice.candidateScore?.reliabilityScores?.framework?.percentile
-  //     );
-  //     formik.setFieldValue(
-  //       "codingpercent",
-  //       candidateSlice.candidateScore?.reliabilityScores?.coding?.percentile
-  //     );
-  //     formik.setFieldValue(
-  //       "debuggingpercent",
-  //       candidateSlice.candidateScore?.reliabilityScores?.debugging?.percentile
-  //     );
-  //     formik.setFieldValue(
-  //       "architecturepercent",
-  //       candidateSlice.candidateScore?.reliabilityScores?.architecture
-  //         ?.percentile
-  //     );
-  //     formik.setFieldValue(
-  //       "implementationpercent",
-  //       candidateSlice.candidateScore?.reliabilityScores?.implementation
-  //         ?.percentile
-  //     );
-  //     formik.setFieldValue(
-  //       "teamworkpercent",
-  //       candidateSlice.candidateScore?.emotionalIntelligencyScores?.teamWork
-  //         ?.percentile
-  //     );
-  //     formik.setFieldValue(
-  //       "complexityhandlingpercent",
-  //       candidateSlice.candidateScore?.emotionalIntelligencyScores
-  //         ?.complexityHandling?.percentile
-  //     );
-  //     formik.setFieldValue(
-  //       "conflictresolutionpercent",
-  //       candidateSlice.candidateScore?.emotionalIntelligencyScores
-  //         ?.conflictResolution?.percentile
-  //     );
-  //     formik.setFieldValue(
-  //       "initiativepercent",
-  //       candidateSlice.candidateScore?.emotionalIntelligencyScores?.initiative
-  //         ?.percentile
-  //     );
-  //     formik.setFieldValue(
-  //       "culturalFitpercent",
-  //       candidateSlice.candidateScore?.emotionalIntelligencyScores
-  //         ?.culturalFitPresentation?.percentile
-  //     );
-  //     formik.setFieldValue(
-  //       "communicationpercent",
-  //       candidateSlice.candidateScore?.emotionalIntelligencyScores
-  //         ?.communication?.percentile
-  //     );
-  //     formik.setFieldValue(
-  //       "ownershippercent",
-  //       candidateSlice.candidateScore?.emotionalIntelligencyScores?.ownership
-  //         ?.percentile
-  //     );
-  //     formik.setFieldValue(
-  //       "empathypercent",
-  //       candidateSlice.candidateScore?.emotionalIntelligencyScores?.empathy
-  //         ?.percentile
-  //     );
-  //     formik.setFieldValue(
-  //       "opennesspercent",
-  //       candidateSlice.candidateScore?.emotionalIntelligencyScores?.openness
-  //         ?.percentile
-  //     );
-  //     formik.setFieldValue(
-  //       "plagiarismpercent",
-  //       candidateSlice.candidateScore?.undesirableScores?.plagiarism?.percentile
-  //     );
-  //     formik.setFieldValue(
-  //       "trustissuespercent",
-  //       candidateSlice.candidateScore?.undesirableScores?.trustIssues
-  //         ?.percentile
-  //     );
-  //     formik.setFieldValue(
-  //       "fakeinformationpercent",
-  //       candidateSlice.candidateScore?.undesirableScores?.fakeInformation
-  //         ?.percentile
-  //     );
-
-  //     //Base score
-  //     formik.setFieldValue(
-  //       "qualificationBasescore",
-  //       candidateSlice.candidateScore?.believabilityScores?.qualification
-  //         ?.Basescore
-  //     );
-  //     formik.setFieldValue(
-  //       "professionalExperienceBasescore",
-  //       candidateSlice.candidateScore?.believabilityScores
-  //         ?.professionalExperience?.Basescore
-  //     );
-  //     formik.setFieldValue(
-  //       "socialscoreBasescore",
-  //       candidateSlice.candidateScore?.believabilityScores?.socialscore
-  //         ?.Basescore
-  //     );
-  //     formik.setFieldValue(
-  //       "patentsBasescore",
-  //       candidateSlice.candidateScore?.believabilityScores?.patents?.Basescore
-  //     );
-  //     formik.setFieldValue(
-  //       "presentationBasescore",
-  //       candidateSlice.candidateScore?.believabilityScores
-  //         ?.whitepaperConferencePresentation?.Basescore
-  //     );
-  //     formik.setFieldValue(
-  //       "blogBasescore",
-  //       candidateSlice.candidateScore?.believabilityScores?.blog?.Basescore
-  //     );
-  //     formik.setFieldValue(
-  //       "designBasescore",
-  //       candidateSlice.candidateScore?.reliabilityScores?.design?.Basescore
-  //     );
-  //     formik.setFieldValue(
-  //       "frameworkBasescore",
-  //       candidateSlice.candidateScore?.reliabilityScores?.framework?.Basescore
-  //     );
-  //     formik.setFieldValue(
-  //       "codingBasescore",
-  //       candidateSlice.candidateScore?.reliabilityScores?.coding?.Basescore
-  //     );
-  //     formik.setFieldValue(
-  //       "debuggingBasescore",
-  //       candidateSlice.candidateScore?.reliabilityScores?.debugging?.Basescore
-  //     );
-  //     formik.setFieldValue(
-  //       "architectureBasescore",
-  //       candidateSlice.candidateScore?.reliabilityScores?.architecture
-  //         ?.Basescore
-  //     );
-  //     formik.setFieldValue(
-  //       "implementationBasescore",
-  //       candidateSlice.candidateScore?.reliabilityScores?.implementation
-  //         ?.Basescore
-  //     );
-  //     formik.setFieldValue(
-  //       "teamworkBasescore",
-  //       candidateSlice.candidateScore?.emotionalIntelligencyScores?.teamWork
-  //         ?.Basescore
-  //     );
-  //     formik.setFieldValue(
-  //       "complexityhandlingBasescore",
-  //       candidateSlice.candidateScore?.emotionalIntelligencyScores
-  //         ?.complexityHandling?.Basescore
-  //     );
-  //     formik.setFieldValue(
-  //       "conflictresolutionBasescore",
-  //       candidateSlice.candidateScore?.emotionalIntelligencyScores
-  //         ?.conflictResolution?.Basescore
-  //     );
-  //     formik.setFieldValue(
-  //       "initiativeBasescore",
-  //       candidateSlice.candidateScore?.emotionalIntelligencyScores?.initiative
-  //         ?.Basescore
-  //     );
-  //     formik.setFieldValue(
-  //       "culturalFitBasescore",
-  //       candidateSlice.candidateScore?.emotionalIntelligencyScores
-  //         ?.culturalFitPresentation?.Basescore
-  //     );
-  //     formik.setFieldValue(
-  //       "communicationBasescore",
-  //       candidateSlice.candidateScore?.emotionalIntelligencyScores
-  //         ?.communication?.Basescore
-  //     );
-  //     formik.setFieldValue(
-  //       "ownershipBasescore",
-  //       candidateSlice.candidateScore?.emotionalIntelligencyScores?.ownership
-  //         ?.Basescore
-  //     );
-  //     formik.setFieldValue(
-  //       "empathyBasescore",
-  //       candidateSlice.candidateScore?.emotionalIntelligencyScores?.empathy
-  //         ?.Basescore
-  //     );
-  //     formik.setFieldValue(
-  //       "opennessBasescore",
-  //       candidateSlice.candidateScore?.emotionalIntelligencyScores?.openness
-  //         ?.Basescore
-  //     );
-  //     formik.setFieldValue(
-  //       "plagiarismBasescore",
-  //       candidateSlice.candidateScore?.undesirableScores?.fakeInformation
-  //         ?.Basescore
-  //     );
-  //     formik.setFieldValue(
-  //       "trustissuesBasescore",
-  //       candidateSlice.candidateScore?.undesirableScores?.plagiarism?.Basescore
-  //     );
-  //     formik.setFieldValue(
-  //       "fakeinformationBasescore",
-  //       candidateSlice.candidateScore?.undesirableScores?.trustIssues?.Basescore
-  //     );
-
-  //     //Final Score
-  //     formik.setFieldValue(
-  //       "qualificationScore",
-  //       candidateSlice.candidateScore?.believabilityScores?.qualification
-  //         ?.finalscore
-  //     );
-  //     formik.setFieldValue(
-  //       "professionalExperienceScore",
-  //       candidateSlice.candidateScore?.believabilityScores
-  //         ?.professionalExperience?.finalscore
-  //     );
-  //     formik.setFieldValue(
-  //       "socialscoreScore",
-  //       candidateSlice.candidateScore?.believabilityScores?.socialscore
-  //         ?.finalscore
-  //     );
-  //     formik.setFieldValue(
-  //       "patentsScore",
-  //       candidateSlice.candidateScore?.believabilityScores?.patents?.finalscore
-  //     );
-  //     formik.setFieldValue(
-  //       "presentationScore",
-  //       candidateSlice.candidateScore?.believabilityScores
-  //         ?.whitepaperConferencePresentation?.finalscore
-  //     );
-  //     formik.setFieldValue(
-  //       "blogScore",
-  //       candidateSlice.candidateScore?.believabilityScores?.blog?.finalscore
-  //     );
-  //     formik.setFieldValue(
-  //       "designScore",
-  //       candidateSlice.candidateScore?.reliabilityScores?.design?.finalscore
-  //     );
-  //     formik.setFieldValue(
-  //       "frameworkScore",
-  //       candidateSlice.candidateScore?.reliabilityScores?.framework?.finalscore
-  //     );
-  //     formik.setFieldValue(
-  //       "codingScore",
-  //       candidateSlice.candidateScore?.reliabilityScores?.coding?.finalscore
-  //     );
-  //     formik.setFieldValue(
-  //       "debuggingScore",
-  //       candidateSlice.candidateScore?.reliabilityScores?.debugging?.finalscore
-  //     );
-  //     formik.setFieldValue(
-  //       "architectureScore",
-  //       candidateSlice.candidateScore?.reliabilityScores?.architecture
-  //         ?.finalscore
-  //     );
-  //     formik.setFieldValue(
-  //       "implementationScore",
-  //       candidateSlice.candidateScore?.reliabilityScores?.implementation
-  //         ?.finalscore
-  //     );
-  //     formik.setFieldValue(
-  //       "teamworkScore",
-  //       candidateSlice.candidateScore?.emotionalIntelligencyScores?.teamWork
-  //         ?.finalscore
-  //     );
-  //     formik.setFieldValue(
-  //       "complexityhandlingScore",
-  //       candidateSlice.candidateScore?.emotionalIntelligencyScores
-  //         ?.complexityHandling?.finalscore
-  //     );
-  //     formik.setFieldValue(
-  //       "conflictresolutionScore",
-  //       candidateSlice.candidateScore?.emotionalIntelligencyScores
-  //         ?.conflictResolution?.finalscore
-  //     );
-  //     formik.setFieldValue(
-  //       "initiativeScore",
-  //       candidateSlice.candidateScore?.emotionalIntelligencyScores?.initiative
-  //         ?.finalscore
-  //     );
-  //     formik.setFieldValue(
-  //       "culturalFitScore",
-  //       candidateSlice.candidateScore?.emotionalIntelligencyScores
-  //         ?.culturalFitPresentation?.finalscore
-  //     );
-  //     formik.setFieldValue(
-  //       "communicationScore",
-  //       candidateSlice.candidateScore?.emotionalIntelligencyScores
-  //         ?.communication?.finalscore
-  //     );
-  //     formik.setFieldValue(
-  //       "ownershipScore",
-  //       candidateSlice.candidateScore?.emotionalIntelligencyScores?.ownership
-  //         ?.finalscore
-  //     );
-  //     formik.setFieldValue(
-  //       "empathyScore",
-  //       candidateSlice.candidateScore?.emotionalIntelligencyScores?.empathy
-  //         ?.finalscore
-  //     );
-  //     formik.setFieldValue(
-  //       "opennessScore",
-  //       candidateSlice.candidateScore?.emotionalIntelligencyScores?.openness
-  //         ?.finalscore
-  //     );
-  //     formik.setFieldValue(
-  //       "plagiarismScore",
-  //       candidateSlice.candidateScore?.undesirableScores?.fakeInformation
-  //         ?.finalscore
-  //     );
-  //     formik.setFieldValue(
-  //       "trustissuesScore",
-  //       candidateSlice.candidateScore?.undesirableScores?.plagiarism?.finalscore
-  //     );
-  //     formik.setFieldValue(
-  //       "fakeinformationScore",
-  //       candidateSlice.candidateScore?.undesirableScores?.trustIssues
-  //         ?.finalscore
-  //     );
-
-  //     formik.setFieldValue(
-  //       "mainScore",
-  //       candidateSlice.candidateScore?.mainScore
-  //     );
-  //     setDisabled(true);
-  //   }
-  // }, [candidateSlice.candidateScore]);
+  useEffect(() => {
+    if (candidateSlice.candidateScore) {
+      formik.setFieldValue(
+        "qualificationScore",
+        candidateSlice.candidateScore?.believabilityScores?.qualification?.score
+      );
+      formik.setFieldValue(
+        "professionalExperienceScore",
+        candidateSlice.candidateScore?.believabilityScores
+          ?.professionalExperience?.score
+      );
+      formik.setFieldValue(
+        "socialScoreScore",
+        candidateSlice.candidateScore?.believabilityScores?.socialScore?.score
+      );
+      formik.setFieldValue(
+        "patentsScore",
+        candidateSlice.candidateScore?.believabilityScores?.patents?.score
+      );
+      formik.setFieldValue(
+        "whitepaperConferencePresentationScore",
+        candidateSlice.candidateScore?.believabilityScores
+          ?.whitepaperConferencePresentation?.score
+      );
+      formik.setFieldValue(
+        "blogScore",
+        candidateSlice.candidateScore?.believabilityScores?.blog?.score
+      );
+      formik.setFieldValue(
+        "designScore",
+        candidateSlice.candidateScore?.reliabilityScores?.design?.score
+      );
+      formik.setFieldValue(
+        "frameworkScore",
+        candidateSlice.candidateScore?.reliabilityScores?.framework?.score
+      );
+      formik.setFieldValue(
+        "codingScore",
+        candidateSlice.candidateScore?.reliabilityScores?.coding?.score
+      );
+      formik.setFieldValue(
+        "debuggingScore",
+        candidateSlice.candidateScore?.reliabilityScores?.debugging?.score
+      );
+      formik.setFieldValue(
+        "architectureScore",
+        candidateSlice.candidateScore?.reliabilityScores?.architecture?.score
+      );
+      formik.setFieldValue(
+        "implementationScore",
+        candidateSlice.candidateScore?.reliabilityScores?.implementation?.score
+      );
+      formik.setFieldValue(
+        "teamworkScore",
+        candidateSlice.candidateScore?.emotionalIntelligencyScores?.teamWork
+          ?.score
+      );
+      formik.setFieldValue(
+        "complexityhandlingScore",
+        candidateSlice.candidateScore?.emotionalIntelligencyScores
+          ?.complexityHandling?.score
+      );
+      formik.setFieldValue(
+        "conflictResolutionScore",
+        candidateSlice.candidateScore?.emotionalIntelligencyScores
+          ?.conflictResolution?.score
+      );
+      formik.setFieldValue(
+        "initiativeScore",
+        candidateSlice.candidateScore?.emotionalIntelligencyScores?.initiative
+          ?.score
+      );
+      formik.setFieldValue(
+        "culturalFitScore",
+        candidateSlice.candidateScore?.emotionalIntelligencyScores
+          ?.culturalFitPresentation?.score
+      );
+      formik.setFieldValue(
+        "presentationScore",
+        candidateSlice.candidateScore?.emotionalIntelligencyScores?.presentation
+          ?.score
+      );
+      formik.setFieldValue(
+        "communicationScore",
+        candidateSlice.candidateScore?.emotionalIntelligencyScores
+          ?.communication?.score
+      );
+      formik.setFieldValue(
+        "ownershipScore",
+        candidateSlice.candidateScore?.emotionalIntelligencyScores?.ownership
+          ?.score
+      );
+      formik.setFieldValue(
+        "empathyScore",
+        candidateSlice.candidateScore?.emotionalIntelligencyScores?.empathy
+          ?.score
+      );
+      formik.setFieldValue(
+        "opennessScore",
+        candidateSlice.candidateScore?.emotionalIntelligencyScores?.openness
+          ?.score
+      );
+      formik.setFieldValue(
+        "plagiarismScore",
+        candidateSlice.candidateScore?.undesirableScores?.fakeInformation?.score
+      );
+      formik.setFieldValue(
+        "trustissuesScore",
+        candidateSlice.candidateScore?.undesirableScores?.plagiarism?.score
+      );
+      formik.setFieldValue(
+        "fakeinformationScore",
+        candidateSlice.candidateScore?.undesirableScores?.trustIssues?.score
+      );
+      setDisabled(false);
+    }
+  }, [candidateSlice.candidateScore]);
 
   const formik = useFormik({
     initialValues: {
-      qualification: "",
-      professionalExperience: "",
-      socialscore: "",
-      patents: "",
-      blog: "",
-      presentation: "",
-      design: "",
-      framework: "",
-      coding: "",
-      debugging: "",
-      architecture: "",
-      implementation: "",
-
-      teamwork: "",
-      complexityhandling: "",
-      conflictresolution: "",
-      initiative: "",
-      culturalFit: "",
-      // epresentation: "",
-      communication: "",
-      ownership: "",
-      empathy: "",
-      openness: "",
-      plagiarism: "",
-      trustissues: "",
-      fakeinformation: "",
-
-      //base score
-      qualificationBasescore: "",
-      professionalExperienceBasescore: "",
-      socialscoreBasescore: "",
-      patentsBasescore: "",
-      blogBasescore: "",
-      presentationBasescore: "",
-      designBasescore: "",
-      frameworkBasescore: "",
-      codingBasescore: "",
-      debuggingBasescore: "",
-      architectureBasescore: "",
-      implementationBasescore: "",
-
-      teamworkBasescore: "",
-      complexityhandlingBasescore: "",
-      conflictresolutionBasescore: "",
-      initiativeBasescore: "",
-      culturalFitBasescore: "",
-      // epresentation: "",
-      communicationBasescore: "",
-      ownershipBasescore: "",
-      empathyBasescore: "",
-      opennessBasescore: "",
-      plagiarismBasescore: "",
-      trustissuesBasescore: "",
-      fakeinformationBasescore: "",
-
-      qualificationpercent: "",
-      professionalExperiencepercent: "",
-      socialscorepercent: "",
-      patentspercent: "",
-      blogpercent: "",
-      presentationpercent: "",
-      designpercent: "",
-      frameworkpercent: "",
-      codingpercent: "",
-      debuggingpercent: "",
-      architecturepercent: "",
-      implementationpercent: "",
-      teamworkpercent: "",
-      complexityhandlingpercent: "",
-      conflictresolutionpercent: "",
-      initiativepercent: "",
-      culturalFitpercent: "",
-      // epresentationpercent: "",
-      communicationpercent: "",
-      ownershippercent: "",
-      empathypercent: "",
-      opennesspercent: "",
-      plagiarismpercent: "",
-      trustissuespercent: "",
-      fakeinformationpercent: "",
-      mainScore: "",
-
       //final score
       qualificationScore: "",
       professionalExperienceScore: "",
-      socialscoreScore: "",
+      socialScoreScore: "",
       patentsScore: "",
       blogScore: "",
-      presentationScore: "",
+      whitepaperConferencePresentationScore: "",
       designScore: "",
       frameworkScore: "",
       codingScore: "",
@@ -593,10 +227,10 @@ const AddScore = ({ setOpenPopup }) => {
       implementationScore: "",
       teamworkScore: "",
       complexityhandlingScore: "",
-      conflictresolutionScore: "",
+      conflictResolutionScore: "",
       initiativeScore: "",
       culturalFitScore: "",
-      // epresentation: "",
+      presentationScore: "",
       communicationScore: "",
       ownershipScore: "",
       empathyScore: "",
@@ -606,460 +240,6 @@ const AddScore = ({ setOpenPopup }) => {
       fakeinformationScore: "",
     },
     validationSchema: Yup.object({
-      // scheduleDescription: Yup.string()
-      //   .trim()
-      //   .required("Schedule Description is required field"),
-      qualification: Yup.number()
-        .min(1)
-        // .max(5)
-        .required("Please enter the value")
-        .typeError("Qualification value should be a number"),
-
-      professionalExperience: Yup.number()
-        .min(1)
-        // .max(5)
-        .required("Please enter the value")
-        .typeError("ProfessionalExperience value should be a number"),
-
-      socialscore: Yup.number()
-        .min(1)
-        // .max(5)
-        .required("Please enter the value")
-        .typeError("Socialscore value should be a number"),
-
-      patents: Yup.number()
-        .min(1)
-        // .max(5)
-        .required("Please enter the value")
-        .typeError("Patents value should be a number"),
-
-      blog: Yup.number()
-        .min(1)
-        // .max(5)
-        .required("Please enter the value")
-        .typeError("Blog value should be a number"),
-
-      presentation: Yup.number()
-        .min(1)
-        // .max(5)
-        .required("Please enter the value")
-        .typeError("Presentation value should be a number"),
-
-      //Reliability
-
-      design: Yup.number()
-        .min(1)
-        // .max(5)
-        .required("Please enter the value")
-        .typeError("design value should be a number"),
-
-      framework: Yup.number()
-        .min(1)
-        // .max(5)
-        .required("Please enter the value")
-        .typeError("framework value should be a number"),
-
-      coding: Yup.number()
-        .min(1)
-        .required("Please enter the value")
-        .typeError("coding value should be a number"),
-
-      debugging: Yup.number()
-        .min(1)
-        // .max(5)
-        .required("Please enter the value")
-        .typeError("debugging value should be a number"),
-
-      architecture: Yup.number()
-        .min(1)
-        // .max(5)
-        .required("Please enter the value")
-        .typeError("architecture  value should be a number"),
-
-      implementation: Yup.number()
-        .min(1)
-        // .max(5)
-        .required("Please enter the value")
-        .typeError("implementation value should be a number"),
-
-      //EI
-
-      teamwork: Yup.number()
-        .min(1)
-        // .max(5)
-        .required("Please enter the value")
-        .typeError("teamwork value should be a number"),
-
-      complexityhandling: Yup.number()
-        .min(1)
-        // .max(5)
-        .required("Please enter the value")
-        .typeError("complexityhandling value should be a number"),
-
-      conflictresolution: Yup.number()
-        .min(1)
-        // .max(5)
-        .required("Please enter the value")
-        .typeError("conflictresolution value should be a number"),
-
-      initiative: Yup.number()
-        .min(1)
-        // .max(5)
-        .required("Please enter the value")
-        .typeError("initiative value should be a number"),
-
-      ownership: Yup.number()
-        .min(1)
-        // .max(5)
-        .required("Please enter the value")
-        .typeError("Ownership value should be a number"),
-
-      // epresentation: Yup.number()
-      //   .min(1)
-      //   .required("Please enter the value")
-      //   .typeError("Presentation value should be a number"),
-
-      communication: Yup.number()
-        .min(1)
-        // .max(5)
-        .required("Please enter the value")
-        .typeError("communication value should be a number"),
-
-      empathy: Yup.number()
-        .min(1)
-        // .max(5)
-        .required("Please enter the value")
-        .typeError("Empathy value should be a number"),
-
-      openness: Yup.number()
-        .min(1)
-        // .max(5)
-        .required("Please enter the value")
-        .typeError("Openness value should be a number"),
-
-      //Undesirable
-
-      plagiarism: Yup.number()
-        .min(1)
-        // .max(5)
-        .required("Please enter the value")
-        .typeError("plagiarism value should be a number"),
-
-      trustissues: Yup.number()
-        .min(1)
-        // .max(5)
-        .required("Please enter the value")
-        .typeError("Trustissues value should be a number"),
-
-      fakeinformation: Yup.number()
-        .min(1)
-        // .max(5)
-        .required("Please enter the value")
-        .typeError("Fakeinformation value should be a number"),
-
-      //percentile
-
-      qualificationpercent: Yup.number()
-        .min(1)
-        .max(100)
-        .required("Please enter the value")
-        .typeError("Qualificationpercent value should be a number"),
-
-      professionalExperiencepercent: Yup.number()
-        .min(1)
-        .max(100)
-        .required("Please enter the value")
-        .typeError("ProfessionalExperiencepercent value should be a number"),
-
-      socialscorepercent: Yup.number()
-        .min(1)
-        .max(100)
-        .required("Please enter the value")
-        .typeError("Socialscorepercent value should be a number"),
-
-      patentspercent: Yup.number()
-        .min(1)
-        .max(100)
-        .required("Please enter the value")
-        .typeError("Patentspercent value should be a number"),
-
-      blogpercent: Yup.number()
-        .min(1)
-        .max(100)
-        .required("Please enter the value")
-        .typeError("Blogpercent value should be a number"),
-
-      presentationpercent: Yup.number()
-        .min(1)
-        .max(100)
-        .required("Please enter the value")
-        .typeError("Presentationpercent value should be a number"),
-
-      //Reliability
-
-      designpercent: Yup.number()
-        .min(1)
-        .max(100)
-        .required("Please enter the value")
-        .typeError("designpercent value should be a number"),
-
-      frameworkpercent: Yup.number()
-        .min(1)
-        .max(100)
-        .required("Please enter the value")
-        .typeError("frameworkpercent value should be a number"),
-
-      codingpercent: Yup.number()
-        .min(1)
-        .max(100)
-        .required("Please enter the value")
-        .typeError("codingpercent value should be a number"),
-
-      debuggingpercent: Yup.number()
-        .min(1)
-        .max(100)
-        .required("Please enter the value")
-        .typeError("debuggingpercent value should be a number"),
-
-      architecturepercent: Yup.number()
-        .min(1)
-        .max(100)
-        .required("Please enter the value")
-        .typeError("architecturepercent  value should be a number"),
-
-      implementationpercent: Yup.number()
-        .min(1)
-        .max(100)
-        .required("Please enter the value")
-        .typeError("implementationpercent value should be a number"),
-
-      //EI
-
-      teamworkpercent: Yup.number()
-        .min(1)
-        .max(100)
-        .required("Please enter the value")
-        .typeError("teamworkpercent value should be a number"),
-
-      complexityhandlingpercent: Yup.number()
-        .min(1)
-        .max(100)
-        .required("Please enter the value")
-        .typeError("complexityhandlingpercent value should be a number"),
-
-      conflictresolutionpercent: Yup.number()
-        .min(1)
-        .max(100)
-        .required("Please enter the value")
-        .typeError("conflictresolutionpercent value should be a number"),
-
-      initiativepercent: Yup.number()
-        .min(1)
-        .max(100)
-        .required("Please enter the value")
-        .typeError("initiativepercent value should be a number"),
-
-      ownershippercent: Yup.number()
-        .min(1)
-        .max(100)
-        .required("Please enter the value")
-        .typeError("Ownershippercent value should be a number"),
-
-      // epresentationpercent: Yup.number()
-      //   .min(1)
-      //   .required("Please enter the value")
-      //   .typeError("Presentationpercent value should be a number"),
-
-      communicationpercent: Yup.number()
-        .min(1)
-        .max(100)
-        .required("Please enter the value")
-        .typeError("communicationpercent value should be a number"),
-
-      empathypercent: Yup.number()
-        .min(1)
-        .max(100)
-        .required("Please enter the value")
-        .typeError("Empathypercent value should be a number"),
-
-      opennesspercent: Yup.number()
-        .min(1)
-        .max(100)
-        .required("Please enter the value")
-        .typeError("Opennesspercent value should be a number"),
-
-      //Undesirable
-
-      plagiarismpercent: Yup.number()
-        .min(1)
-        .max(100)
-        .required("Please enter the value")
-        .typeError("plagiarismpercent value should be a number"),
-
-      trustissuespercent: Yup.number()
-        .min(1)
-        .max(100)
-        .required("Please enter the value")
-        .typeError("Trustissuespercent value should be a number"),
-
-      fakeinformationpercent: Yup.number()
-        .min(1)
-        .max(100)
-        .required("Please enter the value")
-        .typeError("Fakeinformationpercent value should be a number"),
-
-      //base score
-      qualificationBasescore: Yup.number()
-        .min(1)
-        .max(100)
-        .required("Please enter the value")
-        .typeError("Qualification Basescore should be a number"),
-
-      professionalExperienceBasescore: Yup.number()
-        .min(1)
-        .max(100)
-        .required("Please enter the value")
-        .typeError("ProfessionalExperience Basescore should be a number"),
-
-      socialscoreBasescore: Yup.number()
-        .min(1)
-        .max(100)
-        .required("Please enter the value")
-        .typeError("Socialscore Basescore should be a number"),
-
-      patentsBasescore: Yup.number()
-        .min(1)
-        .max(100)
-        .required("Please enter the value")
-        .typeError("Patents Basescore should be a number"),
-
-      blogBasescore: Yup.number()
-        .min(1)
-        .max(100)
-        .required("Please enter the value")
-        .typeError("Blog Basescore should be a number"),
-
-      presentationBasescore: Yup.number()
-        .min(1)
-        .max(100)
-        .required("Please enter the value")
-        .typeError("Presentation Basescore should be a number"),
-
-      //Reliability
-
-      designBasescore: Yup.number()
-        .min(1)
-        .max(100)
-        .required("Please enter the value")
-        .typeError("design Basescore should be a number"),
-
-      frameworkBasescore: Yup.number()
-        .min(1)
-        .max(100)
-        .required("Please enter the value")
-        .typeError("framework Basescore should be a number"),
-
-      codingBasescore: Yup.number()
-        .min(1)
-        .max(100)
-        .required("Please enter the value")
-        .typeError("coding Basescore should be a number"),
-
-      debuggingBasescore: Yup.number()
-        .min(1)
-        .max(100)
-        .required("Please enter the value")
-        .typeError("debugging Basescore should be a number"),
-
-      architectureBasescore: Yup.number()
-        .min(1)
-        .max(100)
-        .required("Please enter the value")
-        .typeError("architecture  Basescore should be a number"),
-
-      implementationBasescore: Yup.number()
-        .min(1)
-        .max(100)
-        .required("Please enter the value")
-        .typeError("implementation Basescore should be a number"),
-
-      //EI
-
-      teamworkBasescore: Yup.number()
-        .min(1)
-        .max(100)
-        .required("Please enter the value")
-        .typeError("teamwork Basescore should be a number"),
-
-      complexityhandlingBasescore: Yup.number()
-        .min(1)
-        .max(100)
-        .required("Please enter the value")
-        .typeError("complexityhandling Basescore should be a number"),
-
-      conflictresolutionBasescore: Yup.number()
-        .min(1)
-        .max(100)
-        .required("Please enter the value")
-        .typeError("conflictresolution Basescore should be a number"),
-
-      initiativeBasescore: Yup.number()
-        .min(1)
-        .max(100)
-        .required("Please enter the value")
-        .typeError("initiative Basescore should be a number"),
-
-      ownershipBasescore: Yup.number()
-        .min(1)
-        .max(100)
-        .required("Please enter the value")
-        .typeError("Ownership Basescore should be a number"),
-
-      // epresentation: Yup.number()
-      //   .min(1)
-      //   .required("Please enter the value")
-      //   .typeError("Presentation value should be a number"),
-
-      communicationBasescore: Yup.number()
-        .min(1)
-        .max(100)
-        .required("Please enter the value")
-        .typeError("communication Basescore should be a number"),
-
-      empathyBasescore: Yup.number()
-        .min(1)
-        .max(100)
-        .required("Please enter the value")
-        .typeError("Empathy Basescore should be a number"),
-
-      opennessBasescore: Yup.number()
-        .min(1)
-        .max(100)
-        .required("Please enter the value")
-        .typeError("Openness Basescore should be a number"),
-
-      //Undesirable
-
-      plagiarismBasescore: Yup.number()
-        .min(1)
-        .max(100)
-        .required("Please enter the value")
-        .typeError("plagiarism Basescore should be a number"),
-
-      trustissuesBasescore: Yup.number()
-        .min(1)
-        .max(100)
-        .required("Please enter the value")
-        .typeError("Trustissues Basescore should be a number"),
-
-      fakeinformationBasescore: Yup.number()
-        .min(1)
-        .max(100)
-        .required("Please enter the value")
-        .typeError("Fakeinformation Basescore should be a number"),
-
-      //Final score
-
       qualificationScore: Yup.number()
         .min(1)
         .max(5)
@@ -1072,7 +252,7 @@ const AddScore = ({ setOpenPopup }) => {
         .required("Please enter the value")
         .typeError("ProfessionalExperience Score should be a number"),
 
-      socialscoreScore: Yup.number()
+      socialScoreScore: Yup.number()
         .min(1)
         .max(5)
         .required("Please enter the value")
@@ -1090,7 +270,7 @@ const AddScore = ({ setOpenPopup }) => {
         .required("Please enter the value")
         .typeError("Blog Score should be a number"),
 
-      presentationScore: Yup.number()
+      whitepaperConferencePresentationScore: Yup.number()
         .min(1)
         .max(5)
         .required("Please enter the value")
@@ -1099,36 +279,37 @@ const AddScore = ({ setOpenPopup }) => {
       //Reliability
 
       designScore: Yup.number()
-        .min(1)
+        .min(0)
         .max(5)
         .required("Please enter the value")
         .typeError("design Score should be a number"),
 
       frameworkScore: Yup.number()
-        .min(1)
+        .min(0)
         .max(5)
         .required("Please enter the value")
         .typeError("framework Score should be a number"),
 
       codingScore: Yup.number()
-        .min(1)
+        .min(0)
+        .max(5)
         .required("Please enter the value")
         .typeError("coding Score should be a number"),
 
       debuggingScore: Yup.number()
-        .min(1)
+        .min(0)
         .max(5)
         .required("Please enter the value")
         .typeError("debugging Score should be a number"),
 
       architectureScore: Yup.number()
-        .min(1)
+        .min(0)
         .max(5)
         .required("Please enter the value")
         .typeError("architecture  Score should be a number"),
 
       implementationScore: Yup.number()
-        .min(1)
+        .min(0)
         .max(5)
         .required("Please enter the value")
         .typeError("implementation Score should be a number"),
@@ -1147,7 +328,7 @@ const AddScore = ({ setOpenPopup }) => {
         .required("Please enter the value")
         .typeError("complexityhandling Score should be a number"),
 
-      conflictresolutionScore: Yup.number()
+      conflictResolutionScore: Yup.number()
         .min(1)
         .max(5)
         .required("Please enter the value")
@@ -1165,10 +346,11 @@ const AddScore = ({ setOpenPopup }) => {
         .required("Please enter the value")
         .typeError("Ownership Score should be a number"),
 
-      // epresentation: Yup.number()
-      //   .min(1)
-      //   .required("Please enter the value")
-      //   .typeError("Presentation value should be a number"),
+      presentationScore: Yup.number()
+        .min(1)
+        .max(5)
+        .required("Please enter the value")
+        .typeError("Presentation value should be a number"),
 
       communicationScore: Yup.number()
         .min(1)
@@ -1210,155 +392,249 @@ const AddScore = ({ setOpenPopup }) => {
     }),
 
     onSubmit: async (values) => {
-      console.log("submit value", values);
+      const weightages = adminSlice.parameterWeightages;
+      let believabilityScore = 0;
+      let reliabilityScore = 0;
+      let emotionalIntelligencyScore = 0;
+      let undesirableScore = 0;
       const apidata = {
         candidateId: params.candidateId,
         believabilityScores: {
           qualification: {
-            value: values?.qualification,
-            percentile: values?.qualificationpercent,
-            score: values?.qualification,
+            value:
+              (weightages?.qualification / 100) *
+              (parseFloat(values?.qualificationScore) / 5),
+            weightage: weightages?.qualification,
+            score: values?.qualificationScore,
           },
           professionalExperience: {
-            value: 3,
-            percentile: values?.professionalExperiencepercent,
-            score: values?.professionalExperience,
+            value:
+              (weightages?.professionalExperience / 100) *
+              (parseFloat(values?.professionalExperienceScore) / 5),
+            weightage: weightages?.professionalExperience,
+            score: values?.professionalExperienceScore,
           },
           socialScore: {
-            value: 3,
-            percentile: values?.socialscorepercent,
-            score: values?.socialscore,
+            value:
+              (weightages?.socialScore / 100) *
+              (parseFloat(values?.socialScoreScore) / 5),
+            weightage: weightages?.socialScore,
+            score: values?.socialScoreScore,
           },
           patents: {
-            value: 3,
-            percentile: values?.patentspercent,
-            score: values?.patents,
+            value:
+              (weightages?.patents / 100) *
+              (parseFloat(values?.patentsScore) / 5),
+            weightage: weightages?.patents,
+            score: values?.patentsScore,
           },
           whitepaperConferencePresentation: {
-            value: 3,
-            percentile: values?.presentationpercent,
-            score: values?.presentation,
+            value:
+              (weightages?.whitepaperConferencePresentation / 100) *
+              (parseFloat(values?.whitepaperConferencePresentationScore) / 5),
+            weightage: weightages?.whitepaperConferencePresentation,
+            score: values?.whitepaperConferencePresentationScore,
           },
           blog: {
-            value: 3,
-            percentile: values?.blogpercent,
-            score: values?.blog,
+            value:
+              (weightages?.blog / 100) * (parseFloat(values?.blogScore) / 5),
+            weightage: weightages?.blog,
+            score: values?.blogScore,
           },
         },
         emotionalIntelligencyScores: {
           teamWork: {
-            value: 3,
-            percentile: values?.teamworkpercent,
-            score: values?.teamwork,
+            value:
+              (weightages?.teamWork / 100) *
+              (parseFloat(values?.teamworkScore) / 5),
+            weightage: weightages?.teamWork,
+            score: values?.teamworkScore,
           },
           complexityHandling: {
-            value: 3,
-            percentile: values?.complexityhandlingpercent,
-            score: values?.complexityHandling,
+            value:
+              (weightages?.complexityHandling / 100) *
+              (parseFloat(values?.complexityhandlingScore) / 5),
+            weightage: weightages?.complexityHandling,
+            score: values?.complexityhandlingScore,
           },
           conflictResolution: {
-            value: 3,
-            percentile: values?.conflictresolutionpercent,
-            score: values?.conflictresolution,
+            value:
+              (weightages?.conflictResolution / 100) *
+              (parseFloat(values?.conflictResolutionScore) / 5),
+            weightage: weightages?.conflictResolution,
+            score: values?.conflictResolutionScore,
           },
           initiative: {
-            value: 3,
-            percentile: values?.initiativepercent,
-            score: values?.initiative,
+            value:
+              (weightages?.initiative / 100) *
+              (parseFloat(values?.initiativeScore) / 5),
+            weightage: weightages?.initiative,
+            score: values?.initiativeScore,
           },
           culturalFitPresentation: {
-            value: 3,
-            percentile: values?.culturalFitpercent,
-            score: values?.culturalFit,
+            value:
+              (weightages?.culturalFit / 100) *
+              (parseFloat(values?.culturalFitScore) / 5),
+            weightage: weightages?.culturalFit,
+            score: values?.culturalFitScore,
+          },
+          presentation: {
+            value:
+              (weightages?.presentation / 100) *
+              (parseFloat(values?.presentationScore) / 5),
+            weightage: weightages?.presentation,
+            score: values?.presentationScore,
           },
           communication: {
-            value: 3,
-            percentile: values?.communicationpercent,
-            score: values?.communication,
+            value:
+              (weightages?.communication / 100) *
+              (parseFloat(values?.communicationScore) / 5),
+            weightage: weightages?.communication,
+            score: values?.communicationScore,
           },
           ownership: {
-            value: 3,
-            percentile: values?.ownershippercent,
-            score: values?.ownership,
+            value:
+              (weightages?.ownership / 100) *
+              (parseFloat(values?.ownershipScore) / 5),
+            weightage: weightages?.ownership,
+            score: values?.ownershipScore,
           },
           empathy: {
-            value: 3,
-            percentile: values?.empathypercent,
-            score: values?.empathy,
+            value:
+              (weightages?.empathy / 100) *
+              (parseFloat(values?.empathyScore) / 5),
+            weightage: weightages?.empathy,
+            score: values?.empathyScore,
           },
           openness: {
-            value: 3,
-            percentile: values?.opennesspercent,
-            score: values?.openness,
+            value:
+              (weightages?.openness / 100) *
+              (parseFloat(values?.opennessScore) / 5),
+            weightage: weightages?.openness,
+            score: values?.opennessScore,
           },
         },
         reliabilityScores: {
           design: {
-            value: 3,
-            percentile: values?.designpercent,
-            score: values?.design,
+            value:
+              (weightages?.design / 100) *
+              (parseFloat(values?.designScore) / 5),
+            weightage: weightages?.design,
+            score: values?.designScore,
           },
           framework: {
-            value: 3,
-            percentile: values?.frameworkpercent,
-            score: values?.framework,
+            value:
+              (weightages?.framework / 100) *
+              (parseFloat(values?.frameworkScore) / 5),
+            weightage: weightages?.framework,
+            score: values?.frameworkScore,
           },
           coding: {
-            value: 3,
-            percentile: values?.codingpercent,
-            score: values?.coding,
+            value:
+              (weightages?.coding / 100) *
+              (parseFloat(values?.codingScore) / 5),
+            weightage: weightages?.coding,
+            score: values?.codingScore,
           },
           debugging: {
-            value: 3,
-            percentile: values?.debuggingpercent,
-            score: values?.debugging,
+            value:
+              (weightages?.debugging / 100) *
+              (parseFloat(values?.debuggingScore) / 5),
+            weightage: weightages?.debugging,
+            score: values?.debuggingScore,
           },
           architecture: {
-            value: 3,
-            percentile: values?.architecturepercent,
-            score: values?.architecture,
+            value:
+              (weightages?.architecture / 100) *
+              (parseFloat(values?.architectureScore) / 5),
+            weightage: weightages?.architecture,
+            score: values?.architectureScore,
           },
           implementation: {
-            value: 3,
-            percentile: values?.implementationpercent,
-            score: values?.implementation,
+            value:
+              (weightages?.implementation / 100) *
+              (parseFloat(values?.implementationScore) / 5),
+            weightage: weightages?.implementation,
+            score: values?.implementationScore,
           },
         },
         undesirableScores: {
           plagiarism: {
-            value: 3,
-            percentile: values?.plagiarismpercent,
-            score: values?.plagiarism,
+            value:
+              (weightages?.plagiarism / 100) *
+              (parseFloat(values?.plagiarismScore) / 5),
+            weightage: weightages?.plagiarism,
+            score: values?.plagiarismScore,
           },
           trustIssues: {
-            value: 3,
-            percentile: values?.trustissuespercent,
-            score: values?.trustissues,
+            value:
+              (weightages?.trustIssues / 100) *
+              (parseFloat(values?.trustissuesScore) / 5),
+            weightage: weightages?.trustIssues,
+            score: values?.trustissuesScore,
           },
           fakeInformation: {
-            value: 3,
-            percentile: values?.fakeinformationpercent,
-            score: values?.fakeinformation,
+            value:
+              (weightages?.fakeInformation / 100) *
+              (parseFloat(values?.fakeinformationScore) / 5),
+            weightage: weightages?.fakeInformation,
+            score: values?.fakeinformationScore,
           },
         },
-        mainScore: values?.mainScore,
       };
-      console.log("submit data", apidata);
+      for (let item in apidata) {
+        if (item === "believabilityScores") {
+          for (let param in apidata[item]) {
+            believabilityScore =
+              believabilityScore + apidata[item][param].value;
+          }
+        }
+        if (item === "reliabilityScores") {
+          for (let param in apidata[item]) {
+            reliabilityScore = reliabilityScore + apidata[item][param].value;
+          }
+        }
+        if (item === "emotionalIntelligencyScores") {
+          for (let param in apidata[item]) {
+            emotionalIntelligencyScore =
+              emotionalIntelligencyScore + apidata[item][param].value;
+          }
+        }
+        if (item === "undesirableScores") {
+          for (let param in apidata[item]) {
+            undesirableScore = undesirableScore + apidata[item][param].value;
+          }
+        }
+      }
+      apidata.mainBelievabilityScore = (believabilityScore * 5).toFixed(2);
+      apidata.mainEmotionalIntelligencyScores = (
+        emotionalIntelligencyScore * 5
+      ).toFixed(2);
+      apidata.mainreliabilityScore = (reliabilityScore * 5).toFixed(2);
+      apidata.mainUndesirableScore = (undesirableScore * 5).toFixed(2);
+      apidata.mainScore = (
+        (believabilityScore * 5 +
+          emotionalIntelligencyScore * 5 +
+          reliabilityScore * 5) /
+        3
+      ).toFixed(2);
       const data = {
         data: apidata,
         navigate,
       };
-      console.log(data);
-      dispatch(addScore(data));
+      // console.log(data);
+      setFinalApiData(data);
+      setIsOpen(true);
     },
   });
 
-  useEffect(() => {
-    console.log(formik.errors);
-  }, [formik.errors]);
-
-  const handleReset = () => {
-    formik.resetForm();
+  const handleScoreSubmit = () => {
+    // console.log(finalApiData);
+    if (candidateSlice.candidateScore) {
+      dispatch(updateScore(finalApiData));
+    } else {
+      dispatch(addScore(finalApiData));
+    }
   };
 
   const renderForm = (
@@ -1370,6 +646,17 @@ const AddScore = ({ setOpenPopup }) => {
       autoComplete="off"
     >
       <Grid container spacing={3}>
+        {isOpen && (
+          <ConfirmationDialog
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            title={"Submit"}
+            content={{
+              mainContent: "Are you sure you want to save the scores?",
+            }}
+            handleSubmit={() => handleScoreSubmit()}
+          />
+        )}
         <BelieveabilityScore
           formik={formik}
           disabled={disabled}
@@ -1388,233 +675,13 @@ const AddScore = ({ setOpenPopup }) => {
           weightages={adminSlice?.parameterWeightages}
         />
 
-        <Grid item xs={12} md={12}>
-          <h1>Undesirable</h1>
-        </Grid>
-        <Grid item xs={12} md={3}>
-          <TextFieldGroup
-            variant="outlined"
-            labelShink={true}
-            label="Plagiarism"
-            name="plagiarism"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            disabled={true}
-            value={adminSlice?.parameterWeightages?.plagiarism}
-            errors={
-              formik.touched.plagiarism && formik.errors.plagiarism
-                ? formik.errors.plagiarism
-                : null
-            }
-          />
-        </Grid>
+        <UndesirabilityScore
+          formik={formik}
+          disabled={disabled}
+          weightages={adminSlice?.parameterWeightages}
+        />
 
-        {/* <Grid item xs={12} md={3}>
-          <TextFieldGroup
-            variant="outlined"
-            labelShink={true}
-            label="Plagiarism Basescore"
-            name="plagiarismBasescore"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            disabled={disabled}
-            value={formik.values.plagiarismBasescore}
-            errors={
-              formik.touched.plagiarismBasescore &&
-              formik.errors.plagiarismBasescore
-                ? formik.errors.plagiarismBasescore
-                : null
-            }
-          />
-        </Grid>
-
-        <Grid item xs={12} md={3}>
-          <TextFieldGroup
-            variant="outlined"
-            labelShink={true}
-            label="Plagiarism percent"
-            name="plagiarismpercent"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            disabled={disabled}
-            value={formik.values.plagiarismpercent}
-            errors={
-              formik.touched.plagiarismpercent &&
-              formik.errors.plagiarismpercent
-                ? formik.errors.plagiarismpercent
-                : null
-            }
-          />
-        </Grid> */}
-
-        <Grid item xs={12} md={3}>
-          <TextFieldGroup
-            variant="outlined"
-            labelShink={true}
-            label="Plagiarism Score"
-            name="plagiarismScore"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            disabled={disabled}
-            value={formik.values.plagiarismScore}
-            errors={
-              formik.touched.plagiarismScore && formik.errors.plagiarismScore
-                ? formik.errors.plagiarismScore
-                : null
-            }
-          />
-        </Grid>
-
-        <Grid item xs={12} md={3}>
-          <TextFieldGroup
-            variant="outlined"
-            labelShink={true}
-            label="Trust Issues"
-            name="trustissues"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            disabled={true}
-            value={adminSlice?.parameterWeightages?.trustIssues}
-            errors={
-              formik.touched.trustissues && formik.errors.trustissues
-                ? formik.errors.trustissues
-                : null
-            }
-          />
-        </Grid>
-        {/* 
-        <Grid item xs={12} md={3}>
-          <TextFieldGroup
-            variant="outlined"
-            labelShink={true}
-            label="Trust Issues Basescore"
-            name="trustissuesBasescore"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            disabled={disabled}
-            value={formik.values.trustissuesBasescore}
-            errors={
-              formik.touched.trustissuesBasescore &&
-              formik.errors.trustissuesBasescore
-                ? formik.errors.trustissuesBasescore
-                : null
-            }
-          />
-        </Grid>
-
-        <Grid item xs={12} md={3}>
-          <TextFieldGroup
-            variant="outlined"
-            labelShink={true}
-            label="Trust Issues percent"
-            name="trustissuespercent"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            disabled={disabled}
-            value={formik.values.trustissuespercent}
-            errors={
-              formik.touched.trustissuespercent &&
-              formik.errors.trustissuespercent
-                ? formik.errors.trustissuespercent
-                : null
-            }
-          />
-        </Grid> */}
-
-        <Grid item xs={12} md={3}>
-          <TextFieldGroup
-            variant="outlined"
-            labelShink={true}
-            label="Trust Issues Score"
-            name="trustissuesScore"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            disabled={disabled}
-            value={formik.values.trustissuesScore}
-            errors={
-              formik.touched.trustissuesScore && formik.errors.trustissuesScore
-                ? formik.errors.trustissuesScore
-                : null
-            }
-          />
-        </Grid>
-
-        <Grid item xs={12} md={3}>
-          <TextFieldGroup
-            variant="outlined"
-            labelShink={true}
-            label="Fake Information"
-            name="fakeinformation"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            disabled={true}
-            value={adminSlice?.parameterWeightages?.fakeInformation}
-            errors={
-              formik.touched.fakeinformation && formik.errors.fakeinformation
-                ? formik.errors.fakeinformation
-                : null
-            }
-          />
-        </Grid>
-
-        {/* <Grid item xs={12} md={3}>
-          <TextFieldGroup
-            variant="outlined"
-            labelShink={true}
-            label="Fake Information Basescore"
-            name="fakeinformationBasescore"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            disabled={disabled}
-            value={formik.values.fakeinformationBasescore}
-            errors={
-              formik.touched.fakeinformationBasescore &&
-              formik.errors.fakeinformationBasescore
-                ? formik.errors.fakeinformationBasescore
-                : null
-            }
-          />
-        </Grid>
-
-        <Grid item xs={12} md={3}>
-          <TextFieldGroup
-            variant="outlined"
-            labelShink={true}
-            label="Fake Information percent"
-            name="fakeinformationpercent"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            disabled={disabled}
-            value={formik.values.fakeinformationpercent}
-            errors={
-              formik.touched.fakeinformationpercent &&
-              formik.errors.fakeinformationpercent
-                ? formik.errors.fakeinformationpercent
-                : null
-            }
-          />
-        </Grid> */}
-
-        <Grid item xs={12} md={3}>
-          <TextFieldGroup
-            variant="outlined"
-            labelShink={true}
-            label="Fake Information Score"
-            name="fakeinformationScore"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            disabled={disabled}
-            value={formik.values.fakeinformationScore}
-            errors={
-              formik.touched.fakeinformationScore &&
-              formik.errors.fakeinformationScore
-                ? formik.errors.fakeinformationScore
-                : null
-            }
-          />
-        </Grid>
-
-        <Grid item xs={12} md={12}>
+        {/* <Grid item xs={12} md={12}>
           <h1>Total Score</h1>
         </Grid>
         <Grid item xs={12} md={6} align="center">
@@ -1633,10 +700,10 @@ const AddScore = ({ setOpenPopup }) => {
                 : null
             }
           />
-        </Grid>
+        </Grid> */}
         <Grid item xs={12} md={6}></Grid>
 
-        <Grid item xs={12} md={6} align="right">
+        <Grid item xs={12} md={12} align="center">
           <div>
             <Button
               buttonStyle="submit"
@@ -1649,25 +716,6 @@ const AddScore = ({ setOpenPopup }) => {
               // onClick={submitForm}
             >
               Save
-            </Button>
-          </div>
-        </Grid>
-
-        <Grid item xs={12} md={6} align="left">
-          <div>
-            <Button
-              buttonStyle="submit"
-              type="reset"
-              name="reset"
-              color="primary"
-              //   className={classes.inputButtonFields}
-              variant="contained"
-              onClick={() => {
-                setDisabled(false);
-                handleReset();
-              }}
-            >
-              Reset
             </Button>
           </div>
         </Grid>

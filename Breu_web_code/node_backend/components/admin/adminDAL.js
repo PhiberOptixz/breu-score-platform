@@ -75,6 +75,22 @@ async function addCandidateScores(data) {
   }
 }
 
+async function updateCandidateScores(data) {
+  try {
+    data.updatedAt = new Date();
+    let result = await candidateScoreModel.findOneAndUpdate(
+      { candidateId: data.candidateId },
+      data,
+      {
+        new: true,
+      }
+    );
+    return result;
+  } catch (err) {
+    throw err;
+  }
+}
+
 async function getCandidateScoreById(data) {
   try {
     let result = await adminModel.findOne({ candidateId: data }).lean();
@@ -96,4 +112,5 @@ module.exports = {
   updateAdminDetails,
   addCandidateScores,
   getCandidateScoreById,
+  updateCandidateScores,
 };

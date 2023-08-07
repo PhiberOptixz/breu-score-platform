@@ -66,6 +66,25 @@ export const addScore = createAsyncThunk(
     }
   }
 );
+//update candidate score
+export const updateScore = createAsyncThunk(
+  "updateScore",
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await axios.put(
+        `/api/admin/updateCandidateScore`,
+        data.data
+      );
+      const result = response.data;
+      SnackBar.success(response?.data?.message);
+      data.navigate("/adminDashboard");
+      return result;
+    } catch (error) {
+      SnackBar.error(error?.response?.data?.message);
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
 
 //fetch corporate details
 export const fetchAllCorporates = createAsyncThunk(
