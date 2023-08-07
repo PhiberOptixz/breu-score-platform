@@ -165,7 +165,7 @@ const ResultScreen = () => {
                 align="left"
                 style={{ paddingLeft: "5%" }}
               >
-                Scores
+                BREU Score
               </p>
               <ProgressBar
                 value={candidateSlice?.candidateScore?.mainScore}
@@ -402,34 +402,34 @@ const ResultScreen = () => {
                       tableName === "Undesireability Score"
                         ? {
                             borderColor:
-                              undesirabilityAvg < 1.5
-                                ? "red"
-                                : undesirabilityAvg > 1.6 &&
+                              undesirabilityAvg < 2
+                                ? "green"
+                                : undesirabilityAvg > 2 &&
                                   undesirabilityAvg <= 2.5
-                                ? "orange"
+                                ? "red"
                                 : undesirabilityAvg > 2.6 &&
                                   undesirabilityAvg <= 3.5
-                                ? "yellow"
+                                ? "red"
                                 : undesirabilityAvg > 3.6 &&
                                   undesirabilityAvg <= 4.5
-                                ? "#4CBB17"
-                                : "green",
+                                ? "red"
+                                : "red",
                             backgroundColor: "#ebe0be",
                           }
                         : {
                             borderColor:
-                              undesirabilityAvg < 1.5
-                                ? "red"
-                                : undesirabilityAvg > 1.6 &&
+                              undesirabilityAvg < 2
+                                ? "green"
+                                : undesirabilityAvg > 2 &&
                                   undesirabilityAvg <= 2.5
-                                ? "orange"
+                                ? "red"
                                 : undesirabilityAvg > 2.6 &&
                                   undesirabilityAvg <= 3.5
-                                ? "yellow"
+                                ? "red"
                                 : undesirabilityAvg > 3.6 &&
                                   undesirabilityAvg <= 4.5
-                                ? "#4CBB17"
-                                : "green",
+                                ? "red"
+                                : "red",
                           }
                     }
                     onClick={() => {

@@ -17,6 +17,21 @@ export const fetchAllCandidates = createAsyncThunk(
   }
 );
 
+//fetch weightages
+export const fetchAllWeightages = createAsyncThunk(
+  "fetchAllWeightages",
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await axios.get("/api/weightage/getAllWeightages");
+      const result = response.data;
+      return result;
+    } catch (error) {
+      SnackBar.error(error?.response?.data?.message);
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
 //fetch candidate's B data
 export const fetchCandidateBData = createAsyncThunk(
   "fetchCandidateBData",
@@ -75,6 +90,7 @@ export const admin = createSlice({
     candidateList: [],
     corporateList: [],
     candidateBData: {},
+    parameterWeightages: null,
   },
   extraReducers: (builder) => {
     builder.addCase(fetchAllCandidates.pending, (state) => {
@@ -107,6 +123,17 @@ export const admin = createSlice({
       state.candidateBData = action?.payload?.data;
     });
     builder.addCase(fetchCandidateBData.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
+    builder.addCase(fetchAllWeightages.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(fetchAllWeightages.fulfilled, (state, action) => {
+      state.loading = false;
+      state.parameterWeightages = action?.payload?.data;
+    });
+    builder.addCase(fetchAllWeightages.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload;
     });

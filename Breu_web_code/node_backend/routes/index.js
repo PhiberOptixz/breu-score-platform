@@ -23,5 +23,6 @@ router.use(
   "/score",
   require("../components/candidate/Scores/candidateScoreRoutes")
 );
+router.use("/weightage", require("../components/admin/weightageRoutes"));
 
 module.exports = router;

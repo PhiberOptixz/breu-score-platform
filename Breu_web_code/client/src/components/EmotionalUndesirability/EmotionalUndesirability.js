@@ -129,6 +129,7 @@ const EmotionalUndesirability = () => {
       setNoOfVideos(2);
       window.scrollTo(0, 0);
     } else {
+      window.scrollTo(0, 0);
       setNoOfVideos(0);
     }
   }, [auth?.user]);
@@ -280,6 +281,12 @@ const EmotionalUndesirability = () => {
       formData.append("video", blob);
       formData.append("type", demo);
       formData.append("candidateId", auth?.user?._id);
+      const superBuffer = new Blob(recordedBlobs, { type: "video/webm" });
+      recordedVideo.src = null;
+      recordedVideo.srcObject = null;
+      recordedVideo.src = window.URL.createObjectURL(superBuffer);
+      recordedVideo.controls = true;
+      recordedVideo.pause();
       dispatch(uploadCandidateVideo(formData));
     } else if (noOfVideos >= 1) {
       const blob = new Blob(recordedBlobs, { type: "video/mp4" });

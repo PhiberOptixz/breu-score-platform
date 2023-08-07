@@ -7,6 +7,7 @@ import { removeCandidateDetails } from "../features/authSlice";
 import { removeCorporateDetails } from "../features/corporateAuthSlice";
 import { removeRecruiterDetails } from "../features/recruiterAuthSlice";
 import { removeAdminDetails } from "../features/adminAuthSlice";
+import ConfirmationDialog from "./ConfirmationDialog";
 
 const Header = ({ name, caption, page }) => {
   const navigate = useNavigate();
@@ -14,6 +15,7 @@ const Header = ({ name, caption, page }) => {
     (state) => state
   );
   const dispatch = useDispatch();
+  const [isOpen, setIsOpen] = React.useState(false);
 
   const handleClick = () => {
     if (auth?.isAuthenticated) {
@@ -31,6 +33,17 @@ const Header = ({ name, caption, page }) => {
 
   return (
     <Grid container>
+      {isOpen && (
+        <ConfirmationDialog
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          title={"Logout"}
+          content={{
+            mainContent: "Are you sure you want to logout?",
+          }}
+          handleSubmit={() => handleClick()}
+        />
+      )}
       {page ? (
         <Grid item className="headerGridItem" xs={12} md={12} align="center">
           <p className="headerPara">
@@ -48,7 +61,7 @@ const Header = ({ name, caption, page }) => {
           </Grid>
           <Grid item className="headerGridItem" xs={1} md={1} align="right">
             <ExitToAppIcon
-              onClick={handleClick}
+              onClick={() => setIsOpen(true)}
               sx={{ color: "white", fontSize: 36, cursor: "pointer" }}
             />
           </Grid>

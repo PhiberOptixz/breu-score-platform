@@ -160,7 +160,7 @@ const Believability = () => {
 
   useEffect(() => {
     console.log(formik.errors, formik.touched);
-  }, [formik.errors]);
+  }, [formik.errors, formik.touched]);
 
   // const filterExperienceData = (data) => {
   //   formik.setFieldValue("selectTotalExperience", data);
@@ -203,7 +203,9 @@ const Believability = () => {
               disabled={auth?.user?.completedBelievability}
               selected={formik.values.selectRole}
               errors={
-                formik.errors.selectRole ? formik.errors.selectRole : null
+                formik.touched.selectRole && formik.errors.selectRole
+                  ? formik.errors.selectRole
+                  : null
               }
             />
 
@@ -230,6 +232,7 @@ const Believability = () => {
               disabled={auth?.user?.completedBelievability}
               selected={formik.values.selectTotalExperience}
               errors={
+                formik.touched.selectTotalExperience &&
                 formik.errors.selectTotalExperience
                   ? formik.errors.selectTotalExperience
                   : null
@@ -254,15 +257,11 @@ const Believability = () => {
               onSelect={(overallExperience) =>
                 formik.setFieldValue("overallExperience", overallExperience)
               }
-              disabled={
-                auth?.user?.completedBelievability ||
-                !formik.values.selectTotalExperience
-                  ? true
-                  : false
-              }
+              disabled={auth?.user?.completedBelievability}
               // onSelect={(programDuration) => console.log(programDuration)}
               selected={formik.values.overallExperience}
               errors={
+                formik.touched.overallExperience &&
                 formik.errors.overallExperience
                   ? formik.errors.overallExperience
                   : null
@@ -290,6 +289,7 @@ const Believability = () => {
               disabled={auth?.user?.completedBelievability}
               selected={formik.values.selectProgrammingLanguage}
               errors={
+                formik.touched.selectProgrammingLanguage &&
                 formik.errors.selectProgrammingLanguage
                   ? formik.errors.selectProgrammingLanguage
                   : null
