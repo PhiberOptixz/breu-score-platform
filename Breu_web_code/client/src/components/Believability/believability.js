@@ -40,14 +40,14 @@ const Believability = () => {
 
   const formik = useFormik({
     initialValues: {
-      selectRole: {},
-      selectTotalExperience: {},
-      overallExperience: {},
-      selectProgrammingLanguage: {},
-      selectProficiency: {},
-      selectEducation: {},
-      selectDomain: {},
-      selectEmploymentMode: {},
+      selectRole: "",
+      selectTotalExperience: "",
+      overallExperience: "",
+      selectProgrammingLanguage: "",
+      selectProficiency: "",
+      selectEducation: "",
+      selectDomain: "",
+      selectEmploymentMode: "",
       linkedIn: "",
       kaggle: "",
       gitHub: "",
@@ -99,7 +99,8 @@ const Believability = () => {
         data,
         navigate,
       };
-      dispatch(addBelievabilityData(apiData));
+      console.log(apiData);
+      // dispatch(addBelievabilityData(apiData));
     },
   });
 
@@ -117,7 +118,7 @@ const Believability = () => {
 
   useEffect(() => {
     if (auth?.isAuthenticated) {
-      if (auth?.user) {
+      if (auth?.user?.completedBelievability) {
         formik.setFieldValue("selectRole", auth?.user?.jobRole);
         formik.setFieldValue(
           "selectTotalExperience",
@@ -317,6 +318,7 @@ const Believability = () => {
               disabled={auth?.user?.completedBelievability}
               selected={formik.values.selectProficiency}
               errors={
+                formik.touched.selectProficiency &&
                 formik.errors.selectProficiency
                   ? formik.errors.selectProficiency
                   : null
@@ -344,7 +346,7 @@ const Believability = () => {
               disabled={auth?.user?.completedBelievability}
               selected={formik.values.selectEducation}
               errors={
-                formik.errors.selectEducation
+                formik.touched.selectEducation && formik.errors.selectEducation
                   ? formik.errors.selectEducation
                   : null
               }
@@ -371,7 +373,9 @@ const Believability = () => {
               disabled={auth?.user?.completedBelievability}
               selected={formik.values.selectDomain}
               errors={
-                formik.errors.selectDomain ? formik.errors.selectDomain : null
+                formik.touched.selectDomain && formik.errors.selectDomain
+                  ? formik.errors.selectDomain
+                  : null
               }
             />
           </Grid>
@@ -401,6 +405,7 @@ const Believability = () => {
               disabled={auth?.user?.completedBelievability}
               selected={formik.values.selectEmploymentMode}
               errors={
+                formik.touched.selectEmploymentMode &&
                 formik.errors.selectEmploymentMode
                   ? formik.errors.selectEmploymentMode
                   : null

@@ -39,6 +39,11 @@ const EiScore = ({ scoreData }) => {
             </td>
             <td className="tdh">{scoreData?.culturalFitPresentation?.score}</td>
           </tr>
+          <tr>
+            <td className="tdh">Presentation</td>
+            <td className="tdh">{scoreData?.presentation?.percentile}</td>
+            <td className="tdh">{scoreData?.presentation?.score}</td>
+          </tr>
           <tr className="trn">
             <td className="tdh">Communication</td>
             <td className="tdh">{scoreData?.communication?.percentile}</td>

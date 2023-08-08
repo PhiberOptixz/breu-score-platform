@@ -41,111 +41,15 @@ const ResultScreen = () => {
     }
   }, [candidateSlice?.candidateScore]);
 
-  const believeabilityAvg = (
-    (parseInt(
-      candidateSlice?.candidateScore?.believabilityScores?.qualification
-        ?.score || 1
-    ) +
-      parseInt(
-        candidateSlice?.candidateScore?.believabilityScores
-          ?.professionalExperience?.score || 1
-      ) +
-      parseInt(
-        candidateSlice?.candidateScore?.believabilityScores?.socialScore
-          ?.score || 1
-      ) +
-      parseInt(
-        candidateSlice?.candidateScore?.believabilityScores?.patents?.score || 1
-      ) +
-      parseInt(
-        candidateSlice?.candidateScore?.believabilityScores
-          ?.whitepaperConferencePresentation?.score || 1
-      ) +
-      parseInt(
-        candidateSlice?.candidateScore?.believabilityScores?.blog?.score || 1
-      )) /
-    6
-  ).toFixed(1);
+  const believeabilityAvg =
+    candidateSlice?.candidateScore?.mainBelievabilityScore;
 
-  const reliabilityAvg = (
-    (parseInt(
-      candidateSlice?.candidateScore?.reliabilityScores?.design?.score || 1
-    ) +
-      parseInt(
-        candidateSlice?.candidateScore?.reliabilityScores?.framework?.score || 1
-      ) +
-      parseInt(
-        candidateSlice?.candidateScore?.reliabilityScores?.coding?.score || 1
-      ) +
-      parseInt(
-        candidateSlice?.candidateScore?.reliabilityScores?.debugging?.score || 1
-      ) +
-      parseInt(
-        candidateSlice?.candidateScore?.reliabilityScores?.architecture
-          ?.score || 1
-      ) +
-      parseInt(
-        candidateSlice?.candidateScore?.reliabilityScores?.implementation
-          ?.score || 1
-      )) /
-    6
-  ).toFixed(1);
+  const reliabilityAvg = candidateSlice?.candidateScore?.mainreliabilityScore;
 
-  const EIAvg = (
-    (parseInt(
-      candidateSlice?.candidateScore?.emotionalIntelligencyScores?.teamWork
-        ?.score || 1
-    ) +
-      parseInt(
-        candidateSlice?.candidateScore?.emotionalIntelligencyScores
-          ?.complexityHandling?.score || 1
-      ) +
-      parseInt(
-        candidateSlice?.candidateScore?.emotionalIntelligencyScores
-          ?.conflictResolution?.score || 1
-      ) +
-      parseInt(
-        candidateSlice?.candidateScore?.emotionalIntelligencyScores?.initiative
-          ?.score || 1
-      ) +
-      parseInt(
-        candidateSlice?.candidateScore?.emotionalIntelligencyScores
-          ?.culturalFitPresentation?.score || 1
-      ) +
-      parseInt(
-        candidateSlice?.candidateScore?.emotionalIntelligencyScores
-          ?.communication?.score || 1
-      ) +
-      parseInt(
-        candidateSlice?.candidateScore?.emotionalIntelligencyScores?.ownership
-          ?.score || 1
-      ) +
-      parseInt(
-        candidateSlice?.candidateScore?.emotionalIntelligencyScores?.empathy
-          ?.score || 1
-      ) +
-      parseInt(
-        candidateSlice?.candidateScore?.emotionalIntelligencyScores?.openness
-          ?.score || 1
-      )) /
-    9
-  ).toFixed(1);
+  const EIAvg = candidateSlice?.candidateScore?.mainEmotionalIntelligencyScores;
 
-  const undesirabilityAvg = (
-    (parseInt(
-      candidateSlice?.candidateScore?.undesirableScores?.fakeInformation
-        ?.score || 1
-    ) +
-      parseInt(
-        candidateSlice?.candidateScore?.undesirableScores?.plagiarism?.score ||
-          1
-      ) +
-      parseInt(
-        candidateSlice?.candidateScore?.undesirableScores?.trustIssues?.score ||
-          1
-      )) /
-    3
-  ).toFixed(1);
+  const undesirabilityAvg =
+    candidateSlice?.candidateScore?.mainUndesirableScore;
 
   return (
     <>

@@ -241,37 +241,37 @@ const AddScore = () => {
     },
     validationSchema: Yup.object({
       qualificationScore: Yup.number()
-        .min(1)
+        .min(0)
         .max(5)
         .required("Please enter the value")
         .typeError("Qualification Score should be a number"),
 
       professionalExperienceScore: Yup.number()
-        .min(1)
+        .min(0)
         .max(5)
         .required("Please enter the value")
         .typeError("ProfessionalExperience Score should be a number"),
 
       socialScoreScore: Yup.number()
-        .min(1)
+        .min(0)
         .max(5)
         .required("Please enter the value")
         .typeError("Socialscore Score should be a number"),
 
       patentsScore: Yup.number()
-        .min(1)
+        .min(0)
         .max(5)
         .required("Please enter the value")
         .typeError("Patents Score should be a number"),
 
       blogScore: Yup.number()
-        .min(1)
+        .min(0)
         .max(5)
         .required("Please enter the value")
         .typeError("Blog Score should be a number"),
 
       whitepaperConferencePresentationScore: Yup.number()
-        .min(1)
+        .min(0)
         .max(5)
         .required("Please enter the value")
         .typeError("Presentation Score should be a number"),
@@ -317,55 +317,55 @@ const AddScore = () => {
       //EI
 
       teamworkScore: Yup.number()
-        .min(1)
+        .min(0)
         .max(5)
         .required("Please enter the value")
         .typeError("teamwork Score should be a number"),
 
       complexityhandlingScore: Yup.number()
-        .min(1)
+        .min(0)
         .max(5)
         .required("Please enter the value")
         .typeError("complexityhandling Score should be a number"),
 
       conflictResolutionScore: Yup.number()
-        .min(1)
+        .min(0)
         .max(5)
         .required("Please enter the value")
         .typeError("conflictresolution Score should be a number"),
 
       initiativeScore: Yup.number()
-        .min(1)
+        .min(0)
         .max(5)
         .required("Please enter the value")
         .typeError("initiative Score should be a number"),
 
       ownershipScore: Yup.number()
-        .min(1)
+        .min(0)
         .max(5)
         .required("Please enter the value")
         .typeError("Ownership Score should be a number"),
 
       presentationScore: Yup.number()
-        .min(1)
+        .min(0)
         .max(5)
         .required("Please enter the value")
         .typeError("Presentation value should be a number"),
 
       communicationScore: Yup.number()
-        .min(1)
+        .min(0)
         .max(5)
         .required("Please enter the value")
         .typeError("communication Score should be a number"),
 
       empathyScore: Yup.number()
-        .min(1)
+        .min(0)
         .max(5)
         .required("Please enter the value")
         .typeError("Empathy Score should be a number"),
 
       opennessScore: Yup.number()
-        .min(1)
+        .min(0)
         .max(5)
         .required("Please enter the value")
         .typeError("Openness Score should be a number"),
@@ -373,19 +373,19 @@ const AddScore = () => {
       //Undesirable
 
       plagiarismScore: Yup.number()
-        .min(1)
+        .min(0)
         .max(5)
         .required("Please enter the value")
         .typeError("plagiarism Score should be a number"),
 
       trustissuesScore: Yup.number()
-        .min(1)
+        .min(0)
         .max(5)
         .required("Please enter the value")
         .typeError("Trustissues Score should be a number"),
 
       fakeinformationScore: Yup.number()
-        .min(1)
+        .min(0)
         .max(5)
         .required("Please enter the value")
         .typeError("Fakeinformation Score should be a number"),
