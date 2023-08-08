@@ -99,8 +99,8 @@ const Believability = () => {
         data,
         navigate,
       };
-      console.log(apiData);
-      // dispatch(addBelievabilityData(apiData));
+      // console.log(apiData);
+      dispatch(addBelievabilityData(apiData));
     },
   });
 
