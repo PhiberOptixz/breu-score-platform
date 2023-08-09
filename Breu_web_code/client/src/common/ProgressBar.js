@@ -58,12 +58,13 @@ const BorderLinearProgress4 = styled(LinearProgress)(({ theme }) => ({
 }));
 
 const ProgressBar = ({ value }) => {
+  console.log(value);
   return (
     <>
       <Grid container align="center">
         <Grid item xs={1} md={1}></Grid>
         <Grid item xs={2} md={2}>
-          {value === 1 ? (
+          {value <= 1 ? (
             <>
               {" "}
               <p>Weak</p>
@@ -74,7 +75,7 @@ const ProgressBar = ({ value }) => {
           ) : null}
         </Grid>
         <Grid item xs={2} md={2}>
-          {value === 2 ? (
+          {value <= 2 && value > 1 ? (
             <>
               {" "}
               <p style={{ fontWeight: "600" }}>Fair</p>
@@ -85,7 +86,7 @@ const ProgressBar = ({ value }) => {
           ) : null}
         </Grid>
         <Grid item xs={2} md={2}>
-          {value === 3 ? (
+          {value <= 3 && value > 2 ? (
             <>
               {" "}
               <p style={{ fontWeight: "600" }}>Good</p>
@@ -96,7 +97,7 @@ const ProgressBar = ({ value }) => {
           ) : null}
         </Grid>
         <Grid item xs={2} md={2}>
-          {value === 4 ? (
+          {value <= 4 && value > 3 ? (
             <>
               {" "}
               <p style={{ fontWeight: "600" }}>Great</p>
@@ -107,7 +108,7 @@ const ProgressBar = ({ value }) => {
           ) : null}
         </Grid>
         <Grid item xs={2} md={2}>
-          {value === 5 ? (
+          {value <= 5 && value > 4 ? (
             <>
               {" "}
               <p style={{ fontWeight: "600" }}>Excellent</p>
