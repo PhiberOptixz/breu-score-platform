@@ -15,6 +15,7 @@ import {
 } from "../../features/recruiterSlice";
 import { useDispatch, useSelector } from "react-redux";
 import SelectMultipleValues from "../../common/SelectMultipleValues";
+import ReactPlayer from "react-player";
 
 const RecruiterLanding = () => {
   const [selectedCorporate, setSelectedCorporate] = useState([]);
@@ -133,6 +134,7 @@ const RecruiterLanding = () => {
       headerAlign: "center",
       align: "center",
       renderCell: (params) => {
+        console.log(params?.row);
         if (params?.row?.scores[0]) {
           return (
             <HorizontalGauge
@@ -246,9 +248,23 @@ const RecruiterLanding = () => {
         <CustomizedDialogs
           title={"Video"}
           children={
-            <video width="700px" height="400px" autoplay>
-              <source src={video} type="video/mp4" />
-            </video>
+            <ReactPlayer
+              config={{
+                file: {
+                  attributes: {
+                    controlsList: "nodownload",
+                  },
+                },
+              }}
+              url={video}
+              width="700px"
+              height="400px"
+              // style={{ pointerEvents: 'none', display: 'block', margin: 'auto' }}
+              controls
+            />
+            // <video width="700px" height="400px" autoplay>
+            //   <source src={video} type="video/mp4" />
+            // </video>
           }
           openPopup={open}
           setOpenPopup={setOpen}

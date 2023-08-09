@@ -91,227 +91,249 @@ module.exports.getCandidateScoreById = async (req, res, next) => {
       });
     });
     qualificationScoresSorted = [...qualificationScores]
-      .sort((a, b) => a - b)
+      .sort((a, b) => b - a)
       .map((parameter, idx, arr) => {
         return {
           score: parameter,
           rank:
-            +(((arr.length - (idx + 1) + 1) / arr.length) * 100).toFixed(2) +
-            "%",
+            +(((arr.length - (idx + 1) + 1) / arr.length) * 100 - 0.01).toFixed(
+              2
+            ) + "%",
         };
       });
     professionalExperienceScoresSorted = [...professionalExperienceScores]
-      .sort((a, b) => a - b)
+      .sort((a, b) => b - a)
       .map((parameter, idx, arr) => {
         return {
           score: parameter,
           rank:
-            +(((arr.length - (idx + 1) + 1) / arr.length) * 100).toFixed(2) +
-            "%",
+            +(((arr.length - (idx + 1) + 1) / arr.length) * 100 - 0.01).toFixed(
+              2
+            ) + "%",
         };
       });
     socialScoresSorted = [...socialScores]
-      .sort((a, b) => a - b)
+      .sort((a, b) => b - a)
       .map((parameter, idx, arr) => {
         return {
           score: parameter,
           rank:
-            +(((arr.length - (idx + 1) + 1) / arr.length) * 100).toFixed(2) +
-            "%",
+            +(((arr.length - (idx + 1) + 1) / arr.length) * 100 - 0.01).toFixed(
+              2
+            ) + "%",
         };
       });
     patentScoresSorted = [...patentScores]
-      .sort((a, b) => a - b)
+      .sort((a, b) => b - a)
       .map((parameter, idx, arr) => {
         return {
           score: parameter,
           rank:
-            +(((arr.length - (idx + 1) + 1) / arr.length) * 100).toFixed(2) +
-            "%",
+            +(((arr.length - (idx + 1) + 1) / arr.length) * 100 - 0.01).toFixed(
+              2
+            ) + "%",
         };
       });
     whitepaperConferencePresentationScoresSorted = [
       ...whitepaperConferencePresentationScores,
     ]
-      .sort((a, b) => a - b)
+      .sort((a, b) => b - a)
       .map((parameter, idx, arr) => {
         return {
           score: parameter,
           rank:
-            +(((arr.length - (idx + 1) + 1) / arr.length) * 100).toFixed(2) +
-            "%",
+            +(((arr.length - (idx + 1) + 1) / arr.length) * 100 - 0.01).toFixed(
+              2
+            ) + "%",
         };
       });
     blogScoresSorted = [...blogScores]
-      .sort((a, b) => a - b)
+      .sort((a, b) => b - a)
       .map((parameter, idx, arr) => {
         return {
           score: parameter,
           rank:
-            +(((arr.length - (idx + 1) + 1) / arr.length) * 100).toFixed(2) +
-            "%",
+            +(((arr.length - (idx + 1) + 1) / arr.length) * 100 - 0.01).toFixed(
+              2
+            ) + "%",
         };
       });
     console.log([...teamWorkScores]);
     teamWorkScoresSorted = [...teamWorkScores]
-      .sort((a, b) => a - b)
+      .sort((a, b) => b - a)
       .map((parameter, idx, arr) => {
         return {
           score: parameter,
           rank:
-            +(((arr.length - (idx + 1) + 1) / arr.length) * 100).toFixed(2) +
-            "%",
+            +(((arr.length - (idx + 1) + 1) / arr.length) * 100 - 0.01).toFixed(
+              2
+            ) + "%",
         };
       });
     console.log(teamWorkScoresSorted);
     complexityHandlingScoresSorted = [...complexityHandlingScores]
-      .sort((a, b) => a - b)
+      .sort((a, b) => b - a)
       .map((parameter, idx, arr) => {
         return {
           score: parameter,
           rank:
-            +(((arr.length - (idx + 1) + 1) / arr.length) * 100).toFixed(2) +
-            "%",
+            +(((arr.length - (idx + 1) + 1) / arr.length) * 100 - 0.01).toFixed(
+              2
+            ) + "%",
         };
       });
     conflictResolutionScoresSorted = [...conflictResolutionScores]
-      .sort((a, b) => a - b)
+      .sort((a, b) => b - a)
       .map((parameter, idx, arr) => {
         return {
           score: parameter,
           rank:
-            +(((arr.length - (idx + 1) + 1) / arr.length) * 100).toFixed(2) +
-            "%",
+            +(((arr.length - (idx + 1) + 1) / arr.length) * 100 - 0.01).toFixed(
+              2
+            ) + "%",
         };
       });
     initiativeScoresSorted = [...initiativeScores]
-      .sort((a, b) => a - b)
+      .sort((a, b) => b - a)
       .map((parameter, idx, arr) => {
         return {
           score: parameter,
           rank:
-            +(((arr.length - (idx + 1) + 1) / arr.length) * 100).toFixed(2) +
-            "%",
+            +(((arr.length - (idx + 1) + 1) / arr.length) * 100 - 0.01).toFixed(
+              2
+            ) + "%",
         };
       });
     culturalFitPresentationScoresSorted = [...culturalFitPresentationScores]
-      .sort((a, b) => a - b)
+      .sort((a, b) => b - a)
       .map((parameter, idx, arr) => {
         return {
           score: parameter,
           rank:
-            +(((arr.length - (idx + 1) + 1) / arr.length) * 100).toFixed(2) +
-            "%",
+            +(((arr.length - (idx + 1) + 1) / arr.length) * 100 - 0.01).toFixed(
+              2
+            ) + "%",
         };
       });
     presentationScoresSorted = [...presentationScores]
-      .sort((a, b) => a - b)
+      .sort((a, b) => b - a)
       .map((parameter, idx, arr) => {
         return {
           score: parameter,
           rank:
-            +(((arr.length - (idx + 1) + 1) / arr.length) * 100).toFixed(2) +
-            "%",
+            +(((arr.length - (idx + 1) + 1) / arr.length) * 100 - 0.01).toFixed(
+              2
+            ) + "%",
         };
       });
     communicationScoresSorted = [...communicationScores]
-      .sort((a, b) => a - b)
+      .sort((a, b) => b - a)
       .map((parameter, idx, arr) => {
         return {
           score: parameter,
           rank:
-            +(((arr.length - (idx + 1) + 1) / arr.length) * 100).toFixed(2) +
-            "%",
+            +(((arr.length - (idx + 1) + 1) / arr.length) * 100 - 0.01).toFixed(
+              2
+            ) + "%",
         };
       });
     ownershipScoresSorted = [...ownershipScores]
-      .sort((a, b) => a - b)
+      .sort((a, b) => b - a)
       .map((parameter, idx, arr) => {
         return {
           score: parameter,
           rank:
-            +(((arr.length - (idx + 1) + 1) / arr.length) * 100).toFixed(2) +
-            "%",
+            +(((arr.length - (idx + 1) + 1) / arr.length) * 100 - 0.01).toFixed(
+              2
+            ) + "%",
         };
       });
     empathyScoresSorted = [...empathyScores]
-      .sort((a, b) => a - b)
+      .sort((a, b) => b - a)
       .map((parameter, idx, arr) => {
         return {
           score: parameter,
           rank:
-            +(((arr.length - (idx + 1) + 1) / arr.length) * 100).toFixed(2) +
-            "%",
+            +(((arr.length - (idx + 1) + 1) / arr.length) * 100 - 0.01).toFixed(
+              2
+            ) + "%",
         };
       });
     opennessScoresSorted = [...opennessScores]
-      .sort((a, b) => a - b)
+      .sort((a, b) => b - a)
       .map((parameter, idx, arr) => {
         return {
           score: parameter,
           rank:
-            +(((arr.length - (idx + 1) + 1) / arr.length) * 100).toFixed(2) +
-            "%",
+            +(((arr.length - (idx + 1) + 1) / arr.length) * 100 - 0.01).toFixed(
+              2
+            ) + "%",
         };
       });
     designScoresSorted = [...designScores]
-      .sort((a, b) => a - b)
+      .sort((a, b) => b - a)
       .map((parameter, idx, arr) => {
         return {
           score: parameter,
           rank:
-            +(((arr.length - (idx + 1) + 1) / arr.length) * 100).toFixed(2) +
-            "%",
+            +(((arr.length - (idx + 1) + 1) / arr.length) * 100 - 0.01).toFixed(
+              2
+            ) + "%",
         };
       });
     frameworkScoresSorted = [...frameworkScores]
-      .sort((a, b) => a - b)
+      .sort((a, b) => b - a)
       .map((parameter, idx, arr) => {
         return {
           score: parameter,
           rank:
-            +(((arr.length - (idx + 1) + 1) / arr.length) * 100).toFixed(2) +
-            "%",
+            +(((arr.length - (idx + 1) + 1) / arr.length) * 100 - 0.01).toFixed(
+              2
+            ) + "%",
         };
       });
     codingScoresSorted = [...codingScores]
-      .sort((a, b) => a - b)
+      .sort((a, b) => b - a)
       .map((parameter, idx, arr) => {
         return {
           score: parameter,
           rank:
-            +(((arr.length - (idx + 1) + 1) / arr.length) * 100).toFixed(2) +
-            "%",
+            +(((arr.length - (idx + 1) + 1) / arr.length) * 100 - 0.01).toFixed(
+              2
+            ) + "%",
         };
       });
     debuggingScoresSorted = [...debuggingScores]
-      .sort((a, b) => a - b)
+      .sort((a, b) => b - a)
       .map((parameter, idx, arr) => {
         return {
           score: parameter,
           rank:
-            +(((arr.length - (idx + 1) + 1) / arr.length) * 100).toFixed(2) +
-            "%",
+            +(((arr.length - (idx + 1) + 1) / arr.length) * 100 - 0.01).toFixed(
+              2
+            ) + "%",
         };
       });
     architectureScoresSorted = [...architectureScores]
-      .sort((a, b) => a - b)
+      .sort((a, b) => b - a)
       .map((parameter, idx, arr) => {
         return {
           score: parameter,
           rank:
-            +(((arr.length - (idx + 1) + 1) / arr.length) * 100).toFixed(2) +
-            "%",
+            +(((arr.length - (idx + 1) + 1) / arr.length) * 100 - 0.01).toFixed(
+              2
+            ) + "%",
         };
       });
     implementationScoresSorted = [...implementationScores]
-      .sort((a, b) => a - b)
+      .sort((a, b) => b - a)
       .map((parameter, idx, arr) => {
         return {
           score: parameter,
           rank:
-            +(((arr.length - (idx + 1) + 1) / arr.length) * 100).toFixed(2) +
-            "%",
+            +(((arr.length - (idx + 1) + 1) / arr.length) * 100 - 0.01).toFixed(
+              2
+            ) + "%",
         };
       });
     plagiarismScoresSorted = [...plagiarismScores]
@@ -320,8 +342,9 @@ module.exports.getCandidateScoreById = async (req, res, next) => {
         return {
           score: parameter,
           rank:
-            +(((arr.length - (idx + 1) + 1) / arr.length) * 100).toFixed(2) +
-            "%",
+            +(((arr.length - (idx + 1) + 1) / arr.length) * 100 - 0.01).toFixed(
+              2
+            ) + "%",
         };
       });
     trustIssuesScoresSorted = [...trustIssuesScores]
@@ -330,8 +353,9 @@ module.exports.getCandidateScoreById = async (req, res, next) => {
         return {
           score: parameter,
           rank:
-            +(((arr.length - (idx + 1) + 1) / arr.length) * 100).toFixed(2) +
-            "%",
+            +(((arr.length - (idx + 1) + 1) / arr.length) * 100 - 0.01).toFixed(
+              2
+            ) + "%",
         };
       });
     fakeInformationScoresSorted = [...fakeInformationScores]
@@ -340,8 +364,9 @@ module.exports.getCandidateScoreById = async (req, res, next) => {
         return {
           score: parameter,
           rank:
-            +(((arr.length - (idx + 1) + 1) / arr.length) * 100).toFixed(2) +
-            "%",
+            +(((arr.length - (idx + 1) + 1) / arr.length) * 100 - 0.01).toFixed(
+              2
+            ) + "%",
         };
       });
 

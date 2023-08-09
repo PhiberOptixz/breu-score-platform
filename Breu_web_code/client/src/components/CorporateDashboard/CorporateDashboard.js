@@ -16,6 +16,7 @@ import CustomizedDialogs from "../../common/customDailougeBox";
 import HorizontalGauge from "react-horizontal-gauge";
 import { fetchCorporateCandidates } from "../../features/corporateSlice";
 import { useSelector, useDispatch } from "react-redux";
+import ReactPlayer from "react-player";
 
 const CorporateDashboard = () => {
   const [video, setVideo] = useState("");
@@ -181,9 +182,23 @@ const CorporateDashboard = () => {
         <CustomizedDialogs
           title={"Video"}
           children={
-            <video width="500px" height="350px" autoplay>
-              <source src={video} type="video/mp4" />
-            </video>
+            <ReactPlayer
+              config={{
+                file: {
+                  attributes: {
+                    controlsList: "nodownload",
+                  },
+                },
+              }}
+              url={video}
+              width="700px"
+              height="400px"
+              // style={{ pointerEvents: 'none', display: 'block', margin: 'auto' }}
+              controls
+            />
+            // <video width="500px" height="350px" autoplay>
+            //   <source src={video} type="video/mp4" />
+            // </video>
           }
           openPopup={open}
           setOpenPopup={setOpen}

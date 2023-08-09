@@ -64,7 +64,7 @@ async function getCandidateRecruiters(data) {
       },
       {
         $lookup: {
-          from: "believabilityScores",
+          from: "candidateScores",
           localField: "_id",
           foreignField: "candidateId",
           as: "scores",
