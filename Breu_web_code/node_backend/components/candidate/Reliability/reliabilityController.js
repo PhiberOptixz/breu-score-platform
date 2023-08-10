@@ -139,3 +139,20 @@ module.exports.getReliabilityResults = async function (req, res, next) {
     return next(new AppError(err, 400));
   }
 };
+
+module.exports.getCandidateVideos = async function (req, res, next) {
+  try {
+    const id = req.params.candidateId;
+    const getReliabilityData = await reliabilityDAL.getCandidateReliabilityData(
+      req.decoded._id
+    );
+    return res.status(200).json({
+      status: "SUCCESS",
+      message: "Fetched Reliability successfully",
+      data: getReliabilityData,
+    });
+  } catch (err) {
+    console.error(colors.red, `Error while fetching Reliability data`, err);
+    return next(new AppError(err, 400));
+  }
+};

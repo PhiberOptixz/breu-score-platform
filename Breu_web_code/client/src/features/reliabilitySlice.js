@@ -35,6 +35,21 @@ export const fetchReliabilityResults = createAsyncThunk(
   }
 );
 
+//fetch reliability data
+export const fetchReliabilityData = createAsyncThunk(
+  "fetchReliabilityData",
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`/api/reliability/getReliabilityData`);
+      const result = response.data;
+      return result;
+    } catch (error) {
+      SnackBar.error(error?.response?.data?.message);
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
 //add reliability data
 export const addReliabilityData = createAsyncThunk(
   "addReliabilityData",
@@ -62,6 +77,7 @@ export const auth = createSlice({
     error: null,
     questionsData: null,
     reliabilityResults: null,
+    candidateReliabilityData: null,
   },
   extraReducers: (builder) => {
     builder.addCase(fetchQuestions.pending, (state) => {
@@ -93,6 +109,17 @@ export const auth = createSlice({
       state.reliabilityResults = action?.payload?.reliabilityScore;
     });
     builder.addCase(fetchReliabilityResults.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
+    builder.addCase(fetchReliabilityData.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(fetchReliabilityData.fulfilled, (state, action) => {
+      state.loading = false;
+      state.candidateReliabilityData = action?.payload?.data;
+    });
+    builder.addCase(fetchReliabilityData.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload;
     });

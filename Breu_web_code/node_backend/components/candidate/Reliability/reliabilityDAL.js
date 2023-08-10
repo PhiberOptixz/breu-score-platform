@@ -182,6 +182,15 @@ async function getReliabilityResults(data) {
   }
 }
 
+async function getCandidateReliabilityData(data) {
+  try {
+    let result = await reliabilityModel.findOne({ candidateId: data }).lean();
+    return result;
+  } catch (err) {
+    throw err;
+  }
+}
+
 module.exports = {
   addQuestions,
   fetchDesignQuestions,
@@ -192,4 +201,5 @@ module.exports = {
   fetchImplementationQuestions,
   postUserReliabiltyQuestions,
   getReliabilityResults,
+  getCandidateReliabilityData,
 };

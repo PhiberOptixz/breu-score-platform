@@ -27,4 +27,10 @@ router.get(
   reliabilityController.getReliabilityResults
 );
 
+router.get(
+  "/getReliabilityData",
+  authJWT.verifyJWTToken,
+  reliabilityController.getCandidateVideos
+);
+
 module.exports = router;

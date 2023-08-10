@@ -2,23 +2,19 @@ import { useEffect, useState, useRef, useMemo } from "react";
 import Header from "../../common/header";
 import { Grid, Paper, Typography } from "@mui/material";
 import PlayCircleFilledWhiteOutlinedIcon from "@mui/icons-material/PlayCircleFilledWhiteOutlined";
-// import ReactPlayer from "react-player";
+import CustomizedDialogs from "../../common/customDailougeBox";
+import ReactPlayer from "react-player";
 import ButtonField from "../../common/button";
-// import Replay10OutlinedIcon from "@mui/icons-material/Replay10Outlined";
-// import Forward10OutlinedIcon from "@mui/icons-material/Forward10Outlined";
 import { useSelector, useDispatch } from "react-redux";
 import { uploadCandidateVideo } from "../../features/intelligibilitySlice";
 import { SnackBar } from "../../common/Snackbar";
 import { useNavigate } from "react-router-dom";
-// import VideocamOutlinedIcon from "@mui/icons-material/VideocamOutlined";
-// import VideocamOffOutlinedIcon from "@mui/icons-material/VideocamOffOutlined";
-// import RadioButtonCheckedOutlinedIcon from "@mui/icons-material/RadioButtonCheckedOutlined";
-// import RadioButtonUncheckedOutlinedIcon from "@mui/icons-material/RadioButtonUncheckedOutlined";
 import LoadingButton from "@mui/lab/LoadingButton";
 import SendIcon from "@mui/icons-material/Send";
 import { createTheme, ThemeProvider, useTheme } from "@mui/material/styles";
 import { toggleButtonClasses } from "@mui/material/ToggleButton";
 import deepmerge from "@mui/utils/deepmerge";
+import { fetchReliabilityData } from "../../features/reliabilitySlice";
 
 const defaultTheme = createTheme();
 const theme = createTheme({
@@ -81,7 +77,9 @@ const EmotionalUndesirability = () => {
   const errorMsgElement = document.querySelector("span#errorMsg");
   const recordedVideo = document.querySelector("video#recorded");
   const recordButton = document.querySelector("button#record");
-  const { auth, intelligibilitySlice } = useSelector((state) => state);
+  const { auth, intelligibilitySlice, reliability } = useSelector(
+    (state) => state
+  );
   const dispatch = useDispatch();
   const [time, setTime] = useState("");
   const [seconds, setSeconds] = useState(0);
@@ -90,7 +88,7 @@ const EmotionalUndesirability = () => {
   const [disableDownload, setDisableDownload] = useState(true);
   const [demo, setDemo] = useState("Demo 1");
   const [title, setTitle] = useState(
-    "Demo – What is expected (tech stack selection, design choices tradeoffs, your contribution, learnings if any)"
+    "This is a demo of how I would answer the same question in STAR format"
   );
   const [questionTitle, setQuestionTitle] = useState(
     "Describe your recent & most complex project in STAR format. – 2 mins"
@@ -108,6 +106,8 @@ const EmotionalUndesirability = () => {
   const videoRef = useRef(null);
   const [noOfVideos, setNoOfVideos] = useState(0);
   const [noOfTries, setNoOfTries] = useState(0);
+  const [recordedVideos, setRecordedVideos] = useState("");
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     document.title = "Breu.ai - Emotional Intelligibility";
@@ -126,6 +126,7 @@ const EmotionalUndesirability = () => {
       setDemoVideoURL("https://www.youtube.com/embed/vsRRs_362-M?rel=0");
       scollToRef.current.scrollIntoView();
     } else if (auth.user.completedConflictVideo) {
+      dispatch(fetchReliabilityData());
       setNoOfVideos(2);
       window.scrollTo(0, 0);
     } else {
@@ -146,35 +147,6 @@ const EmotionalUndesirability = () => {
     }
   }, 1000);
 
-  const startCamera = async (e) => {
-    const constraints = {
-      audio: true,
-      video: {
-        width: 1080,
-        height: 720,
-      },
-    };
-    if (webcam === "Start Camera") {
-      setWebcam("Stop Camera");
-      try {
-        navigator.getUserMedia =
-          navigator.getUserMedia ||
-          navigator.webkitGetUserMedia ||
-          navigator.mozGetUserMedia;
-        const stream = await navigator.mediaDevices.getUserMedia(constraints);
-        setWebStream(stream);
-        handleSuccess(stream);
-      } catch (e) {
-        console.error("navigator.getUserMedia error:", e);
-        // errorMsgElement.innerHTML = `navigator.getUserMedia error:${e.toString()}`;
-      }
-    } else if (webcam === "Stop Camera") {
-      setWebcam("Start Camera");
-      handleStop(webStream);
-    }
-    setShowRecorded(false);
-  };
-
   const handleSuccess = (stream) => {
     setDisableRecord(false);
     window.stream = stream;
@@ -185,36 +157,63 @@ const EmotionalUndesirability = () => {
 
   const handleStop = (stream) => {
     const video = document.querySelector("#gum");
-    for (const track of video.srcObject.getTracks()) {
-      track.stop();
+    if (video?.srcObject && stream && noOfTries <= 2) {
+      for (const track of video?.srcObject?.getTracks()) {
+        track.stop();
+      }
     }
     video.srcObject = null;
-    stream.getTracks().forEach(function (track) {
-      let video = videoRef.current;
-      video.pause();
-      video.srcObject = null;
-      track.stop();
-      // if (track.readyState == 'live') {
-      //     track.stop();
-      // }
-    });
+    if (stream && noOfTries <= 2) {
+      stream?.getTracks()?.forEach(function (track) {
+        let video = videoRef.current;
+        video.pause();
+        video.srcObject = null;
+        track.stop();
+        // if (track.readyState == 'live') {
+        //     track.stop();
+        // }
+      });
+    }
     setDisableRecord(true);
     setDisablePlay(true);
     setDisableDownload(true);
   };
 
-  const recordVideo = () => {
+  const recordVideo = async () => {
     if (record === "Start Recording") {
       if (noOfTries >= 2) {
         SnackBar.error(
-          "You have exceeded the recording limit please submit the last recorded video"
+          "You have exceeded the recording limit. Your last recorded video will be auto submitted."
         );
+        handleSubmit();
       } else {
+        const constraints = {
+          audio: true,
+          video: {
+            width: 1080,
+            height: 720,
+          },
+        };
+        try {
+          navigator.getUserMedia =
+            navigator.getUserMedia ||
+            navigator.webkitGetUserMedia ||
+            navigator.mozGetUserMedia;
+          const stream = await navigator.mediaDevices.getUserMedia(constraints);
+          setWebStream(stream);
+          handleSuccess(stream);
+        } catch (e) {
+          console.error("navigator.getUserMedia error:", e);
+          // errorMsgElement.innerHTML = `navigator.getUserMedia error:${e.toString()}`;
+        }
         setNoOfTries(noOfTries + 1);
         setRecord("Stop Recording");
         startRecording();
       }
     } else {
+      if (webStream) {
+        handleStop(webStream);
+      }
       setRecord("Start Recording");
       setDisablePlay(false);
       setDisableDownload(false);
@@ -310,6 +309,66 @@ const EmotionalUndesirability = () => {
       />
       {noOfVideos === 2 ? (
         <>
+          <CustomizedDialogs
+            title={"Video"}
+            children={
+              <ReactPlayer
+                config={{
+                  file: {
+                    attributes: {
+                      controlsList: "nodownload",
+                    },
+                  },
+                }}
+                url={recordedVideos}
+                width="700px"
+                height="400px"
+                controls
+              />
+            }
+            openPopup={open}
+            setOpenPopup={setOpen}
+          />
+
+          <Typography align="center">
+            <ButtonField
+              onClick={() => {
+                setOpen(true);
+                setRecordedVideos(
+                  reliability?.candidateReliabilityData?.interestingProjectVideo
+                    ?.link
+                );
+              }}
+              buttonStyle="submit"
+              type="button"
+              name="Watch Video 1"
+              variant="contained"
+              color="primary"
+              sx={{
+                marginTop: "2%",
+                marginBottom: "2%",
+              }}
+            />
+            <ButtonField
+              onClick={() => {
+                setOpen(true);
+                setRecordedVideos(
+                  reliability?.candidateReliabilityData?.conflictResolutionVideo
+                    ?.link
+                );
+              }}
+              buttonStyle="submit"
+              type="button"
+              name="Watch Video 2"
+              variant="contained"
+              color="primary"
+              sx={{
+                marginTop: "2%",
+                marginLeft: "2%",
+                marginBottom: "2%",
+              }}
+            />
+          </Typography>
           <Typography variant="h5" color={"red"} align="center">
             You have successfully submitted the videos. Please click next to see
             BREU score
@@ -341,46 +400,12 @@ const EmotionalUndesirability = () => {
             <h1 ref={scollToRef}>{demo}</h1>
             <p style={{ fontSize: "22px" }}>{title}</p>
 
-            {/* <Paper
-              elevation={0}
-              sx={{
-                background: "#0a71b9",
-                color: "white",
-                width: "100%",
-                // borderRadius: "2% 0% 0% 0%",
-              }}
-            > */}
             <iframe
               width={"99%"}
               height={"332px"}
               src={demoVideoURL}
               style={{ marginTop: "0.5%" }}
             ></iframe>
-            {/* <video
-              width="100%"
-              // controls
-              style={{ borderRadius: "0% 0% 2% 2%" }}
-            >
-              <source
-                src="https://www.youtube.com/watch?v=ysz5S6PUM-U"
-                type="video/mp4"
-              />
-            </video> */}
-            {/* <Grid container sx={{ paddingTop: "2%", paddingBottom: "2%" }}>
-                <Grid item xs={4} md={4} align="right">
-                  {/* <Replay10OutlinedIcon sx={{ fontSize: "30px" }} /> 
-                </Grid>
-                <Grid item xs={4} md={4} align="center">
-                  <PlayCircleFilledWhiteOutlinedIcon
-                    sx={{ fontSize: "30px" }}
-                    // onClick={console.log("Play click")}
-                  />
-                </Grid>
-                <Grid item xs={4} md={4} align="left">
-                  {/* <Forward10OutlinedIcon sx={{ fontSize: "30px" }} /> 
-                </Grid>
-              </Grid> */}
-            {/* </Paper> */}
           </Grid>
 
           <Grid item xs={12} md={5} sx={{ marginLeft: "2%", marginTop: "-1%" }}>
@@ -401,21 +426,6 @@ const EmotionalUndesirability = () => {
               )}
             </h1>
             <p style={{ fontSize: "22px" }}>{questionTitle}</p>
-
-            {/* <ButtonField
-            id="start"
-            onClick={startCamera}
-            buttonStyle="submit"
-            type="submit"
-            name={webcam}
-            color="primary"
-            variant="contained"
-            sx={{
-              width: "30%",
-              backgroundColor: "#0a71b9",
-              marginBottom: "2%",
-            }}
-          /> */}
 
             <Paper
               elevation={0}
@@ -452,42 +462,12 @@ const EmotionalUndesirability = () => {
                   borderRadius: "0% 0% 2% 2%",
                   height: "285px",
                 }}
-                playsinliplaysInlinene
-                loop
+                playsInline
               ></video>
               <Grid container sx={{ paddingTop: "2%", paddingBottom: "2%" }}>
-                <Grid item xs={3} md={3} align="right">
+                <Grid item xs={4} md={4} align="center">
                   <ButtonField
-                    // disabled={true}
-                    sx={{
-                      width: "95%",
-                      height: "95%",
-                      backgroundColor: "#0a71b9",
-                      padding: "2px",
-                      marginRight: "5px",
-                      fontSize: "68%",
-                    }}
-                    onClick={startCamera}
-                    name={webcam}
-                    // name={
-                    //   webcam === "Start Camera" ? (
-                    //     <VideocamOutlinedIcon
-                    //       // disabled={true}
-                    //       sx={{ fontSize: "30px" }}
-                    //     />
-                    //   ) : (
-                    //     <VideocamOffOutlinedIcon
-                    //       // onClick={startCamera}
-                    //       sx={{ fontSize: "30px" }}
-                    //     />
-                    //   )
-                    // }
-                  />
-                  {/* </Button> */}
-                </Grid>
-                <Grid item xs={3} md={3} align="center">
-                  <ButtonField
-                    disabled={webcam === "Start Camera" ? true : false}
+                    // disabled={webcam === "Start Camera" ? true : false}
                     sx={{
                       width: "95%",
                       height: "95%",
@@ -498,36 +478,15 @@ const EmotionalUndesirability = () => {
                     }}
                     onClick={() => recordVideo()}
                     name={record}
-                    // name={
-                    //   record === "Start Recording" ? (
-                    //     <RadioButtonCheckedOutlinedIcon
-                    //       // onClick={() => recordVideo()}
-                    //       sx={{ fontSize: "30px" }}
-                    //     />
-                    //   ) : (
-                    //     <RadioButtonUncheckedOutlinedIcon
-                    //       // onClick={() => recordVideo()}
-                    //       sx={{ fontSize: "30px" }}
-                    //     />
-                    //   )
-                    // }
                   />
-
-                  {/* {record === "Start Recording" ? (
-                  <RadioButtonCheckedOutlinedIcon
-                    onClick={() => recordVideo()}
-                    sx={{ fontSize: "30px" }}
-                  />
-                ) : (
-                  <RadioButtonUncheckedOutlinedIcon
-                    onClick={() => recordVideo()}
-                    sx={{ fontSize: "30px" }}
-                  />
-                )} */}
                 </Grid>
-                <Grid item xs={3} md={3} align="left">
+                <Grid item xs={4} md={4} align="left">
                   <ButtonField
-                    disabled={disablePlay}
+                    disabled={
+                      record === "Stop Recording" || noOfTries == 0
+                        ? true
+                        : false
+                    }
                     sx={{
                       width: "95%",
                       height: "95%",
@@ -536,7 +495,7 @@ const EmotionalUndesirability = () => {
                       marginRight: "5px",
                       fontSize: "68%",
                     }}
-                    onClick={playRecorded}
+                    onClick={() => playRecorded()}
                     name={
                       <>
                         <PlayCircleFilledWhiteOutlinedIcon
@@ -546,21 +505,9 @@ const EmotionalUndesirability = () => {
                         Play
                       </>
                     }
-                    // name={
-                    //   <PlayCircleFilledWhiteOutlinedIcon
-                    //     // onClick={playRecorded}
-                    //     sx={{ fontSize: "30px" }}
-                    //   />
-                    // }
                   />
-                  {/* {
-                  <PlayCircleFilledWhiteOutlinedIcon
-                    onClick={playRecorded}
-                    sx={{ fontSize: "30px" }}
-                  />
-                } */}
                 </Grid>
-                <Grid item xs={3} md={3} align="left">
+                <Grid item xs={4} md={4} align="left">
                   <Typography
                     color={seconds > 90 ? "red" : "white"}
                     sx={{ marginTop: "2%", textAlign: "left" }}
@@ -587,37 +534,6 @@ const EmotionalUndesirability = () => {
                 </span>
               </MuiLoadingButton>
             </ThemeProvider>
-            {/* <LoadingButton
-              size="small"
-              sx={{
-                width: "25%",
-                height: "40px",
-              }}
-              onClick={() => handleSubmit()}
-              endIcon={<SendIcon />}
-              disabled={disablePlay}
-              loading={intelligibilitySlice?.loading}
-              loadingPosition="end"
-              variant="contained"
-            >
-              <span>
-                {intelligibilitySlice?.loading ? "Uploading Video" : "Submit"}
-              </span>
-            </LoadingButton> */}
-            {/* <ButtonField
-              disabled={disablePlay}
-              onClick={() => handleSubmit()}
-              buttonStyle="submit"
-              type="button"
-              name="Submit & Proceed"
-              variant="contained"
-              color="primary"
-              sx={{
-                width: "20%",
-                marginTop: "2%",
-                marginBottom: "2%",
-              }}
-            /> */}
           </Grid>
         </Grid>
       )}
