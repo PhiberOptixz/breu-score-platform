@@ -369,115 +369,123 @@ module.exports.getCandidateScoreById = async (req, res, next) => {
             ) + "%",
         };
       });
+    if (data) {
+      data.believabilityScores.qualification.percentile =
+        qualificationScoresSorted?.find(
+          (item) =>
+            item.score == data?.believabilityScores?.qualification?.score
+        )?.rank;
+      data.believabilityScores.professionalExperience.percentile =
+        professionalExperienceScoresSorted?.find(
+          (item) =>
+            item.score ==
+            data?.believabilityScores?.professionalExperience?.score
+        )?.rank;
+      data.believabilityScores.socialScore.percentile =
+        socialScoresSorted?.find(
+          (item) => item.score == data?.believabilityScores?.socialScore?.score
+        )?.rank;
+      data.believabilityScores.patents.percentile = patentScoresSorted?.find(
+        (item) => item.score == data?.believabilityScores?.patents?.score
+      )?.rank;
+      data.believabilityScores.whitepaperConferencePresentation.percentile =
+        whitepaperConferencePresentationScoresSorted?.find(
+          (item) =>
+            item.score ==
+            data?.believabilityScores?.whitepaperConferencePresentation?.score
+        )?.rank;
+      data.believabilityScores.blog.percentile = blogScoresSorted?.find(
+        (item) => item.score == data?.believabilityScores?.blog?.score
+      )?.rank;
+      data.emotionalIntelligencyScores.teamWork.percentile =
+        teamWorkScoresSorted?.find(
+          (item) =>
+            item.score == data?.emotionalIntelligencyScores?.teamWork?.score
+        )?.rank;
+      data.emotionalIntelligencyScores.complexityHandling.percentile =
+        complexityHandlingScoresSorted?.find(
+          (item) =>
+            item.score ==
+            data?.emotionalIntelligencyScores?.complexityHandling?.score
+        )?.rank;
+      data.emotionalIntelligencyScores.conflictResolution.percentile =
+        conflictResolutionScoresSorted?.find(
+          (item) =>
+            item.score ==
+            data?.emotionalIntelligencyScores?.conflictResolution?.score
+        )?.rank;
+      data.emotionalIntelligencyScores.initiative.percentile =
+        initiativeScoresSorted?.find(
+          (item) =>
+            item.score == data?.emotionalIntelligencyScores?.initiative?.score
+        )?.rank;
+      data.emotionalIntelligencyScores.culturalFitPresentation.percentile =
+        culturalFitPresentationScoresSorted?.find(
+          (item) =>
+            item.score ==
+            data?.emotionalIntelligencyScores?.culturalFitPresentation?.score
+        )?.rank;
+      data.emotionalIntelligencyScores.presentation.percentile =
+        presentationScoresSorted?.find(
+          (item) =>
+            item.score == data?.emotionalIntelligencyScores?.presentation?.score
+        )?.rank;
+      data.emotionalIntelligencyScores.communication.percentile =
+        communicationScoresSorted?.find(
+          (item) =>
+            item.score ==
+            data?.emotionalIntelligencyScores?.communication?.score
+        )?.rank;
+      data.emotionalIntelligencyScores.ownership.percentile =
+        ownershipScoresSorted?.find(
+          (item) =>
+            item.score == data?.emotionalIntelligencyScores?.ownership?.score
+        )?.rank;
+      data.emotionalIntelligencyScores.empathy.percentile =
+        empathyScoresSorted?.find(
+          (item) =>
+            item.score == data?.emotionalIntelligencyScores?.empathy?.score
+        )?.rank;
+      data.emotionalIntelligencyScores.openness.percentile =
+        opennessScoresSorted?.find(
+          (item) =>
+            item.score == data?.emotionalIntelligencyScores?.openness?.score
+        )?.rank;
+      data.reliabilityScores.design.percentile = designScoresSorted?.find(
+        (item) => item.score == data?.reliabilityScores?.design?.score
+      )?.rank;
+      data.reliabilityScores.framework.percentile = frameworkScoresSorted?.find(
+        (item) => item.score == data?.reliabilityScores?.framework?.score
+      )?.rank;
+      data.reliabilityScores.coding.percentile = codingScoresSorted?.find(
+        (item) => item.score == data?.reliabilityScores?.coding?.score
+      )?.rank;
+      data.reliabilityScores.debugging.percentile = debuggingScoresSorted?.find(
+        (item) => item.score == data?.reliabilityScores?.debugging?.score
+      )?.rank;
+      data.reliabilityScores.architecture.percentile =
+        architectureScoresSorted?.find(
+          (item) => item.score == data?.reliabilityScores?.architecture?.score
+        )?.rank;
+      data.reliabilityScores.implementation.percentile =
+        implementationScoresSorted?.find(
+          (item) => item.score == data?.reliabilityScores?.implementation?.score
+        )?.rank;
+      data.undesirableScores.plagiarism.percentile =
+        plagiarismScoresSorted?.find(
+          (item) => item.score == data?.undesirableScores?.plagiarism?.score
+        )?.rank;
+      data.undesirableScores.trustIssues.percentile =
+        trustIssuesScoresSorted?.find(
+          (item) => item.score == data?.undesirableScores?.trustIssues?.score
+        )?.rank;
+      data.undesirableScores.fakeInformation.percentile =
+        fakeInformationScoresSorted?.find(
+          (item) =>
+            item.score == data?.undesirableScores?.fakeInformation?.score
+        )?.rank;
+    }
 
-    data.believabilityScores.qualification.percentile =
-      qualificationScoresSorted?.find(
-        (item) => item.score == data?.believabilityScores?.qualification?.score
-      )?.rank;
-    data.believabilityScores.professionalExperience.percentile =
-      professionalExperienceScoresSorted?.find(
-        (item) =>
-          item.score == data?.believabilityScores?.professionalExperience?.score
-      )?.rank;
-    data.believabilityScores.socialScore.percentile = socialScoresSorted?.find(
-      (item) => item.score == data?.believabilityScores?.socialScore?.score
-    )?.rank;
-    data.believabilityScores.patents.percentile = patentScoresSorted?.find(
-      (item) => item.score == data?.believabilityScores?.patents?.score
-    )?.rank;
-    data.believabilityScores.whitepaperConferencePresentation.percentile =
-      whitepaperConferencePresentationScoresSorted?.find(
-        (item) =>
-          item.score ==
-          data?.believabilityScores?.whitepaperConferencePresentation?.score
-      )?.rank;
-    data.believabilityScores.blog.percentile = blogScoresSorted?.find(
-      (item) => item.score == data?.believabilityScores?.blog?.score
-    )?.rank;
-    data.emotionalIntelligencyScores.teamWork.percentile =
-      teamWorkScoresSorted?.find(
-        (item) =>
-          item.score == data?.emotionalIntelligencyScores?.teamWork?.score
-      )?.rank;
-    data.emotionalIntelligencyScores.complexityHandling.percentile =
-      complexityHandlingScoresSorted?.find(
-        (item) =>
-          item.score ==
-          data?.emotionalIntelligencyScores?.complexityHandling?.score
-      )?.rank;
-    data.emotionalIntelligencyScores.conflictResolution.percentile =
-      conflictResolutionScoresSorted?.find(
-        (item) =>
-          item.score ==
-          data?.emotionalIntelligencyScores?.conflictResolution?.score
-      )?.rank;
-    data.emotionalIntelligencyScores.initiative.percentile =
-      initiativeScoresSorted?.find(
-        (item) =>
-          item.score == data?.emotionalIntelligencyScores?.initiative?.score
-      )?.rank;
-    data.emotionalIntelligencyScores.culturalFitPresentation.percentile =
-      culturalFitPresentationScoresSorted?.find(
-        (item) =>
-          item.score ==
-          data?.emotionalIntelligencyScores?.culturalFitPresentation?.score
-      )?.rank;
-    data.emotionalIntelligencyScores.presentation.percentile =
-      presentationScoresSorted?.find(
-        (item) =>
-          item.score == data?.emotionalIntelligencyScores?.presentation?.score
-      )?.rank;
-    data.emotionalIntelligencyScores.communication.percentile =
-      communicationScoresSorted?.find(
-        (item) =>
-          item.score == data?.emotionalIntelligencyScores?.communication?.score
-      )?.rank;
-    data.emotionalIntelligencyScores.ownership.percentile =
-      ownershipScoresSorted?.find(
-        (item) =>
-          item.score == data?.emotionalIntelligencyScores?.ownership?.score
-      )?.rank;
-    data.emotionalIntelligencyScores.empathy.percentile =
-      empathyScoresSorted?.find(
-        (item) =>
-          item.score == data?.emotionalIntelligencyScores?.empathy?.score
-      )?.rank;
-    data.emotionalIntelligencyScores.openness.percentile =
-      opennessScoresSorted?.find(
-        (item) =>
-          item.score == data?.emotionalIntelligencyScores?.openness?.score
-      )?.rank;
-    data.reliabilityScores.design.percentile = designScoresSorted?.find(
-      (item) => item.score == data?.reliabilityScores?.design?.score
-    )?.rank;
-    data.reliabilityScores.framework.percentile = frameworkScoresSorted?.find(
-      (item) => item.score == data?.reliabilityScores?.framework?.score
-    )?.rank;
-    data.reliabilityScores.coding.percentile = codingScoresSorted?.find(
-      (item) => item.score == data?.reliabilityScores?.coding?.score
-    )?.rank;
-    data.reliabilityScores.debugging.percentile = debuggingScoresSorted?.find(
-      (item) => item.score == data?.reliabilityScores?.debugging?.score
-    )?.rank;
-    data.reliabilityScores.architecture.percentile =
-      architectureScoresSorted?.find(
-        (item) => item.score == data?.reliabilityScores?.architecture?.score
-      )?.rank;
-    data.reliabilityScores.implementation.percentile =
-      implementationScoresSorted?.find(
-        (item) => item.score == data?.reliabilityScores?.implementation?.score
-      )?.rank;
-    data.undesirableScores.plagiarism.percentile = plagiarismScoresSorted?.find(
-      (item) => item.score == data?.undesirableScores?.plagiarism?.score
-    )?.rank;
-    data.undesirableScores.trustIssues.percentile =
-      trustIssuesScoresSorted?.find(
-        (item) => item.score == data?.undesirableScores?.trustIssues?.score
-      )?.rank;
-    data.undesirableScores.fakeInformation.percentile =
-      fakeInformationScoresSorted?.find(
-        (item) => item.score == data?.undesirableScores?.fakeInformation?.score
-      )?.rank;
     return res.send({ message: "SUCCESS", data: data });
   } catch (error) {
     console.error(colors.red, `Error fetching candidate Score`, error);
