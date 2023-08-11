@@ -22,6 +22,7 @@ import BelievabilityScore from "./components/Score/BeliveabilityScore";
 import AdminBelievability from "./components/Admin/adminBelievability";
 import AddScore from "./components/Admin/AddScore";
 import SignInAdmin from "./components/SignIn/SignInAdmin";
+import AboutUs from "./components/AboutUs/AboutUs";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sign-up" element={<Singup />} />
+        <Route path="/aboutus" element={<AboutUs />} />
         <Route path="/prologue" element={<Prologue />} />
         <Route path="/undesirability" element={<Undesirability />} />
         <Route path="/recruiterDashboard" element={<RecruiterLanding />} />

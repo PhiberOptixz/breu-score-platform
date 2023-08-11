@@ -33,7 +33,7 @@ const Reliability = () => {
     if (!auth?.user?.completedReliability) {
       dispatch(fetchQuestions());
     }
-    document.title = "Breu.ai - Reliability";
+    document.title = "BREU.AI - Reliability";
   }, []);
 
   const handleChoice = (e, ele) => {

@@ -113,7 +113,7 @@ const Believability = () => {
     dispatch(getRoleData());
     dispatch(getAllOverallExperiences());
     dispatch(getAllEmploymentModes());
-    document.title = "Breu.ai - Believability";
+    document.title = "BREU.AI - Believability";
   }, []);
 
   useEffect(() => {

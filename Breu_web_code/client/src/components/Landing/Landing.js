@@ -38,7 +38,7 @@ const Landing = () => {
 
   return (
     <div>
-      <Header name="BREU.ai" page={true} />
+      <Header name="BREU.AI" page={true} />
       <Grid container>
         <Grid item xs={12} md={7}>
           <div className="player-wrapper LandingVideoGrid">

@@ -9,7 +9,7 @@ const BreuScore = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    document.title = "Breu.ai - Breu Score";
+    document.title = "BREU.AI - Breu Score";
   }, []);
 
   useEffect(() => {

@@ -110,7 +110,7 @@ const EmotionalUndesirability = () => {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    document.title = "Breu.ai - Emotional Intelligibility";
+    document.title = "BREU.AI - Emotional Intelligibility";
     if (
       auth.user.completedInterestingVideo &&
       !auth.user.completedConflictVideo
