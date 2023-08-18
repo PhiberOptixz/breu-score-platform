@@ -27,4 +27,10 @@ router.put(
   adminController.updateCandidateScore
 );
 
+router.put(
+  "/linkCandidateRecruiter",
+  authJWT.verifyJWTToken,
+  adminController.linkCandidateRecruiter
+);
+
 module.exports = router;

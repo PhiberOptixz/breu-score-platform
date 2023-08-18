@@ -86,12 +86,46 @@ export const updateScore = createAsyncThunk(
   }
 );
 
+//link candidate recruiter
+export const linkCandidateRecruiter = createAsyncThunk(
+  "linkCandidateRecruiter",
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await axios.put(
+        `/api/admin/linkCandidateRecruiter`,
+        data
+      );
+      const result = response.data;
+      SnackBar.success(response?.data?.message);
+      return result;
+    } catch (error) {
+      SnackBar.error(error?.response?.data?.message);
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
 //fetch corporate details
 export const fetchAllCorporates = createAsyncThunk(
   "fetchAllCorporates",
   async (data, { rejectWithValue }) => {
     try {
       const response = await axios.get("/api/corporate/getAllCorporates");
+      const result = response.data;
+      return result;
+    } catch (error) {
+      SnackBar.error(error?.response?.data?.message);
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
+//fetch recruiter details
+export const fetchAllRecruiters = createAsyncThunk(
+  "fetchAllRecruiters",
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await axios.get("/api/recruiter/getAllRecruiters");
       const result = response.data;
       return result;
     } catch (error) {
@@ -109,6 +143,7 @@ export const admin = createSlice({
     candidateList: [],
     corporateList: [],
     candidateBData: {},
+    recruiterList: [],
     parameterWeightages: null,
   },
   extraReducers: (builder) => {
@@ -153,6 +188,17 @@ export const admin = createSlice({
       state.parameterWeightages = action?.payload?.data;
     });
     builder.addCase(fetchAllWeightages.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
+    builder.addCase(fetchAllRecruiters.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(fetchAllRecruiters.fulfilled, (state, action) => {
+      state.loading = false;
+      state.recruiterList = action?.payload?.data;
+    });
+    builder.addCase(fetchAllRecruiters.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload;
     });

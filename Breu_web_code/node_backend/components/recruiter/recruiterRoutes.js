@@ -8,6 +8,11 @@ router.get(
   authJWT.verifyJWTToken,
   recruiterController.getRecruiterCandidates
 );
+router.get(
+  "/getAllRecruiters",
+  authJWT.verifyJWTToken,
+  recruiterController.getAllRecruiters
+);
 
 router.post(
   "/sendCandidateToCorporate",

@@ -42,7 +42,7 @@ module.exports.addScore = async function (req, res, next) {
       .status(200)
       .json({ status: "SUCCESS", message: "Scores added successfully" });
   } catch (err) {
-    console.error(colors.red, `Error while adding questions`, err);
+    console.error(colors.red, `Error while adding scores`, err);
     return next(new AppError(err, 400));
   }
 };
@@ -55,7 +55,20 @@ module.exports.updateCandidateScore = async function (req, res, next) {
       .status(200)
       .json({ status: "SUCCESS", message: "Scores updated successfully" });
   } catch (err) {
-    console.error(colors.red, `Error while updating questions`, err);
+    console.error(colors.red, `Error while updating candidate score`, err);
+    return next(new AppError(err, 400));
+  }
+};
+
+module.exports.linkCandidateRecruiter = async function (req, res, next) {
+  try {
+    const data = req.body;
+    const updateScores = await candidateDAL.updateCandidateDetails(data);
+    return res
+      .status(200)
+      .json({ status: "SUCCESS", message: "Linked recruiter successfully" });
+  } catch (err) {
+    console.error(colors.red, `Error while updating candidate data`, err);
     return next(new AppError(err, 400));
   }
 };

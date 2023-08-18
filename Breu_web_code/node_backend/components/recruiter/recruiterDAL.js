@@ -16,6 +16,20 @@ async function getRecruiterById(data) {
   }
 }
 
+async function getAllRecruiters() {
+  try {
+    let result = await recruiterModel.find({}).lean();
+    return result;
+  } catch (err) {
+    console.log(err);
+    if (err.message) {
+      throw err.message;
+    } else {
+      throw err;
+    }
+  }
+}
+
 async function getRecruiterByEmail(data) {
   try {
     let result = await recruiterModel
@@ -135,4 +149,5 @@ module.exports = {
   getCandidatebyRecruiterId,
   getCandidateRecruiters,
   getCorporateByRecruiterId,
+  getAllRecruiters,
 };

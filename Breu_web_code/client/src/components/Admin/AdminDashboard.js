@@ -1,24 +1,19 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import Radio from "@mui/material/Radio";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 import PlayCircleFilledWhiteRoundedIcon from "@mui/icons-material/PlayCircleFilledWhiteRounded";
 import ListItemText from "@mui/material/ListItemText";
 import Header from "../../common/header";
 import { Grid, Link, Typography } from "@mui/material";
-import ButtonField from "../../common/button";
 import { Button } from "@mui/material";
 import { NavLink, useNavigate } from "react-router-dom";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
 import CustomizedDialogs from "../../common/customDailougeBox";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchAllCandidates } from "../../features/adminSlice";
+import BreuSelect from "../../common/selectSingleValue";
+import {
+  fetchAllCandidates,
+  fetchAllRecruiters,
+  linkCandidateRecruiter,
+} from "../../features/adminSlice";
 import ReactPlayer from "react-player";
 import { fetchReliabilityResults } from "../../features/reliabilitySlice";
 
@@ -26,6 +21,10 @@ const AdminDashboard = () => {
   const [age, setAge] = useState("");
   const [video, setVideo] = useState("");
   const [open, setOpen] = useState(false);
+  const [openRecruiter, setOpenRecruiter] = useState(false);
+  const [recruiterList, setRecruiterList] = useState([]);
+  const [selectedRecruiter, setSelectedRecruiter] = useState({});
+  const [selectedUser, setSelectedUser] = useState({});
   const [resultOpen, setResultOpen] = useState(false);
   const { adminSlice, adminAuthSlice, reliability } = useSelector(
     (state) => state
@@ -35,8 +34,21 @@ const AdminDashboard = () => {
   useEffect(() => {
     if (adminAuthSlice?.isAuthenticated) {
       dispatch(fetchAllCandidates());
+      dispatch(fetchAllRecruiters());
     }
   }, [adminAuthSlice?.isAuthenticated]);
+
+  useEffect(() => {
+    if (adminSlice?.recruiterList) {
+      const recruiterList = adminSlice?.recruiterList?.map((item) => {
+        return {
+          _id: item?._id,
+          name: item?.recruiterName,
+        };
+      });
+      setRecruiterList(recruiterList);
+    }
+  }, [adminSlice?.recruiterList]);
 
   const handleChange = (event) => {
     setAge(event.target.value);
@@ -59,6 +71,28 @@ const AdminDashboard = () => {
     setResultOpen(true);
   };
 
+  const handleLinkRecruiter = (data) => {
+    setSelectedRecruiter({});
+    setSelectedUser(data?.row);
+    const filteredRecs = recruiterList?.find((item) => {
+      return data?.row?.linkedRecruiters?.includes(item?._id);
+    });
+    if (filteredRecs) {
+      setSelectedRecruiter(filteredRecs);
+    }
+    setOpenRecruiter(true);
+    // dispatch()
+  };
+  const linkRecruiters = () => {
+    const data = {
+      _id: selectedUser?._id,
+      linkedRecruiters: [selectedRecruiter?._id],
+    };
+    dispatch(linkCandidateRecruiter(data));
+    setOpenRecruiter(false);
+    setSelectedUser({});
+  };
+
   const columns = [
     {
       field: "firstName",
@@ -70,9 +104,21 @@ const AdminDashboard = () => {
     {
       field: "email",
       headerName: "Email",
-      width: 150,
+      width: 180,
       headerAlign: "center",
       align: "center",
+    },
+    {
+      field: "linkCandidates",
+      headerName: "Link Candidates",
+      width: 140,
+      headerAlign: "center",
+      align: "center",
+      renderCell: (params) => (
+        <Button variant="contained" onClick={() => handleLinkRecruiter(params)}>
+          Link
+        </Button>
+      ),
     },
     {
       field: "believability",
@@ -88,13 +134,13 @@ const AdminDashboard = () => {
     },
     {
       field: "reliabilityResults",
-      headerName: "ReliabilityResults",
-      width: 250,
+      headerName: "Reliability Results",
+      width: 200,
       headerAlign: "center",
       align: "center",
       renderCell: (params) => (
         <Button variant="contained" onClick={() => handleResult(params)}>
-          View Reliability Results
+          View
         </Button>
       ),
     },
@@ -102,7 +148,7 @@ const AdminDashboard = () => {
     {
       field: "secondvideo",
       headerName: "EI Video 1",
-      width: 200,
+      width: 130,
       headerAlign: "center",
       align: "center",
       renderCell: (params) => {
@@ -120,7 +166,7 @@ const AdminDashboard = () => {
     {
       field: "firstvideo",
       headerName: "EI VIdeo 2",
-      width: 200,
+      width: 130,
       headerAlign: "center",
       align: "center",
       renderCell: (params) => {
@@ -200,6 +246,31 @@ const AdminDashboard = () => {
           }
           openPopup={open}
           setOpenPopup={setOpen}
+        />
+        <CustomizedDialogs
+          title={"Select Recruiter"}
+          children={
+            <div style={{ width: "400px" }}>
+              <BreuSelect
+                align="center"
+                placeholder="Select Recruiter"
+                name="selectRole"
+                values={recruiterList || []}
+                onSelect={(list) => setSelectedRecruiter(list)}
+                // disabled={auth?.user?.completedBelievability}
+                selected={selectedRecruiter}
+              />
+              <Button
+                sx={{ marginTop: "20px" }}
+                variant="contained"
+                onClick={() => linkRecruiters()}
+              >
+                Link
+              </Button>
+            </div>
+          }
+          openPopup={openRecruiter}
+          setOpenPopup={setOpenRecruiter}
         />
 
         <CustomizedDialogs

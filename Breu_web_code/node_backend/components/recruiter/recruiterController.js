@@ -18,7 +18,17 @@ module.exports.getRecruiterCandidates = async (req, res, next) => {
       return next(new AppError("Could not find candidate", 400));
     }
   } catch (error) {
-    console.error(colors.red, `Error fetching questions`, error);
+    console.error(colors.red, `Error fetching candidates`, error);
+    return next(new AppError(error, 400));
+  }
+};
+
+module.exports.getAllRecruiters = async (req, res, next) => {
+  try {
+    const data = await recruiterDAL.getAllRecruiters();
+    return res.send({ message: "SUCCESS", data: data });
+  } catch (error) {
+    console.error(colors.red, `Error fetching candidates`, error);
     return next(new AppError(error, 400));
   }
 };
