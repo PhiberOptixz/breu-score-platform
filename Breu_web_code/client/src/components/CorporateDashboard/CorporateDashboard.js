@@ -23,6 +23,7 @@ const CorporateDashboard = () => {
   const [open, setOpen] = useState(false);
   const { corporateAuth, corporateSlice } = useSelector((state) => state);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (corporateAuth?.isAuthenticated) {
@@ -97,21 +98,23 @@ const CorporateDashboard = () => {
       renderCell: (params) => {
         if (params?.row?.scores[0]) {
           return (
-            <HorizontalGauge
-              ticks={[
-                { label: "0", value: 0 },
-                { label: "1", value: 1 },
-                { label: "2", value: 2 },
-                { label: "3", value: 3 },
-                { label: "4", value: 4 },
-                { label: "5", value: 5 },
-              ]}
-              height={45}
-              width={250}
-              min={0}
-              max={5}
-              value={params?.row?.scores[0].mainScore || ""}
-            />
+            <span onClick={() => navigate(`/resultScreen/${params.row._id}`)}>
+              <HorizontalGauge
+                ticks={[
+                  { label: "0", value: 0 },
+                  { label: "1", value: 1 },
+                  { label: "2", value: 2 },
+                  { label: "3", value: 3 },
+                  { label: "4", value: 4 },
+                  { label: "5", value: 5 },
+                ]}
+                height={45}
+                width={250}
+                min={0}
+                max={5}
+                value={params?.row?.scores[0].mainScore || ""}
+              />
+            </span>
           );
         }
       },
@@ -154,7 +157,6 @@ const CorporateDashboard = () => {
     },
   ];
 
-  const navigate = useNavigate();
   return (
     <>
       <Header name="Corporate" caption={"Your choice matters"} />

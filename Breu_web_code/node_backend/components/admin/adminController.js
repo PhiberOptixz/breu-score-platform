@@ -8,7 +8,12 @@ module.exports.getAllCandidates = async (req, res, next) => {
     const adminExists = await adminDAL.getAdminById(req.decoded._id);
     if (adminExists) {
       const data = await candidateDAL.getAllCandidates();
-      return res.send({ message: "SUCCESS", data: data });
+      const mappedData = await data?.map((item) => {
+        item.mainScore = item?.score?.mainScore;
+        return item;
+      });
+      // .sort((a, b) => a.mainScore - b.mainScore);
+      return res.send({ message: "SUCCESS", data: mappedData });
     } else {
       return next(new AppError("Could not find candidates", 400));
     }

@@ -118,7 +118,7 @@ const EmotionalUndesirability = () => {
       setNoOfVideos(1);
       setDemo("Demo-2");
       setTitle(
-        "Demo – What is expected (conflicts if any with team members/manager, on what ground & how did you do ?"
+        "This is a demo of how I would answer the same question in STAR format"
       );
       setQuestionTitle(
         "Describe your recent project failure, how did u cope up with the situation & recover from it – 2 mins"

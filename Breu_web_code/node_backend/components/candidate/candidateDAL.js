@@ -88,6 +88,25 @@ async function getAllCandidates(data) {
           as: "videos",
         },
       },
+      {
+        $lookup: {
+          from: "candidateScores",
+          localField: "_id",
+          foreignField: "candidateId",
+          as: "score",
+        },
+      },
+      {
+        $unwind: {
+          path: "$score",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $sort: {
+          "score.mainScore": -1,
+        },
+      },
     ]);
 
     return result;

@@ -183,8 +183,24 @@ const AdminDashboard = () => {
     },
 
     {
-      field: "score",
+      field: "mainScore",
       headerName: "Score",
+      width: 120,
+      headerAlign: "center",
+      align: "center",
+      renderCell: (params) => {
+        if (params?.row?.mainScore) {
+          return (
+            <NavLink to={`/resultScreen/${params.row._id}`}>
+              {params.row.mainScore}
+            </NavLink>
+          );
+        }
+      },
+    },
+    {
+      field: "scores",
+      headerName: "Enter Score",
       headerAlign: "center",
       width: 200,
       sortable: false,

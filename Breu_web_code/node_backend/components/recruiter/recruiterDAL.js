@@ -84,6 +84,11 @@ async function getCandidateRecruiters(data) {
           as: "scores",
         },
       },
+      {
+        $sort: {
+          "scores.mainScore": -1,
+        },
+      },
     ]);
     return result;
   } catch (err) {

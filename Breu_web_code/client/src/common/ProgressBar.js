@@ -58,7 +58,6 @@ const BorderLinearProgress4 = styled(LinearProgress)(({ theme }) => ({
 }));
 
 const ProgressBar = ({ value }) => {
-  console.log(value);
   return (
     <>
       <Grid container align="center">
@@ -66,7 +65,7 @@ const ProgressBar = ({ value }) => {
         <Grid item xs={2} md={2}>
           {value <= 1 ? (
             <>
-              {" "}
+              {value}
               <p>Weak</p>
               <div className="triContainer">
                 <div className="revTriangle"></div>
@@ -77,7 +76,7 @@ const ProgressBar = ({ value }) => {
         <Grid item xs={2} md={2}>
           {value <= 2 && value > 1 ? (
             <>
-              {" "}
+              {value}
               <p style={{ fontWeight: "600" }}>Fair</p>
               <div className="triContainer">
                 <div className="revTriangle"></div>
@@ -88,7 +87,7 @@ const ProgressBar = ({ value }) => {
         <Grid item xs={2} md={2}>
           {value <= 3 && value > 2 ? (
             <>
-              {" "}
+              {value}
               <p style={{ fontWeight: "600" }}>Good</p>
               <div className="triContainer">
                 <div className="revTriangle"></div>
@@ -99,7 +98,7 @@ const ProgressBar = ({ value }) => {
         <Grid item xs={2} md={2}>
           {value <= 4 && value > 3 ? (
             <>
-              {" "}
+              {value}
               <p style={{ fontWeight: "600" }}>Great</p>
               <div className="triContainer">
                 <div className="revTriangle"></div>
@@ -110,7 +109,7 @@ const ProgressBar = ({ value }) => {
         <Grid item xs={2} md={2}>
           {value <= 5 && value > 4 ? (
             <>
-              {" "}
+              {value}
               <p style={{ fontWeight: "600" }}>Excellent</p>
               <div className="triContainer">
                 <div className="revTriangle"></div>

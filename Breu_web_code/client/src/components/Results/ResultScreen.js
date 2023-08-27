@@ -23,7 +23,6 @@ const ResultScreen = () => {
     />
   );
   const [tableName, setTableName] = useState("Believability Score");
-  console.log(location.pathname);
 
   useEffect(() => {
     if (location?.pathname !== "/breuscore") {
