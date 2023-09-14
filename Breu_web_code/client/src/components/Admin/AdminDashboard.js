@@ -20,6 +20,7 @@ import { fetchReliabilityResults } from "../../features/reliabilitySlice";
 const AdminDashboard = () => {
   const [age, setAge] = useState("");
   const [video, setVideo] = useState("");
+  const [videoTitle, setVideoTitle] = useState("");
   const [open, setOpen] = useState(false);
   const [openRecruiter, setOpenRecruiter] = useState(false);
   const [recruiterList, setRecruiterList] = useState([]);
@@ -55,13 +56,17 @@ const AdminDashboard = () => {
   };
 
   const handleConflictClick = (data) => {
-    console.log(data?.row?.videos[0]?.conflictResolutionVideo?.link);
+    setVideoTitle(
+      "Describe your recent project failure, how did u cope up with the situation & recover from it."
+    );
     setVideo(data?.row?.videos[0]?.conflictResolutionVideo?.link);
     setOpen(true);
   };
 
   const handleInterestingClick = (data) => {
-    console.log(data?.row?.videos[0]?.interestingProjectVideo?.link);
+    setVideoTitle(
+      "Describe your recent & most complex project in STAR format."
+    );
     setVideo(data?.row?.videos[0]?.interestingProjectVideo?.link);
     setOpen(true);
   };
@@ -240,7 +245,7 @@ const AdminDashboard = () => {
         </Grid>
 
         <CustomizedDialogs
-          title={"Video"}
+          title={videoTitle}
           children={
             <ReactPlayer
               config={{

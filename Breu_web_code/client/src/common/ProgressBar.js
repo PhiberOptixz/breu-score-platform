@@ -63,7 +63,7 @@ const ProgressBar = ({ value }) => {
       <Grid container align="center">
         <Grid item xs={1} md={1}></Grid>
         <Grid item xs={2} md={2}>
-          {value <= 1 ? (
+          {value <= 2 ? (
             <>
               {value}
               <p>Weak</p>
@@ -74,7 +74,7 @@ const ProgressBar = ({ value }) => {
           ) : null}
         </Grid>
         <Grid item xs={2} md={2}>
-          {value <= 2 && value > 1 ? (
+          {value <= 2.5 && value > 2.0 ? (
             <>
               {value}
               <p style={{ fontWeight: "600" }}>Fair</p>
@@ -85,7 +85,7 @@ const ProgressBar = ({ value }) => {
           ) : null}
         </Grid>
         <Grid item xs={2} md={2}>
-          {value <= 3 && value > 2 ? (
+          {value <= 3.5 && value > 2.5 ? (
             <>
               {value}
               <p style={{ fontWeight: "600" }}>Good</p>
@@ -96,7 +96,7 @@ const ProgressBar = ({ value }) => {
           ) : null}
         </Grid>
         <Grid item xs={2} md={2}>
-          {value <= 4 && value > 3 ? (
+          {value <= 4.5 && value > 3.5 ? (
             <>
               {value}
               <p style={{ fontWeight: "600" }}>Great</p>
@@ -107,7 +107,7 @@ const ProgressBar = ({ value }) => {
           ) : null}
         </Grid>
         <Grid item xs={2} md={2}>
-          {value <= 5 && value > 4 ? (
+          {value <= 5 && value > 4.5 ? (
             <>
               {value}
               <p style={{ fontWeight: "600" }}>Excellent</p>
