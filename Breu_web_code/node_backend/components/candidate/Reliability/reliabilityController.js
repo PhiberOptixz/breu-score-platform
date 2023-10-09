@@ -23,26 +23,44 @@ module.exports.fetchQuestionsData = async (req, res, next) => {
       req.decoded._id
     );
     if (candidateExists) {
-      const designQuestions = await reliabilityDAL.fetchDesignQuestions(
-        candidateExists.jobRole?._id
-      );
-      const debuggingQuestions = await reliabilityDAL.fetchDebuggingQuestions(
-        candidateExists.jobRole?._id
-      );
+      const designQuestions = await reliabilityDAL.fetchDesignQuestions({
+        role: new mongoose.Types.ObjectId(candidateExists.jobRole?._id),
+        language: new mongoose.Types.ObjectId(
+          candidateExists.preferredProgrammingLanguage?._id
+        ),
+      });
+      const debuggingQuestions = await reliabilityDAL.fetchDebuggingQuestions({
+        role: new mongoose.Types.ObjectId(candidateExists.jobRole?._id),
+        language: new mongoose.Types.ObjectId(
+          candidateExists.preferredProgrammingLanguage?._id
+        ),
+      });
       const architectureQuestions =
-        await reliabilityDAL.fetchArchitectureQuestions(
-          candidateExists.jobRole?._id
-        );
-      const frameworkQuestions = await reliabilityDAL.fetchFrameworkQuestions(
-        candidateExists.jobRole?._id
-      );
-      const codingQuestions = await reliabilityDAL.fetchCodingQuestions(
-        candidateExists.jobRole?._id
-      );
+        await reliabilityDAL.fetchArchitectureQuestions({
+          role: new mongoose.Types.ObjectId(candidateExists.jobRole?._id),
+          language: new mongoose.Types.ObjectId(
+            candidateExists.preferredProgrammingLanguage?._id
+          ),
+        });
+      const frameworkQuestions = await reliabilityDAL.fetchFrameworkQuestions({
+        role: new mongoose.Types.ObjectId(candidateExists.jobRole?._id),
+        language: new mongoose.Types.ObjectId(
+          candidateExists.preferredProgrammingLanguage?._id
+        ),
+      });
+      const codingQuestions = await reliabilityDAL.fetchCodingQuestions({
+        role: new mongoose.Types.ObjectId(candidateExists.jobRole?._id),
+        language: new mongoose.Types.ObjectId(
+          candidateExists.preferredProgrammingLanguage?._id
+        ),
+      });
       const implementationQuestins =
-        await reliabilityDAL.fetchImplementationQuestions(
-          candidateExists.jobRole?._id
-        );
+        await reliabilityDAL.fetchImplementationQuestions({
+          role: new mongoose.Types.ObjectId(candidateExists.jobRole?._id),
+          language: new mongoose.Types.ObjectId(
+            candidateExists.preferredProgrammingLanguage?._id
+          ),
+        });
       return res.send({
         message: "SUCCESS",
         data: [

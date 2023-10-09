@@ -40,7 +40,8 @@ async function fetchDesignQuestions(data) {
     let result = await questionsModel.aggregate([
       {
         $match: {
-          roles: { $in: [data] },
+          roles: { $in: [data.role] },
+          languages: { $in: [data.language] },
           reliabilityType: "design",
         },
       },
@@ -61,7 +62,8 @@ async function fetchArchitectureQuestions(data) {
     let result = await questionsModel.aggregate([
       {
         $match: {
-          roles: { $in: [data] },
+          roles: { $in: [data.role] },
+          languages: { $in: [data.language] },
           reliabilityType: "architecture",
         },
       },
@@ -82,7 +84,8 @@ async function fetchCodingQuestions(data) {
     let result = await questionsModel.aggregate([
       {
         $match: {
-          roles: { $in: [data] },
+          roles: { $in: [data.role] },
+          languages: { $in: [data.language] },
           reliabilityType: "coding",
         },
       },
@@ -103,7 +106,8 @@ async function fetchDebuggingQuestions(data) {
     let result = await questionsModel.aggregate([
       {
         $match: {
-          roles: { $in: [data] },
+          roles: { $in: [data.role] },
+          languages: { $in: [data.language] },
           reliabilityType: "debugging",
         },
       },
@@ -124,7 +128,8 @@ async function fetchFrameworkQuestions(data) {
     let result = await questionsModel.aggregate([
       {
         $match: {
-          roles: { $in: [data] },
+          roles: { $in: [data.role] },
+          languages: { $in: [data.language] },
           reliabilityType: "framework",
         },
       },
@@ -145,7 +150,8 @@ async function fetchImplementationQuestions(data) {
     let result = await questionsModel.aggregate([
       {
         $match: {
-          roles: { $in: [data] },
+          roles: { $in: [data.role] },
+          languages: { $in: [data.language] },
           reliabilityType: "implementation",
         },
       },
