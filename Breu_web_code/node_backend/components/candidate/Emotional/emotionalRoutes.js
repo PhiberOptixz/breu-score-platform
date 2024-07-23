@@ -20,7 +20,8 @@ const s3 = new S3Client({
 const uploadvideo = multer({
   storage: multerS3({
     s3: s3,
-    bucket: "breu",
+    // bucket: "breu",
+    bucket: "newbreu",
     acl: "public-read",
     metadata: function (req, file, cb) {
       cb(null, { fieldName: file.fieldname });
