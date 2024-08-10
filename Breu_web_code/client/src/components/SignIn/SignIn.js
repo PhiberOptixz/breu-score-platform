@@ -69,7 +69,7 @@ const SignIn = () => {
               <Typography
                 sx={{ fontSize: "22px", color: "#0a71b9", fontWeight: "600" }}
               >
-                Worlds first Platform to combine Emotions with AI to make your
+                World's first Platform to combine Emotions with AI to make your
                 Profile Human
               </Typography>
 
