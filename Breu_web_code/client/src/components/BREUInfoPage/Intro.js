@@ -17,9 +17,7 @@ import { useSelector } from "react-redux";
 
 const Intro = () => {
   const { auth } = useSelector((state) => state);
-  const [video, setVideo] = useState(
-    "https://breu.s3.ap-south-1.amazonaws.com/breuinformationvideos/believe.mp4"
-  );
+  const [video, setVideo] = useState("https://youtu.be/brrQ9L88OFo");
   const navigate = useNavigate();
   const [nodeNumber, setNodeNumber] = useState();
   const [preNodeNumber, setPreNodeNumber] = useState(-1);
@@ -71,6 +69,7 @@ const Intro = () => {
     borderRadius: "50%",
     justifyContent: "center",
     alignItems: "center",
+    cursor: "pointer",
     ...(ownerState.active && {
       backgroundImage:
         "linear-gradient( 136deg, rgb(56 88 209) 0%, rgb(120 171 236) 50%, rgb(158 179 244) 100%)",
@@ -85,118 +84,69 @@ const Intro = () => {
   function ColorlibStepIcon(props) {
     const { active, completed, className } = props;
 
+    const handleClick = (icon) => {
+      switch (icon) {
+        case 1:
+          setVideo("https://youtu.be/brrQ9L88OFo");
+          setNodeNumber(0);
+          break;
+        case 2:
+          if (preNodeNumber === -1 || repeat === 1) {
+            setVideo("https://youtu.be/jWRdd7FFGgY");
+            setPreNodeNumber(0);
+            setNodeNumber(1);
+          }
+          break;
+        case 3:
+          if (preNodeNumber === 0 || repeat === 1) {
+            setVideo("https://youtu.be/IXAdpLx9-OI");
+            setPreNodeNumber(1);
+            setNodeNumber(2);
+          }
+          break;
+        case 4:
+          if (preNodeNumber === 1 || repeat === 1) {
+            setVideo("https://youtu.be/epjzFs3IlEA");
+            setPreNodeNumber(2);
+            setNodeNumber(3);
+          }
+          break;
+        case 5:
+          if (preNodeNumber === 2 || repeat === 1) {
+            setVideo("https://youtu.be/oJjNaZPW8iI");
+            setPreNodeNumber(3);
+            setNodeNumber(4);
+            setRepeat(1);
+          }
+          break;
+        default:
+          break;
+      }
+    };
+
     const icons = {
-      // 1: (
-      //   <h2
-      //     onClick={() => {
-      //       setVideo("https://www.youtube.com/embed/3pmC0SRynFY");
-      //       setNodeNumber(0);
-      //     }}
-      //   >
-      //     P
-      //   </h2>
-      // ),
-      1: (
-        <h2
-          onClick={() => {
-            setVideo(
-              "https://breu.s3.ap-south-1.amazonaws.com/breuinformationvideos/believe.mp4"
-            );
-            setNodeNumber(0);
-          }}
-        >
-          B
-        </h2>
-      ),
-      2: (
-        <h2
-          onClick={() => {
-            if (preNodeNumber === -1 || repeat === 1) {
-              setVideo(
-                "https://breu.s3.ap-south-1.amazonaws.com/breuinformationvideos/reliability.mp4"
-              );
-              setPreNodeNumber(0);
-              setNodeNumber(1);
-            }
-          }}
-        >
-          R
-        </h2>
-      ),
-      3: (
-        <h2
-          onClick={() => {
-            if (preNodeNumber === 0 || repeat === 1) {
-              setVideo(
-                "https://breu.s3.ap-south-1.amazonaws.com/breuinformationvideos/ei+demo.mp4"
-              );
-              setPreNodeNumber(1);
-              setNodeNumber(2);
-            }
-          }}
-        >
-          E
-        </h2>
-      ),
-      4: (
-        <h2
-          onClick={() => {
-            if (preNodeNumber === 1 || repeat === 1) {
-              setVideo(
-                "https://breu.s3.ap-south-1.amazonaws.com/breuinformationvideos/undesirable.mp4"
-              );
-              setPreNodeNumber(2);
-              setNodeNumber(3);
-            }
-          }}
-        >
-          U
-        </h2>
-      ),
-      5: (
-        <h2
-          onClick={() => {
-            if (preNodeNumber === 2 || repeat === 1) {
-              setVideo(
-                "https://breu.s3.ap-south-1.amazonaws.com/breuinformationvideos/BREU+SCORE+TRAILER.mp4"
-              );
-              setPreNodeNumber(3);
-              setNodeNumber(4);
-              setRepeat(1);
-            }
-          }}
-        >
-          S
-        </h2>
-      ),
+      1: "B",
+      2: "R",
+      3: "E",
+      4: "U",
+      5: "S",
     };
 
     return (
       <ColorlibStepIconRoot
         ownerState={{ completed, active }}
         className={className}
-        onClick={(e) => console.log(e)}
+        onClick={() => handleClick(props.icon)}
       >
-        {icons[String(props.icon)]}
+        <h2>{icons[String(props.icon)]}</h2>
       </ColorlibStepIconRoot>
     );
   }
 
   ColorlibStepIcon.propTypes = {
-    /**
-     * Whether this step is active.
-     * @default false
-     */
     active: PropTypes.bool,
     className: PropTypes.string,
-    /**
-     * Mark the step as completed. Is passed to child components.
-     * @default false
-     */
     completed: PropTypes.bool,
-    /**
-     * The label displayed in the step icon.
-     */
     icon: PropTypes.node,
   };
 
@@ -216,13 +166,8 @@ const Intro = () => {
         <Grid item xs={0} md={3}></Grid>
         <Grid item xs={12} md={6}>
           <div className="player-wrapper LandingVideoGrid">
-            {/* <video loop autoPlay style={{ width: "300px" }}>
-              <source src={video} type="video/mp4" />
-            </video> */}
             <ReactPlayer
               className="react-player"
-              //   url="https://www.youtube.com/watch?v=ysz5S6PUM-U"
-              // controls
               url={video}
               width="100%"
               height="100%"
@@ -232,7 +177,6 @@ const Intro = () => {
         </Grid>
         <Grid item xs={0} md={3}></Grid>
 
-        {/* stepper */}
         <Grid item xs={12} md={11} sx={{ marginTop: "4%" }}>
           <Stepper
             alternativeLabel
@@ -241,9 +185,7 @@ const Intro = () => {
           >
             {steps.map((label) => (
               <Step key={label} sx={{ cursor: "pointer" }}>
-                <StepLabel StepIconComponent={ColorlibStepIcon}>
-                  {/* {label} */}
-                </StepLabel>
+                <StepLabel StepIconComponent={ColorlibStepIcon} />
               </Step>
             ))}
           </Stepper>

@@ -66,7 +66,7 @@ module.exports.candidateSignIn = async function (req, res, next) {
           candidateData.password = undefined;
           res.header("Authorization", token).status(200).json({
             status: "SUCCESS",
-            message: "Login successfull !",
+            message: "Login successfull !!",
             token: token,
           });
         } else {
