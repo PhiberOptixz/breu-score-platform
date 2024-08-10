@@ -18,3 +18,5 @@
    sudo npm install aws-amplify @aws-amplify/ui-react
 
 8. staging -> amplify pull --appId d3rp29m9hje1ou --envName staging
+
+[working with node]
